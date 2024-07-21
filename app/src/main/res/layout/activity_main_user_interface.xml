@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="75dp"
         android:gravity="center"
-        android:text="Temporary UserName"
+        android:text="@string/temporary_username"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/progressBar_id" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/settings_button"
         android:layout_width="40dp"
         android:layout_height="35dp"
         android:layout_marginTop="32dp"
@@ -65,6 +65,30 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar_main_interface"
-        tools:listitem="@layout/recycler_view_item" />
+        tools:listitem="@layout/recycler_view_item"
+        android:id="@+id/upcoming_tasks_recycler"/>
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_tasks_recycler"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/add_a_challenge"
+        android:id="@+id/new_challenge_button"
+
+        />
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/new_challenge_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/logout"
+        android:id="@+id/logout_button"
+
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
