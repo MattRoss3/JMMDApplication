@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JMMD Application</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="jmmd_language_learner">JMMD Language Learner</string>
 </resources>
