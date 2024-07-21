@@ -13,7 +13,7 @@
         android:theme="@style/Theme.JMMDApplication"
         tools:targetApi="31">
         <activity
-            android:name=".signUpActivity"
+            android:name=".signInPageActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
