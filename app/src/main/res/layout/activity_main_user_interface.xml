@@ -8,17 +8,18 @@
     tools:context=".MainUserInterface">
 
     <TextView
-        android:id="@+id/userName_display_main_interface"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="75dp"
-        android:gravity="center"
-        android:text="@string/temporary_username"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/mainUser_header"
+        android:layout_width="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:text="@string/temporary_username"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="34dp"
+        android:layout_marginTop="40dp"
         />
 
 
@@ -27,68 +28,89 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="253dp"
         android:layout_height="61dp"
-        android:layout_marginTop="12dp"
         android:progress="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progressBar_id" />
 
     <ImageButton
         android:id="@+id/settings_button"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="78dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/userName_display_main_interface"
+        app:layout_constraintHorizontal_bias="0.996"
+        app:layout_constraintStart_toEndOf="@+id/logout_button"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <TextView
         android:id="@+id/progressBar_id"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="20dp"
+        android:layout_width="179dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/my_overall_progress"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName_display_main_interface" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="330dp"
-        android:layout_height="184dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_main_interface"
-        tools:listitem="@layout/recycler_view_item"
-        android:id="@+id/upcoming_tasks_recycler"/>
+        app:layout_constraintTop_toBottomOf="@id/mainUser_header" />
+    <TextView
+        android:id="@+id/Challenges_label"
+        android:layout_width="179dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/my_challenges"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/new_challenge_button" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="361dp"
+        android:layout_height="400dp"
+        android:fillViewport="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Challenges_label">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:listitem="@layout/recycler_view_item" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
     <Button
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/upcoming_tasks_recycler"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/add_a_challenge"
         android:id="@+id/new_challenge_button"
-
-        />
-    <Button
-        android:layout_width="125dp"
+        android:layout_width="181dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintTop_toBottomOf="@id/new_challenge_button"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/add_a_challenge"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/logout"
-        android:id="@+id/logout_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar_main_interface" />
 
-        />
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        tools:layout_editor_absoluteX="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="10dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

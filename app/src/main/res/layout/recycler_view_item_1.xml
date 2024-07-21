@@ -7,9 +7,9 @@
               android:layout_height="wrap_content">
   <Button
       android:id="@+id/textView1"
-      android:layout_width="350dp"
+      android:layout_width="340dp"
       android:layout_height="100dp"
 
-      android:text="French  /n Challenge 1/15/n Press to add to current tasks" />
+      android:text="@string/french_n_challenge_1_15_n_press_to_add_to_current_tasks" />
 
 </LinearLayout>
