@@ -9,4 +9,5 @@
     <string name="enter_password_again">Enter New Password Again</string>
     <string name="enter_new_password">Enter New Password</string>
     <string name="enter_new_username">Enter New Username</string>
+    <string name="my_overall_progress">My Overall Progress</string>
 </resources>
