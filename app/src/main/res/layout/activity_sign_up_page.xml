@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signInPageActivity">
+    tools:context=".SignUpPageActivity">
 
     <TextView
-        android:id="@+id/Title_of_page_sign_page"
+        android:id="@+id/Title_of_signUp_page_textView"
         android:layout_width="284dp"
         android:layout_height="105dp"
         android:layout_marginTop="75dp"
         android:gravity="center"
-        android:text="@string/jmmd_language_learner"
+        android:text="@string/language_learner_account_sign_up"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -21,53 +21,57 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/userName_sign_in_screen_edit_text"
+        android:id="@+id/userName_sign_up_screen_edit_text"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="@string/enter_username"
+        android:hint="@string/enter_new_username"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Title_of_page_sign_page" />
+        app:layout_constraintTop_toBottomOf="@id/Title_of_signUp_page_textView" />
 
     <EditText
-        android:id="@+id/Password_sign_in_edit_text"
+        android:id="@+id/Password1_sign_up_edit_text"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="@string/enter_password"
+        android:hint="@string/enter_new_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/userName_sign_in_screen_edit_text" />
+        app:layout_constraintTop_toBottomOf="@id/userName_sign_up_screen_edit_text" />
+    <EditText
+        android:id="@+id/Password2_sign_up_edit_text"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/enter_password_again"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Password1_sign_up_edit_text"
+        />
 
     <Button
-        android:id="@+id/sign_in_button_signIn_page"
+        android:id="@+id/Sign_up_button_signUp_page"
         android:layout_width="125dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:text="@string/sign_in"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Password_sign_in_edit_text"
-        />
-
-    <Button
-        android:id="@+id/sign_up_button_signIn_page"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@id/Password2_sign_up_edit_text"
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
