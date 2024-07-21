@@ -10,4 +10,7 @@
     <string name="enter_new_password">Enter New Password</string>
     <string name="enter_new_username">Enter New Username</string>
     <string name="my_overall_progress">My Overall Progress</string>
+    <string name="sample_french_challenge">French \n Challenge 1/15 \n Progress 15%</string>
+    <string name="sample_spanish_challenge">Spanish \n Challenge 4/15 \n Progress 55%</string>
+    <string name="Sample_Spanish_2">Spanish \n Challenge 5/15 \n Progress 0%</string>
 </resources>
