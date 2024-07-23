@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signInPageActivity">
+
+    <TextView
+        android:id="@+id/Title_of_page_sign_page"
+        android:layout_width="284dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="75dp"
+        android:gravity="center"
+        android:text="@string/jmmd_language_learner"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/userName_sign_in_screen_edit_text"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/enter_username"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Title_of_page_sign_page" />
+
+    <EditText
+        android:id="@+id/Password_sign_in_edit_text"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/enter_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userName_sign_in_screen_edit_text" />
+
+    <Button
+        android:id="@+id/sign_in_button_signIn_page"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Password_sign_in_edit_text"
+        />
+
+    <Button
+        android:id="@+id/sign_up_button_signIn_page"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/sign_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_in_button_signIn_page"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

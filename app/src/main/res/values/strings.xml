@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">JMMD Application</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="jmmd_language_learner">JMMD Language Learner</string>
+    <string name="language_learner_account_sign_up">Language Learner Account Sign Up</string>
+    <string name="enter_password_again">Enter New Password Again</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="enter_new_username">Enter New Username</string>
+    <string name="my_overall_progress">My Overall Progress</string>
+    <string name="sample_french_challenge">French \n Challenge 1/15 \n Progress 15%</string>
+    <string name="sample_spanish_challenge">Spanish \n Challenge 4/15 \n Progress 55%</string>
+    <string name="Sample_Spanish_2">Spanish \n Challenge 5/15 \n Progress 0%</string>
+    <string name="temporary_username">Temporary UserName</string>
+    <string name="add_a_challenge">Add a Challenge</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
+    <string name="back_to_home_page">Back to home page</string>
+    <string name="add_challenges">Add Challenges</string>
+    <string name="enter_language">Enter Language</string>
+    <string name="search">Search</string>
+    <string name="challenges">Challenges</string>
+    <string name="back">Back</string>
+    <string name="challenge">Challenge</string>
+    <string name="challenge_will_go_here">Challenge will go here</string>
+    <string name="french_n_challenge_1_15_n_press_to_add_to_current_tasks">French \n Challenge 1/15\n Press to add to current tasks</string>
+    <string name="my_challenges">My Challenges</string>
+    <string name="account_deletion_and_creation">Account Deletion</string>
+    <string name="delete_account">Delete Account</string>
 </resources>

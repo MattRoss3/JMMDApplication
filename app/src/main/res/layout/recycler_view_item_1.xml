@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:padding="8dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+  <Button
+      android:id="@+id/textView1"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+
+      android:text="@string/french_n_challenge_1_15_n_press_to_add_to_current_tasks" />
+
+</LinearLayout>
