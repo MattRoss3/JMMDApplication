@@ -38,11 +38,13 @@
         android:layout_width="78dp"
         android:layout_height="41dp"
         android:layout_marginTop="4dp"
+        android:contentDescription="@string/settingimage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.996"
         app:layout_constraintStart_toEndOf="@+id/logout_button"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        app:srcCompat="@android:drawable/ic_menu_manage"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/progressBar_id"
