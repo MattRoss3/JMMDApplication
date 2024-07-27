@@ -24,6 +24,13 @@ public class MainUserInterface extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=Settings_page.intentFactory(getApplicationContext());
+            }
+        });
     }
 
 }
