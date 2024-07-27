@@ -1,5 +1,7 @@
 package com.example.jmmdapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -21,4 +23,8 @@ public class signInPageActivity extends AppCompatActivity {
             return insets;
         });
     }
+    static Intent intentFactory(Context context){
+        return new Intent(context, signInPageActivity.class);
+    }
+
 }

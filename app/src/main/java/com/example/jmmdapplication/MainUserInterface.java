@@ -16,6 +16,14 @@ public class MainUserInterface extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
-
+        setContentView(binding.getRoot());
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= signInPageActivity.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
     }
+
 }
