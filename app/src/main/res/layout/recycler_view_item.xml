@@ -10,25 +10,26 @@
       android:layout_width="340dp"
       android:layout_height="100dp"
       android:text="@string/sample_french_challenge"
-
-
+      android:backgroundTint="@color/bluec"
       />
 
   <Button
       android:id="@+id/button2_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
-      android:text="@string/sample_spanish_challenge"/>
+      android:text="@string/sample_spanish_challenge"
+      android:backgroundTint="@color/bluec"/>
 
   <Button
       android:id="@+id/button3_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
-      android:text="@string/Sample_Spanish_2"/>
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
   <Button
       android:id="@+id/button4_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
-
-      android:text="@string/Sample_Spanish_2"/>
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
 </LinearLayout>

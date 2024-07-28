@@ -15,6 +15,7 @@ public class MainUserInterface extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_user_interface);
         binding=ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {

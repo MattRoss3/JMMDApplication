@@ -17,8 +17,11 @@ public class signInPageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sign_in_page);
         binding=ActivitySignInPageBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
+
     }
     static Intent intentFactory(Context context){
         return new Intent(context, signInPageActivity.class);

@@ -15,6 +15,7 @@ public class ChallengeScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_challenge_screen);
         binding=ActivityChallengeScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

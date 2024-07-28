@@ -15,6 +15,7 @@ public class addnewChallenge extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_addnew_challenge);
         binding=ActivityAddnewChallengeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
