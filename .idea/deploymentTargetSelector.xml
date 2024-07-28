@@ -14,6 +14,9 @@
       <SelectionState runConfigName="addnewChallenge">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="signInPageActivity ">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
