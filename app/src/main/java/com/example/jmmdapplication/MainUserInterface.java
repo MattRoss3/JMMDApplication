@@ -45,23 +45,31 @@ public class MainUserInterface extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //loginUser(); //TODO: implement loginUser() method
-        invalidateOptionsMenu();
+        //repository = [appRepo].getRepository(getApplication()); //TODO: Repository not yet exists
+        //loginUser(savedInstanceState); //TODO: implement loginUser() method
 
+        //invalidateOptionsMenu();//TODO: NOT SURE IF NEEDED
+
+        //TODO: ViewModel not yet exists
+//        [appViewModel]ViewModel.getAllLogsById(loggedInUserID).observe(this, completedchallenges -> {
+//            adapter.submitList(gymlogs);
+//        });
+
+        // a User isn't signed into the application, go to sign in screen
         if (loggedInUserID == -1) {
             //Intent intent = signInPageActivity.loginIntentFactory(getApplicationContext()); //TODO: implement loginIntentFactory method
             //startActivity(intent);
         }
+        //updateSharedPreference(); //TODO: Implement updateSharedPreference()
 
-        //repository = [appRepo].getRepository(getApplication()); //TODO: Repository not yet exists
+        //TODO: implement progress percentage & fractions for Language Progress
+        // 1: get the user's completed challeneges per language
+        // 2: get the total amount of added challenges per language
 
-//        binding.logoutButton.setOnClickListener(new View.OnClickListener() { // UNSURE IF NEEDED
-            @Override
-            public void onClick(View v) {
-                Intent intent= signInPageActivity.intentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
+        //TODO: implement progressBar for Overall Progress
+        int userProgress = repository.getProgressByUserId(loggedInUserID); //TODO: repo not yet exists
+        binding.progressBarMainInterface.setProgress(userProgress);
+
 
         binding.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +77,31 @@ public class MainUserInterface extends AppCompatActivity {
                 Intent intent=Settings_page.intentFactory(getApplicationContext());
             }
         });
+
+
+
+        // code from GymLog to refresh log data on screen.
+        //TODO: can be adjusted to refresh challeneges if needed
+//        binding.logButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Toast.makeText(MainActivity.this, "IT WORKED!", Toast.LENGTH_SHORT).show();
+//                getInformationFromDisplay();
+//                insertGymLogRecord();
+//                //TODO: REMOVE LINE BELOW
+////                updateDisplay();
+//            }
+//        });
+
+        //TODO: Implement logout menu
+        //        binding.logoutButton.setOnClickListener(new View.OnClickListener() { // UNSURE IF NEEDED
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= signInPageActivity.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+
 
         //TODO: to scroll
 //        binding.logDisplayTextViewOR[layoutXML_TEXTVIEW].setMovementMethod(new ScrollingMovementMethod());
