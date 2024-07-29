@@ -34,7 +34,7 @@ public class MainUserInterface extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
+        binding = ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         //[appViewModel]ViewModel = new ViewModelProvider(this).get(GymLogViewModel.class); //TODO: app's ViewModel not yet exists
@@ -62,40 +62,36 @@ public class MainUserInterface extends AppCompatActivity {
         }
         //updateSharedPreference(); //TODO: Implement updateSharedPreference()
 
-        //TODO: implement progress percentage & fractions for Language Progress
-        // 1: get the user's completed challeneges per language
-        // 2: get the total amount of added challenges per language
-        // 3. display challenge stats per language
-        //binding.myChallengesDisplayRecyclerView.addView();
-
-        binding.myChallengesDisplayRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                Intent intent = FtoCActivity.fToCIntentFactory(getApplicationContext(), convertValue());
-                startActivity(intent);
-
-                return false;
-            }
-        });
-    }
 
         //TODO: implement progressBar for Overall Progress
         int userProgress = repository.getProgressByUserId(loggedInUserID); //TODO: repo not yet exists
         binding.progressBarMainInterface.setProgress(userProgress);
 
 
-        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+        //TODO: implement progress percentage & fractions for Language Progress
+        // 1: get the user's completed challeneges per language
+        // 2: get the total amount of added challenges per language
+        // 3. display challenge stats per language
+
+        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=Settings_page.intentFactory(getApplicationContext());
+                Intent intent = ChallengeScreen.ChallengeScreenIntentFactory(getApplicationContext()); //TODO: Implement ChallengeScreenIntentFactory()
+                startActivity(intent);
             }
         });
 
 
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Settings_page.intentFactory(getApplicationContext());
+            }
+        });
+
 
         // code from GymLog to refresh log data on screen.
-        //TODO: can be adjusted to refresh challeneges if needed
+        //TODO: can be adjusted to refresh challenges if needed
 //        binding.logButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -120,12 +116,13 @@ public class MainUserInterface extends AppCompatActivity {
         //TODO: to scroll
 //        binding.logDisplayTextViewOR[layoutXML_TEXTVIEW].setMovementMethod(new ScrollingMovementMethod());
 
+    }
+
     public static Intent MainUserInterfaceIntentFactory(Context context) {
         Intent intent = new Intent(context, MainUserInterface.class);
         return intent;
     }
-    }
-
-
-
 }
+
+
+
