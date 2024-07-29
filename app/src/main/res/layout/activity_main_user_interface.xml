@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/new_challenge_button" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/logDisplayRecyclerView"
+        android:id="@+id/myChallengesDisplayRecyclerView"
         android:layout_width="361dp"
         android:layout_height="400dp"
         android:fillViewport="true"

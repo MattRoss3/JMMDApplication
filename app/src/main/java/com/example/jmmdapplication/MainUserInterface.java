@@ -65,6 +65,20 @@ public class MainUserInterface extends AppCompatActivity {
         //TODO: implement progress percentage & fractions for Language Progress
         // 1: get the user's completed challeneges per language
         // 2: get the total amount of added challenges per language
+        // 3. display challenge stats per language
+        //binding.myChallengesDisplayRecyclerView.addView();
+
+        binding.myChallengesDisplayRecyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                Intent intent = FtoCActivity.fToCIntentFactory(getApplicationContext(), convertValue());
+                startActivity(intent);
+
+                return false;
+            }
+        });
+    }
 
         //TODO: implement progressBar for Overall Progress
         int userProgress = repository.getProgressByUserId(loggedInUserID); //TODO: repo not yet exists
@@ -105,6 +119,13 @@ public class MainUserInterface extends AppCompatActivity {
 
         //TODO: to scroll
 //        binding.logDisplayTextViewOR[layoutXML_TEXTVIEW].setMovementMethod(new ScrollingMovementMethod());
+
+    public static Intent MainUserInterfaceIntentFactory(Context context) {
+        Intent intent = new Intent(context, MainUserInterface.class);
+        return intent;
     }
+    }
+
+
 
 }
