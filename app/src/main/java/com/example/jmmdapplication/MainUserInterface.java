@@ -37,30 +37,30 @@ public class MainUserInterface extends AppCompatActivity {
         binding = ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //[appViewModel]ViewModel = new ViewModelProvider(this).get(GymLogViewModel.class); //TODO: app's ViewModel not yet exists
+        [appViewModel]ViewModel = new ViewModelProvider(this).get(GymLogViewModel.class); //TODO: app's ViewModel not yet exists
 
         //TODO: RecyclerView / viewHolders
-//        RecyclerView recyclerView = binding.logDisplayRecyclerView;
-//        final GymLogAdapterOR[AppAdapter] adapter = new AppAdapter(new AppAdapter.GymLogDiffOR[AppDiff]());
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        RecyclerView recyclerView = binding.logDisplayRecyclerView;
+        final GymLogAdapterOR[AppAdapter] adapter = new AppAdapter(new AppAdapter.GymLogDiffOR[AppDiff]());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //repository = [appRepo].getRepository(getApplication()); //TODO: Repository not yet exists
-        //loginUser(savedInstanceState); //TODO: implement loginUser() method
+        repository = [appRepo].getRepository(getApplication()); //TODO: Repository not yet exists
+        loginUser(savedInstanceState); //TODO: implement loginUser() method
 
         //invalidateOptionsMenu();//TODO: NOT SURE IF NEEDED
 
         //TODO: ViewModel not yet exists
-//        [appViewModel]ViewModel.getAllLogsById(loggedInUserID).observe(this, completedchallenges -> {
-//            adapter.submitList(gymlogs);
-//        });
+        [appViewModel]ViewModel.getAllLogsById(loggedInUserID).observe(this, completedchallenges -> {
+            adapter.submitList(gymlogs);
+        });
 
         // a User isn't signed into the application, go to sign in screen
         if (loggedInUserID == -1) {
-            //Intent intent = signInPageActivity.loginIntentFactory(getApplicationContext()); //TODO: implement loginIntentFactory method
-            //startActivity(intent);
+            Intent intent = signInPageActivity.loginIntentFactory(getApplicationContext()); //TODO: implement loginIntentFactory method
+            startActivity(intent);
         }
-        //updateSharedPreference(); //TODO: Implement updateSharedPreference()
+        updateSharedPreference(); //TODO: Implement updateSharedPreference()
 
 
         //TODO: implement progressBar for Overall Progress
