@@ -14,6 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * This is a
+ *
+ * @authors Matthew Ross, Dakota Fouch
+ * @since 07/20/2024
+ * CST 338 Software Design with Dr. C
+ * wk05: Project 2
+ */
+
 public class MainUserInterface extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.example.jmmdapplication.MAIN_ACTIVITY_USER_ID";
@@ -22,14 +31,14 @@ public class MainUserInterface extends AppCompatActivity {
     private static final int LOGGED_OUT = -1;
 
     private ActivityMainUserInterfaceBinding binding;
-    //private [appRepo] repository; //TODO: Repository not yet exists
+    private [appRepo] repository; //TODO: Repository not yet exists
 
-    //private [appViewModel]ViewModel gymLogViewModel; //TODO: app's ViewModel not yet exists
+    private [appViewModel]ViewModel gymLogViewModel; //TODO: app's ViewModel not yet exists
 
     public static final String TAG = "MAIN_USER_INTERFACE_TAG";
 
     private int loggedInUserID = -1;
-    //private User user; //TODO: User class not yet exists
+    private User user; //TODO: User class not yet exists
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +82,7 @@ public class MainUserInterface extends AppCompatActivity {
         // 2: get the total amount of added challenges per language
         // 3. display challenge stats per language
 
+        //TODO: This method might need to be implemented in onBindViewHolder() in adapter class
         binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
