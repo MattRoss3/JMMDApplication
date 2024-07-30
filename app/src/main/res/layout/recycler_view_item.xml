@@ -10,25 +10,66 @@
       android:layout_width="340dp"
       android:layout_height="100dp"
       android:text="@string/sample_french_challenge"
-
-
+      android:backgroundTint="@color/bluec"
       />
 
   <Button
       android:id="@+id/button2_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
-      android:text="@string/sample_spanish_challenge"/>
+      android:text="@string/sample_spanish_challenge"
+      android:backgroundTint="@color/bluec"/>
 
   <Button
       android:id="@+id/button3_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
-      android:text="@string/Sample_Spanish_2"/>
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
   <Button
       android:id="@+id/button4_mainPage"
       android:layout_width="340dp"
       android:layout_height="100dp"
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
+  <Button
+      android:id="@+id/button5_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/sample_french_challenge"
+      android:backgroundTint="@color/bluec"
+      />
 
-      android:text="@string/Sample_Spanish_2"/>
+  <Button
+      android:id="@+id/button6_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/sample_spanish_challenge"
+      android:backgroundTint="@color/bluec"/>
+
+  <Button
+      android:id="@+id/button7_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
+  <Button
+      android:id="@+id/button8_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
+  <Button
+      android:id="@+id/button9_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
+  <Button
+      android:id="@+id/button10_mainPage"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:text="@string/Sample_Spanish_2"
+      android:backgroundTint="@color/bluec"/>
+
 </LinearLayout>

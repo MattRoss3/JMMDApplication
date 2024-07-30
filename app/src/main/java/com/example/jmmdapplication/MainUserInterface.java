@@ -43,7 +43,8 @@ public class MainUserInterface extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_main_user_interface);
+        binding=ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         [appViewModel]ViewModel = new ViewModelProvider(this).get(GymLogViewModel.class); //TODO: app's ViewModel not yet exists
@@ -91,15 +92,104 @@ public class MainUserInterface extends AppCompatActivity {
             }
         });
 
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= signInPageActivity.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+
 
         binding.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = Settings_page.intentFactory(getApplicationContext());
+                Intent intent=Settings_page.intentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
+        binding.newChallengeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=addnewChallenge.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
+        //TODO: Might not be necessary if able to set OnCLickListener for RecyclerView
+//        binding.button1MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button2MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button3MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button4MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//
+//        binding.button5MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button6MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button7MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button8MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button9MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
+//        binding.button10MainPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= ChallengeScreen.intentFactory(getApplicationContext());
+//                startActivity(intent);
+//            }
+//        });
 
-
+        //CODE IDEAS
         // code from GymLog to refresh log data on screen.
         //TODO: can be adjusted to refresh challenges if needed
 //        binding.logButton.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +218,10 @@ public class MainUserInterface extends AppCompatActivity {
 
     }
 
-    public static Intent MainUserInterfaceIntentFactory(Context context) {
-        Intent intent = new Intent(context, MainUserInterface.class);
-        return intent;
+    static Intent MainUserInterfaceIntentFactory(Context context){
+        return new Intent(context, MainUserInterface.class);
     }
+
 }
 
 
