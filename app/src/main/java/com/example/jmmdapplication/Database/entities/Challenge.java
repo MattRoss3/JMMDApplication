@@ -22,6 +22,7 @@ public class Challenge {
         this.name = name;
         this.description = description;
         this.isAssigned = isAssigned;
+        id = 0;
     }
 
     // Getters and Setters

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 public class User {
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    private int id;
+    private Integer id;
 
     @NonNull
     private String username;
@@ -22,6 +22,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
+        id = 0;
     }
 
     // Getters and Setters
