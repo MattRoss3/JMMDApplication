@@ -12,27 +12,34 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
+
 
 public class ChallengeScreen extends AppCompatActivity {
+
+    private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
+
     private ActivityChallengeScreenBinding binding;
+
+    private int userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge_screen);
-        binding=ActivityChallengeScreenBinding.inflate(getLayoutInflater());
+
+        binding = ActivityChallengeScreenBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
+        userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
 
-        binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= MainUserInterface.intentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
 
     }
-    static Intent intentFactory(Context context){
-        return new Intent(context, ChallengeScreen.class);
+
+    public static Intent challengeIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, ChallengeScreen.class);
+        intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
+        return intent;
     }
+
+
+
 }
