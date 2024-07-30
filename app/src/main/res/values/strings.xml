@@ -30,4 +30,6 @@
     <string name="account_deletion_and_creation">Account Deletion</string>
     <string name="delete_account">Delete Account</string>
     <string name="settingimage">SettingImage</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_username">Change Username</string>
 </resources>

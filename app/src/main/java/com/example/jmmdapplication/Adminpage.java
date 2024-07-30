@@ -15,6 +15,7 @@ public class Adminpage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_adminpage);
         binding=ActivityAdminpageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
