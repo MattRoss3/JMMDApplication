@@ -4,7 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.jmmdapplication.Database.AppDatabase;
+import com.example.jmmdapplication.Database.DAO.QuestionDAO;
 import com.example.jmmdapplication.Database.DAO.UserDAO;
+import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.entities.User;
 
 import com.example.jmmdapplication.Database.DAO.ChallengeDAO;
@@ -14,6 +16,7 @@ import com.example.jmmdapplication.Database.DAO.ProgressDAO;
 import com.example.jmmdapplication.Database.entities.Progress;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -25,6 +28,7 @@ public class DatabaseRepository {
     private final UserDAO userDAO;
     private final ChallengeDAO challengeDAO;
     private final ProgressDAO progressDAO;
+    private final QuestionDAO questionDAO;
     private final ExecutorService executorService;
     private static final String TAG = "MainActivity";
     private static DatabaseRepository repository;
@@ -34,6 +38,7 @@ public class DatabaseRepository {
         userDAO = db.userDAO();
         challengeDAO = db.challengeDAO();
         progressDAO = db.progressDAO();
+        questionDAO = db.questionDAO();
         executorService = AppDatabase.databaseWriteExecutor;
 
     }
@@ -165,12 +170,17 @@ public class DatabaseRepository {
     }
 
     public ArrayList<Progress> getProgressByUserId(int userId) {
-        Future<List<Progress>> future = executorService.submit(() -> progressDAO.getProgressByUserId(userId));
+        Future<List<Progress>> future = executorService.submit(new Callable<List<Progress>>() {
+            @Override
+            public List<Progress> call() throws Exception {
+                return progressDAO.getProgressByUserId(userId);
+            }
+        });
 
         try {
-            List<Progress> progressList = future.get();
+            ArrayList<Progress> progressList = (ArrayList<Progress>) future.get();
             Log.i(TAG, "Fetched progress for userId: " + userId);
-            return new ArrayList<>(progressList);
+            return progressList;
         } catch (InterruptedException | ExecutionException e) {
             Log.e(TAG, "Error getting progress by userId", e);
         }
@@ -190,5 +200,45 @@ public class DatabaseRepository {
             Log.i(TAG, "Deleted progress for userId: " + progress.getUserId());
         });
     }
+
+    public void insertQuestion(Question question) {
+        executorService.execute(() -> {
+            questionDAO.insertQuestion(question);
+            Log.i(TAG, "Inserted question: " + question.getQuestionText());
+        });
+    }
+
+    public ArrayList<Question> getQuestionsByChallengeId(int challengeId) {
+        Future<List<Question>> future = executorService.submit(new Callable<List<Question>>() {
+            @Override
+            public List<Question> call() throws Exception {
+                return questionDAO.getQuestionsByChallengeId(challengeId);
+            }
+        });
+
+        try {
+            ArrayList<Question> questions = (ArrayList<Question>) future.get();
+            Log.i(TAG, "Fetched questions for challengeId: " + challengeId);
+            return questions;
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error getting questions by challengeId", e);
+        }
+        return new ArrayList<>();
+    }
+
+    public void updateQuestion(Question question) {
+        executorService.execute(() -> {
+            questionDAO.updateQuestion(question);
+            Log.i(TAG, "Updated question: " + question.getQuestionText());
+        });
+    }
+
+    public void deleteQuestion(Question question) {
+        executorService.execute(() -> {
+            questionDAO.deleteQuestion(question);
+            Log.i(TAG, "Deleted question: " + question.getQuestionText());
+        });
+    }
+
 }
 

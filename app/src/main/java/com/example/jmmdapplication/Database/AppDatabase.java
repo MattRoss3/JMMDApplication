@@ -11,9 +11,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.jmmdapplication.Database.DAO.ChallengeDAO;
 import com.example.jmmdapplication.Database.DAO.ProgressDAO;
+import com.example.jmmdapplication.Database.DAO.QuestionDAO;
 import com.example.jmmdapplication.Database.DAO.UserDAO;
 import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
+import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.typeConverters.LocalDataTypeConverter;
 
@@ -21,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters({LocalDataTypeConverter.class})
-@Database(entities = {User.class, Challenge.class, Progress.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Challenge.class, Progress.class, Question.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -47,6 +49,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDAO userDAO();
     public abstract ChallengeDAO challengeDAO();
     public abstract ProgressDAO progressDAO();
+    public abstract QuestionDAO questionDAO();
 
     private static final RoomDatabase.Callback addDefaultValues =
             new RoomDatabase.Callback() {
