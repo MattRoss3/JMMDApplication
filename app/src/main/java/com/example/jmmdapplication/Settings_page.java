@@ -26,8 +26,8 @@ public class Settings_page extends AppCompatActivity {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= MainUserInterface.intentFactory(getApplicationContext());
-                startActivity(intent);
+//                Intent intent= MainUserInterface.intentFactory(getApplicationContext());
+//                startActivity(intent);
             }
         });
     }

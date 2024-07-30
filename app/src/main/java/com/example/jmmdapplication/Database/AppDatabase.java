@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters({LocalDataTypeConverter.class})
-@Database(entities = {User.class, Challenge.class, Progress.class, Question.class, Answer.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Challenge.class, Progress.class, Question.class, Answer.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;

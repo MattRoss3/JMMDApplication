@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         loginUser();
 
         if (loggedInUser == -1) {
-            Intent intent = signInPageActivity.loginIntentFactory(getApplicationContext());
+            Intent intent = SignInPageActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
 

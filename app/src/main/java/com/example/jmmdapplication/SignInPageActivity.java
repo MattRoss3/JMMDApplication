@@ -10,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
 
 
-import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
-
-
-    private ActivitySignInPageBinding binding;
+public class SignInPageActivity extends AppCompatActivity {
+private ActivitySignInPageBinding binding;
     private static final int USER_ID = 0; // Use 0 as the hardcoded user ID
 
     @Override
@@ -34,5 +32,7 @@ import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
     }
 
     static Intent loginIntentFactory(Context context) {
+        return new Intent(context, SignInPageActivity.class);
+    }
 
 }
