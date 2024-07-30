@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.jmmdapplication.Database.DAO.ChallengeDAO;
@@ -13,11 +15,13 @@ import com.example.jmmdapplication.Database.DAO.UserDAO;
 import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.User;
+import com.example.jmmdapplication.Database.typeConverters.LocalDataTypeConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Challenge.class, Progress.class}, version = 1, exportSchema = false)
+@TypeConverters({LocalDataTypeConverter.class})
+@Database(entities = {User.class, Challenge.class, Progress.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;

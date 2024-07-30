@@ -7,8 +7,7 @@ import androidx.annotation.NonNull;
 @Entity(tableName = "challenges")
 public class Challenge {
     @PrimaryKey(autoGenerate = true)
-    @NonNull
-    private Integer id;
+    private int id;
 
     @NonNull
     private String name;
@@ -22,7 +21,6 @@ public class Challenge {
         this.name = name;
         this.description = description;
         this.isAssigned = isAssigned;
-        id = 0;
     }
 
     // Getters and Setters
