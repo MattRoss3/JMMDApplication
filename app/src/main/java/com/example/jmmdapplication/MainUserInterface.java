@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * This is a
+ * This application will act as a quick and easy language learning app.
  *
- * @authors Matthew Ross, Dakota Fouch
+ * @authors Jerrick Wallace, Mohamed Othman, Matthew Ross, Dakota Fouch
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C
  * wk05: Project 2
