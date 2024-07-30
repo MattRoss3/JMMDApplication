@@ -4,8 +4,10 @@ import android.app.Application;
 import android.util.Log;
 
 import com.example.jmmdapplication.Database.AppDatabase;
+import com.example.jmmdapplication.Database.DAO.AnswerDAO;
 import com.example.jmmdapplication.Database.DAO.QuestionDAO;
 import com.example.jmmdapplication.Database.DAO.UserDAO;
+import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.entities.User;
 
@@ -29,6 +31,7 @@ public class DatabaseRepository {
     private final ChallengeDAO challengeDAO;
     private final ProgressDAO progressDAO;
     private final QuestionDAO questionDAO;
+    private final AnswerDAO answerDAO;
     private final ExecutorService executorService;
     private static final String TAG = "MainActivity";
     private static DatabaseRepository repository;
@@ -39,6 +42,7 @@ public class DatabaseRepository {
         challengeDAO = db.challengeDAO();
         progressDAO = db.progressDAO();
         questionDAO = db.questionDAO();
+        answerDAO = db.answerDAO();
         executorService = AppDatabase.databaseWriteExecutor;
 
     }
@@ -239,6 +243,46 @@ public class DatabaseRepository {
             Log.i(TAG, "Deleted question: " + question.getQuestionText());
         });
     }
+
+    public void insertAnswer(Answer answer) {
+        executorService.execute(() -> {
+            answerDAO.insertAnswer(answer);
+            Log.i(TAG, "Inserted answer for questionId: " + answer.getQuestionId());
+        });
+    }
+
+    public ArrayList<Answer> getAnswersByQuestionId(int questionId) {
+        Future<List<Answer>> future = executorService.submit(new Callable<List<Answer>>() {
+            @Override
+            public List<Answer> call() throws Exception {
+                return answerDAO.getAnswersByQuestionId(questionId);
+            }
+        });
+
+        try {
+            ArrayList<Answer> answers = (ArrayList<Answer>) future.get();
+            Log.i(TAG, "Fetched answers for questionId: " + questionId);
+            return answers;
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error getting answers by questionId", e);
+        }
+        return new ArrayList<>();
+    }
+
+    public void updateAnswer(Answer answer) {
+        executorService.execute(() -> {
+            answerDAO.updateAnswer(answer);
+            Log.i(TAG, "Updated answer for questionId: " + answer.getQuestionId());
+        });
+    }
+
+    public void deleteAnswer(Answer answer) {
+        executorService.execute(() -> {
+            answerDAO.deleteAnswer(answer);
+            Log.i(TAG, "Deleted answer for questionId: " + answer.getQuestionId());
+        });
+    }
+
 
 }
 
