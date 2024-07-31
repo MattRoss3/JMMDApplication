@@ -13,13 +13,21 @@
         android:theme="@style/Theme.JMMDApplication"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Adminpage"
             android:exported="false" />
         <activity
             android:name=".ChallengeScreen"
             android:exported="false" />
         <activity
-            android:name=".addnewChallenge"
+            android:name=".AddNewChallenge"
             android:exported="false" />
         <activity
             android:name=".Settings_page"
@@ -30,13 +38,11 @@
         <activity
             android:name=".SignUpPageActivity"
             android:exported="false" />
-
         <activity
-            android:name=".signInPageActivity"
-            android:exported="true">
+            android:name=".SignInPageActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
