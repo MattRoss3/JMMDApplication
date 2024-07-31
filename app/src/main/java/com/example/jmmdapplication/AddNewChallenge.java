@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.jmmdapplication.databinding.ActivityAddnewChallengeBinding;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 
-public class AddNewChallenge extends AppCompatActivity {
+public class addNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,6 @@ public class AddNewChallenge extends AppCompatActivity {
         });
     }
     static Intent intentFactory(Context context){
-        return new Intent(context, AddNewChallenge.class);
+        return new Intent(context, addNewChallenge.class);
     }
 }

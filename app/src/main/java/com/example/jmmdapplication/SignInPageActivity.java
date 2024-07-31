@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,12 +24,26 @@ private ActivitySignInPageBinding binding;
         binding.signInButtonSignInPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = ChallengeScreen.challengeIntentFactory(getApplicationContext(), USER_ID);
-                startActivity(intent);
+                handleSignIn();
             }
         });
+    }
 
+    private void handleSignIn() {
+        String username = binding.userNameSignInScreenEditText.getText().toString();
+        String password = binding.PasswordSignInEditText.getText().toString();
 
+        if(validateCredentials(username, password)) {
+            Intent intent = ChallengeScreen.challengeIntentFactory(getApplicationContext(), USER_ID);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean validateCredentials(String username, String password) {
+        //TODO: Replace with the actual validation logic
+        return "user".equals(username) && "password".equals(password);
     }
 
     static Intent loginIntentFactory(Context context) {
