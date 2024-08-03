@@ -34,7 +34,7 @@ private ActivitySignInPageBinding binding;
         String password = binding.PasswordSignInEditText.getText().toString();
 
         if(validateCredentials(username, password)) {
-            Intent intent = ChallengeScreen.challengeIntentFactory(getApplicationContext(), USER_ID);
+            Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext(), USER_ID);
             startActivity(intent);
         } else {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();

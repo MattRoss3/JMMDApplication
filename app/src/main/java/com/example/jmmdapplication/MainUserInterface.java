@@ -219,7 +219,7 @@ public class MainUserInterface extends AppCompatActivity {
 
     }
 
-    static Intent MainUserInterfaceIntentFactory(Context context){
+    static Intent MainUserInterfaceIntentFactory(Context context, int userId){
         return new Intent(context, MainUserInterface.class);
     }
 
