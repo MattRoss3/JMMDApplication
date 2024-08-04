@@ -53,7 +53,7 @@ public class MainUserInterface extends AppCompatActivity {
         binding.newChallengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+                Intent intent = new Intent(MainUserInterface.this, AddNewChallenge.class);
                 startActivity(intent);
             }
         });

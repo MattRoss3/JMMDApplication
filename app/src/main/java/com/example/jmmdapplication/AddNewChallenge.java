@@ -8,7 +8,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jmmdapplication.databinding.ActivityAddnewChallengeBinding;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 
 public class AddNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
