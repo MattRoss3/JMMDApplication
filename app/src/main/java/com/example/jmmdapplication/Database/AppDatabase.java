@@ -1,6 +1,8 @@
 package com.example.jmmdapplication.Database;
 
 import android.content.Context;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -61,7 +63,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     super.onCreate(db);
                     databaseWriteExecutor.execute(() -> {
                         UserDAO userDao = INSTANCE.userDAO();
-                        userDao.insertUser(new User("defaultUser1", "defaultPassword1", false));
+                        Log.d("AppDatabase", "Default values being inserted"); // Add logging
+                        userDao.insertUser(new User("admin", "password", false));
                         userDao.insertUser(new User("defaultUser2", "defaultPassword2", false));
                     });
                 }

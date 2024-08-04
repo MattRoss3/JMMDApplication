@@ -54,6 +54,24 @@ public class DatabaseRepository {
         });
     }
 
+    public User getUserById(int id) {
+        Future<User> future = executorService.submit(new Callable<User>() {
+            @Override
+            public User call() throws Exception {
+                return userDAO.getUserById(id);
+            }
+        });
+
+        try {
+            User user = future.get();
+            Log.i(TAG, "Fetched user by id: " + id);
+            return user;
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error getting user by id", e);
+        }
+        return null;
+    }
+
     public static DatabaseRepository getRepository(Application application) {
         if (repository != null) {
             return repository;
@@ -122,6 +140,18 @@ public class DatabaseRepository {
             return users;
         } catch (InterruptedException | ExecutionException e) {
             Log.e(TAG, "Error getting all users", e);
+        }
+        return null;
+    }
+
+    public User getUserByUsernameAndPassword(String username, String password) {
+        Future<User> future = executorService.submit(() -> userDAO.getUserByUsernameAndPassword(username, password));
+        try {
+            User user = future.get();
+            Log.i(TAG, "Fetched user with username: " + username);
+            return user;
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error getting user by username and password", e);
         }
         return null;
     }

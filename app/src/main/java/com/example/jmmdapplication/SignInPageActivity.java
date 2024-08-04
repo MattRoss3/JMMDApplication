@@ -1,19 +1,21 @@
 package com.example.jmmdapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.jmmdapplication.Database.AppDatabase;
+import com.example.jmmdapplication.Database.entities.User;
+import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
-
+import com.example.jmmdapplication.util.SessionManager;
 
 public class SignInPageActivity extends AppCompatActivity {
-private ActivitySignInPageBinding binding;
-    private static final int USER_ID = 0; // Use 0 as the hardcoded user ID
+    private ActivitySignInPageBinding binding;
+    DatabaseRepository repository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,33 +23,40 @@ private ActivitySignInPageBinding binding;
         binding = ActivitySignInPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.signInButtonSignInPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleSignIn();
-            }
+        repository = DatabaseRepository.getRepository(getApplication());
+
+        binding.signInButtonSignInPage.setOnClickListener(view -> signInUser());
+
+        binding.signUpButtonSignInPage.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInPageActivity.this, SignUpPageActivity.class);
+            startActivity(intent);
         });
     }
 
-    private void handleSignIn() {
-        String username = binding.userNameSignInScreenEditText.getText().toString();
-        String password = binding.PasswordSignInEditText.getText().toString();
+    /**
+     * This method will pull the username and password from the sign-in screen and check if the user exists in the database.
+     * If the user exists, it will save the user session and redirect to the main user interface.
+     * If the user does not exist, it will show an error message.
+     */
+    private void signInUser() {
+        String username = binding.userNameSignInScreenEditText.getText() != null ? binding.userNameSignInScreenEditText.getText().toString().trim() : "";
+        String password = binding.passwordSignInEditText.getText() != null ? binding.passwordSignInEditText.getText().toString().trim() : "";
 
-        if(validateCredentials(username, password)) {
-            Intent intent = ChallengeScreen.challengeIntentFactory(getApplicationContext(), USER_ID);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-        }
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            User user = repository.getUserByUsernameAndPassword(username, password);
+
+            runOnUiThread(() -> {
+                if (user != null) {
+                    SessionManager.saveUserSession(SignInPageActivity.this, user.getId());
+                    Intent intent = new Intent(SignInPageActivity.this, MainUserInterface.class);
+                    startActivity(intent);
+                    finish(); // Close the sign-in activity
+                } else {
+                    // Login failed, show error message
+                    Toast.makeText(SignInPageActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
     }
-
-    private boolean validateCredentials(String username, String password) {
-        //TODO: Replace with the actual validation logic
-        return "user".equals(username) && "password".equals(password);
-    }
-
-    static Intent loginIntentFactory(Context context) {
-        return new Intent(context, SignInPageActivity.class);
-    }
-
 }
