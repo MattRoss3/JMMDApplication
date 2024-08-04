@@ -18,10 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
 import java.util.List;
