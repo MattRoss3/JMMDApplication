@@ -27,7 +27,6 @@ public class ChallengeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityChallengeScreenBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
         userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
 

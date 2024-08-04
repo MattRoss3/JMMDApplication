@@ -12,6 +12,7 @@ import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 
 public class addNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
