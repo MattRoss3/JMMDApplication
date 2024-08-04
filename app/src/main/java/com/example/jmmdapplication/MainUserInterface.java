@@ -68,6 +68,14 @@ public class MainUserInterface extends AppCompatActivity {
             }
         });
 
+        binding.button1MainPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+                startActivity(intent);
+            }
+        });
+
 //---------------------------------Example of how to get the user with details---------------------------------
         // this is an example of how to get the user with details including challenges, questions, answers, and progress from the UserWithDetails object
 

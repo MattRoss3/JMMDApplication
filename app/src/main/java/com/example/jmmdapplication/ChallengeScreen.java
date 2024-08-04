@@ -20,6 +20,7 @@ import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +28,8 @@ public class ChallengeScreen extends AppCompatActivity {
 
     private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_ID";
+    private static final String CHALLENGE_ACTIVITY_CHALLENGE_NAME = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_NAME";
+    private static final String CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION";
 
 
     private ActivityChallengeScreenBinding binding;
@@ -38,6 +41,8 @@ public class ChallengeScreen extends AppCompatActivity {
 
     private int userId;
     private int challengeId;
+    private String challengeName;
+    private String challengeDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class ChallengeScreen extends AppCompatActivity {
         setContentView(binding.getRoot());
         userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
         challengeId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, -1);
+        challengeName = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME);
+        challengeDescription = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION);
 
         //challengeScreenViewModel = new ViewModelProvider(this).get([app]ViewModel.class); // TODO: ViewModel not yet exists
 
@@ -58,7 +65,6 @@ public class ChallengeScreen extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         repository = DatabaseRepository.getRepository(getApplication());
-        //loginUser(savedInstanceState);
 
         //TODO: Display challenge title and description
         //1: find the challenge object
@@ -74,14 +80,18 @@ public class ChallengeScreen extends AppCompatActivity {
 ////
 ////            adapter.submitList(userChallenges);
 ////        });
-        List<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
+
+        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
 
         for (Question question : challengeQuestions) {
             //Display question, answers in multiple choice format with radio buttons, & submit button for each question in the challenge
-            List<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getId()); // get list of possible answers
+            ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
+
+            binding.challengeScreenHeader.setText(challengeName);
+            binding.challengeScreenDescription.setText(challengeDescription);
 
             //Label the question and answers
-            binding.challengeScreenHeader.setText(question.getQuestionText());
+            binding.questionText.setText(question.getQuestionText());
             binding.radioButton1.setText(questionAnswers.get(0).getAnswerText());
             binding.radioButton2.setText(questionAnswers.get(1).getAnswerText());
             binding.radioButton3.setText(questionAnswers.get(2).getAnswerText());
