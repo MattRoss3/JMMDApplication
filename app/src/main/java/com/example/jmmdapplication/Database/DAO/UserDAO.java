@@ -12,6 +12,10 @@ public interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User user);
 
+    //get user by id
+    @Query("SELECT * FROM users WHERE id = :id")
+    User getUserById(int id);
+
     @Query("SELECT * FROM users WHERE username = :username")
     User getUserByUsername(String username);
 
@@ -23,6 +27,10 @@ public interface UserDAO {
 
     @Query("SELECT * FROM users")
     List<User> getAllUsers();
+
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
+    User getUserByUsernameAndPassword(String username, String password);
+
 
 
 }
