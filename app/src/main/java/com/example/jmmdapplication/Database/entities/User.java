@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 @Entity(tableName = "users")
 public class User {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int userId;
 
     @NonNull
     private String username;
@@ -23,9 +23,8 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
     @NonNull
     public String getUsername() { return username; }

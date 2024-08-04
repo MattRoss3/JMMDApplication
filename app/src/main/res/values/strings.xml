@@ -32,4 +32,5 @@
     <string name="settingimage">SettingImage</string>
     <string name="change_password">Change Password</string>
     <string name="change_username">Change Username</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -7,11 +7,14 @@ import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
 @Entity(tableName = "answers",
-        foreignKeys = @ForeignKey(entity = Question.class, parentColumns = "id", childColumns = "questionId", onDelete = ForeignKey.CASCADE),
+        foreignKeys = @ForeignKey(entity = Question.class,
+                parentColumns = "questionId",
+                childColumns = "questionId",
+                onDelete = ForeignKey.CASCADE),
         indices = {@Index(value = "questionId")})
 public class Answer {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int answerId;
 
     private int questionId;
 
@@ -23,9 +26,8 @@ public class Answer {
         this.answerText = answerText;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getAnswerId() { return answerId; }
+    public void setAnswerId(int answerId) { this.answerId = answerId; }
 
     public int getQuestionId() { return questionId; }
     public void setQuestionId(int questionId) { this.questionId = questionId; }

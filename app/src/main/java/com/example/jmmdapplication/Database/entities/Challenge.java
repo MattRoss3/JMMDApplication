@@ -1,13 +1,22 @@
 package com.example.jmmdapplication.Database.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "challenges")
+@Entity(tableName = "challenges",
+        foreignKeys = @ForeignKey(entity = User.class,
+                parentColumns = "userId",
+                childColumns = "userId",
+                onDelete = ForeignKey.CASCADE),
+        indices = {@Index(value = "userId")})
 public class Challenge {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int challengeId;
+
+    private int userId;
 
     @NonNull
     private String name;
@@ -23,9 +32,8 @@ public class Challenge {
         this.isAssigned = isAssigned;
     }
 
-    // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getChallengeId() { return challengeId; }
+    public void setChallengeId(int challengeId) { this.challengeId = challengeId; }
 
     @NonNull
     public String getName() { return name; }
@@ -37,4 +45,12 @@ public class Challenge {
 
     public boolean isAssigned() { return isAssigned; }
     public void setAssigned(boolean assigned) { isAssigned = assigned; }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }
