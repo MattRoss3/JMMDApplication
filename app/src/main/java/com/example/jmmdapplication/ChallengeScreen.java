@@ -14,9 +14,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Challenge;
+import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
+
+import java.util.List;
 
 
 public class ChallengeScreen extends AppCompatActivity {
@@ -62,14 +66,29 @@ public class ChallengeScreen extends AppCompatActivity {
         //2: set the text for the header with the title and description
         //binding.challengeScreenHeader.setText();
 
-        // TODO: Display the 4 multiple choice questions
+        // TODO: Display the multiple choice question
         // TODO: ViewModel not yet exists
-//        ViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> { // TODO: pass a list of 4 questions to the adapter to display the 4 questions of the challenge
+//        ViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> { // TODO: pass a list of 4 answers to the adapter to display the 4 questions of the challenge
 //            adapter.submitList(questions);
 //        }
 ////
 ////            adapter.submitList(userChallenges);
 ////        });
+        List<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
+
+        for (Question question : challengeQuestions) {
+            //Display question, answers in multiple choice format with radio buttons, & submit button for each question in the challenge
+            List<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getId()); // get list of possible answers
+
+            //Label the question and answers
+            binding.challengeScreenHeader.setText(question.getQuestionText());
+            binding.radioButton1.setText(questionAnswers.get(0).getAnswerText());
+            binding.radioButton2.setText(questionAnswers.get(1).getAnswerText());
+            binding.radioButton3.setText(questionAnswers.get(2).getAnswerText());
+            binding.radioButton4.setText(questionAnswers.get(3).getAnswerText());
+
+            //TODO: Create submit button & determine if selected answer is correct, update datatbase accordingly
+        }
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
