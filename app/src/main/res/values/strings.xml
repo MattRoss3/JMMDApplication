@@ -33,4 +33,6 @@
     <string name="change_password">Change Password</string>
     <string name="change_username">Change Username</string>
     <string name="cancel">Cancel</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="welcome_message">Welcome %1$s</string>
 </resources>

@@ -64,44 +64,36 @@ public class MainUserInterface extends AppCompatActivity {
             }
         });
 
-//---------------------------------Example of how to get the user with details---------------------------------
-        // this is an example of how to get the user with details including challenges, questions, answers, and progress from the UserWithDetails object
-
-        // first initialize the repository
         repository = new DatabaseRepository(getApplication());
 
-        // get the user id from the session
         int userId = SessionManager.getUserSession(this);
 
-        // get the user with details
         UserWithDetails userWithDetails = repository.getUserWithDetails(userId);
 
-        // if the user is not null, then we can extract the user, challenges, questions, answers, and progress from userWithDetails
         if (userWithDetails != null) {
-
-            // get the user object
             User user = userWithDetails.user;
 
-            // get the challenges with details
-            List<ChallengeWithDetails> challenges = userWithDetails.challengeWithDetails;
+            String welcomeMessage = getString(R.string.welcome_message, user.getUsername());
+            binding.mainUserHeader.setText(welcomeMessage);
 
-            // loop through the challenges and get the questions and answers
-            for (ChallengeWithDetails challengeDetails : challenges) {
-                Challenge challenge = challengeDetails.challenge;
-                List<QuestionWithAnswer> questionWithAnswers = challengeDetails.questionWithAnswers;
-
-                for (QuestionWithAnswer questionWithAnswer : questionWithAnswers) {
-                    Question question = questionWithAnswer.question;
-                    Answer answer = questionWithAnswer.answer;
-
-                    // Process the data as needed
-                    // For example:
-                    Log.d("ExampleActivity", "Question: " + question.getQuestionText());
-                    if (answer != null) {
-                        Log.d("ExampleActivity", "Answer: " + answer.getAnswerText());
-                    }
-                }
-            }
+//            List<ChallengeWithDetails> challenges = userWithDetails.challengeWithDetails;
+//
+//            for (ChallengeWithDetails challengeDetails : challenges) {
+//                Challenge challenge = challengeDetails.challenge;
+//                List<QuestionWithAnswer> questionWithAnswers = challengeDetails.questionWithAnswers;
+//
+//                for (QuestionWithAnswer questionWithAnswer : questionWithAnswers) {
+//                    Question question = questionWithAnswer.question;
+//                    Answer answer = questionWithAnswer.answer;
+//
+//                    // Process the data as needed
+//                    // For example:
+//                    Log.d("ExampleActivity", "Question: " + question.getQuestionText());
+//                    if (answer != null) {
+//                        Log.d("ExampleActivity", "Answer: " + answer.getAnswerText());
+//                    }
+//                }
+//            }
 
             // get the progress Object
             List<Progress> progresses = userWithDetails.progress;
