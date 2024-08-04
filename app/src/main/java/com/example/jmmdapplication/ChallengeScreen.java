@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Challenge;
+import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +47,7 @@ public class ChallengeScreen extends AppCompatActivity {
     private int challengeId;
     private String challengeName;
     private String challengeDescription;
+    private RadioButton selectedAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,14 @@ public class ChallengeScreen extends AppCompatActivity {
 
         repository = DatabaseRepository.getRepository(getApplication());
 
+        binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext(), userId);
+                startActivity(intent);
+            }
+        });
+
         //TODO: Display challenge title and description
         //1: find the challenge object
 
@@ -82,31 +95,58 @@ public class ChallengeScreen extends AppCompatActivity {
 ////        });
 
         ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
-
         for (Question question : challengeQuestions) {
             //Display question, answers in multiple choice format with radio buttons, & submit button for each question in the challenge
             ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
-
             binding.challengeScreenHeader.setText(challengeName);
             binding.challengeScreenDescription.setText(challengeDescription);
 
             //Label the question and answers
+            //TODO:randomize
             binding.questionText.setText(question.getQuestionText());
             binding.radioButton1.setText(questionAnswers.get(0).getAnswerText());
             binding.radioButton2.setText(questionAnswers.get(1).getAnswerText());
             binding.radioButton3.setText(questionAnswers.get(2).getAnswerText());
             binding.radioButton4.setText(questionAnswers.get(3).getAnswerText());
 
-            //TODO: Create submit button & determine if selected answer is correct, update datatbase accordingly
+            //TODO: Create submit button & determine if selected answer is correct, update database accordingly
+            binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonID) {
+                    selectedAnswer = (RadioButton) radioGroup.findViewById(checkedButtonID);
+                }
+            });
+
+            binding.submitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
+                        // update progress for this challenge
+                        // record the date this challenge was completed
+                        // increment level
+
+                        List<Progress> allProgress = repository.getProgressByUserId(userId);
+                        for (Progress currProgress : allProgress) {
+                            if (currProgress.getChallengeId() == challengeId) {
+                                Progress progress = currProgress;
+                                progress.setLevel(progress.getLevel() + 1);
+
+                                if (question.getQuestionId() == challengeQuestions.get(challengeQuestions.size() - 1).getQuestionId()) { // determine if this is the final question in the challenge
+                                    progress.setStatus("isComplete");
+                                    progress.setCompletionDate(LocalDateTime.now());
+                                }
+                                repository.updateProgress(progress);
+                            }
+                        }
+
+                    } else { // the user chose the incorrect answer
+
+                    }
+                }
+            });
         }
 
-        binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext(), userId);
-                startActivity(intent);
-            }
-        });
+
 
         //binding.radioButton1.setText(getString(repository.));
 
