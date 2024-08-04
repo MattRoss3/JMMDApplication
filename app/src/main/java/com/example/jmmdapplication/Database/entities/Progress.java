@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 @Entity(tableName = "progress",
         foreignKeys = {
-                @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "userId", onDelete = ForeignKey.CASCADE),
-                @ForeignKey(entity = Challenge.class, parentColumns = "id", childColumns = "challengeId", onDelete = ForeignKey.CASCADE)
+                @ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Challenge.class, parentColumns = "challengeId", childColumns = "challengeId", onDelete = ForeignKey.CASCADE)
         },
         indices = {@Index(value = "userId"), @Index(value = "challengeId")})
 public class Progress {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int progressId;
 
     private int userId;
 
@@ -38,8 +38,8 @@ public class Progress {
     }
 
     // Getters and Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getProgressId() { return progressId; }
+    public void setProgressId(int progressId) { this.progressId = progressId; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
