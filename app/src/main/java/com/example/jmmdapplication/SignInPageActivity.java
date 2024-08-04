@@ -47,7 +47,7 @@ public class SignInPageActivity extends AppCompatActivity {
 
             runOnUiThread(() -> {
                 if (user != null) {
-                    SessionManager.saveUserSession(SignInPageActivity.this, user.getId());
+                    SessionManager.saveUserSession(SignInPageActivity.this, user.getUserId());
                     Intent intent = new Intent(SignInPageActivity.this, MainUserInterface.class);
                     startActivity(intent);
                     finish(); // Close the sign-in activity

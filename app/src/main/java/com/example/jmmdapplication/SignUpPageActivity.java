@@ -59,7 +59,7 @@ public class SignUpPageActivity extends AppCompatActivity {
                 // Create new user
                 User newUser = new User(username, password, false);
                 repository.insertUser(newUser);
-                SessionManager.saveUserSession(SignUpPageActivity.this, newUser.getId());
+                SessionManager.saveUserSession(SignUpPageActivity.this, newUser.getUserId());
 
                 runOnUiThread(() -> {
                     Toast.makeText(SignUpPageActivity.this, "Account created successfully. Please log in.", Toast.LENGTH_SHORT).show();

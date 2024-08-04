@@ -7,6 +7,7 @@ import com.example.jmmdapplication.Database.AppDatabase;
 import com.example.jmmdapplication.Database.DAO.AnswerDAO;
 import com.example.jmmdapplication.Database.DAO.QuestionDAO;
 import com.example.jmmdapplication.Database.DAO.UserDAO;
+import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.entities.User;
@@ -18,7 +19,6 @@ import com.example.jmmdapplication.Database.DAO.ProgressDAO;
 import com.example.jmmdapplication.Database.entities.Progress;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -44,8 +44,8 @@ public class DatabaseRepository {
         questionDAO = db.questionDAO();
         answerDAO = db.answerDAO();
         executorService = AppDatabase.databaseWriteExecutor;
-
     }
+
 
     public void insertUser(User user) {
         executorService.execute(() -> {
@@ -54,22 +54,19 @@ public class DatabaseRepository {
         });
     }
 
-    public User getUserById(int id) {
-        Future<User> future = executorService.submit(new Callable<User>() {
+    public UserWithDetails getUserWithDetails(int userId) {
+        Future<UserWithDetails> future = executorService.submit(new Callable<UserWithDetails>() {
             @Override
-            public User call() throws Exception {
-                return userDAO.getUserById(id);
+            public UserWithDetails call() throws Exception {
+                return userDAO.getUserWithDetails(userId);
             }
         });
-
         try {
-            User user = future.get();
-            Log.i(TAG, "Fetched user by id: " + id);
-            return user;
+            return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting user by id", e);
+            Log.e(TAG, "Error fetching user with details", e);
+            return null;
         }
-        return null;
     }
 
     public static DatabaseRepository getRepository(Application application) {
