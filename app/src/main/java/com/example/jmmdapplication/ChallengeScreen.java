@@ -74,7 +74,7 @@ public class ChallengeScreen extends AppCompatActivity {
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext(), userId);
+                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
@@ -131,10 +131,11 @@ public class ChallengeScreen extends AppCompatActivity {
                                 Progress progress = currProgress;
                                 progress.setLevel(progress.getLevel() + 1);
 
-                                if (question.getQuestionId() == challengeQuestions.get(challengeQuestions.size() - 1).getQuestionId()) { // determine if this is the final question in the challenge
+                                if (progress.getLevel() == challengeQuestions.size()) {
                                     progress.setStatus("isComplete");
                                     progress.setCompletionDate(LocalDateTime.now());
                                 }
+
                                 repository.updateProgress(progress);
                             }
                         }
@@ -153,13 +154,12 @@ public class ChallengeScreen extends AppCompatActivity {
 
     }
 
-    public static Intent challengeIntentFactory(Context context, int userId, int challengeId) {
+    public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreen.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, challengeId);
+        intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME, challengeName);
+        intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION, challengeDescription);
         return intent;
     }
-
-
-
 }
