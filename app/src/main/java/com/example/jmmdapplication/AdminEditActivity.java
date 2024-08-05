@@ -8,11 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityAdminEditBinding;
 import com.example.jmmdapplication.util.SessionManager;
+
+import java.util.List;
 
 public class AdminEditActivity extends AppCompatActivity {
 
@@ -33,12 +36,17 @@ public class AdminEditActivity extends AppCompatActivity {
 
         repository = DatabaseRepository.getRepository(getApplication());
 
-        // get the user id from the session manager
-        int userId = SessionManager.getUserSession(this);
+        assert repository != null;
 
-        userWithDetails = repository.getUserWithDetails(userId);
+        // get all the users and their info.
+        List<UserWithDetails> usersWithDetails = repository.getUsersWithDetails();
 
+        setupRecyclerView(usersWithDetails);    }
 
-
+    private void setupRecyclerView(List<UserWithDetails> users) {
+        UserAdapter adapter = new UserAdapter(users);
+        binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.userRecyclerView.setAdapter(adapter);
     }
+
 }

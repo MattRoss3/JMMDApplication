@@ -45,7 +45,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public void bind(UserWithDetails user) {
             binding.userName.setText(user.user.getUsername());
-            binding.userProgress.setText("Progress: " + user.progress.size()  + "%");
+            binding.userProgress.setText("Progress: " + user.challengeWithDetails.size()  + "%");
             binding.userChallenges.setText("Challenges: " + user.challengeWithDetails.size());
         }
     }

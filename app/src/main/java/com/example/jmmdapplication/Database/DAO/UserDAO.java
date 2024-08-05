@@ -13,6 +13,11 @@ public interface UserDAO {
     void insertUser(User user);
 
     @Transaction
+    @Query("SELECT * FROM users")
+    List<UserWithDetails> getUsersWithDetails();
+
+
+    @Transaction
     @Query("SELECT * FROM users WHERE userId = :id")
     UserWithDetails getUserWithDetails(int id);
 

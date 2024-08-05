@@ -54,6 +54,23 @@ public class DatabaseRepository {
         });
     }
 
+    public List<UserWithDetails> getUsersWithDetails() {
+        Future<List<UserWithDetails>> future = executorService.submit(new Callable<List<UserWithDetails>>() {
+            @Override
+            public List<UserWithDetails> call() throws Exception {
+                return userDAO.getUsersWithDetails();
+            }
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(TAG, "Error fetching users with details", e);
+            return null;
+        }
+    }
+
+
     public UserWithDetails getUserWithDetails(int userId) {
         Future<UserWithDetails> future = executorService.submit(new Callable<UserWithDetails>() {
             @Override
