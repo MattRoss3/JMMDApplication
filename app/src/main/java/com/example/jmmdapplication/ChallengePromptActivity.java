@@ -5,14 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jmmdapplication.databinding.ActivityChallengePromptBinding;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 
 public class ChallengePromptActivity extends AppCompatActivity {
 
@@ -45,7 +40,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.multipleChoiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreen.class);
+                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenMultipleChoice.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +48,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.writeinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreen.class);
+                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenWritein.class);
                 startActivity(intent);
             }
         });
@@ -68,7 +63,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
     }
 
     public static Intent challengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
-        Intent intent = new Intent(context, ChallengeScreen.class);
+        Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_PROMPT_USER_ID, userId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challengeId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challengeName);

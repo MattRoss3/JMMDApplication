@@ -12,23 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.entities.Answer;
-import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
-import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
+import com.example.jmmdapplication.databinding.ActivityChallengeScreenWriteinBinding;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ChallengeScreen extends AppCompatActivity {
+public class ChallengeScreenWritein extends AppCompatActivity {
 
     private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_ID";
@@ -36,12 +31,12 @@ public class ChallengeScreen extends AppCompatActivity {
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION";
 
 
-    private ActivityChallengeScreenBinding binding;
+    private ActivityChallengeScreenWriteinBinding binding;
     private DatabaseRepository repository;
 
 
 
-    public static final String TAG = "CHALLENGE_SCREEN_TAG";
+    public static final String TAG = "CHALLENGE_SCREEN_WRITEIN_TAG";
 
     private int userId;
     private int challengeId;
@@ -53,7 +48,7 @@ public class ChallengeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityChallengeScreenBinding.inflate(getLayoutInflater());
+        binding = ActivityChallengeScreenWriteinBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
         userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
@@ -69,7 +64,7 @@ public class ChallengeScreen extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository();
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,31 +91,24 @@ public class ChallengeScreen extends AppCompatActivity {
 
         ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
         for (Question question : challengeQuestions) {
-            //Display question, answers in multiple choice format with radio buttons, & submit button for each question in the challenge
             ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
+            Answer correctAnswer = questionAnswers.get(0);
+
+
             binding.challengeScreenHeader.setText(challengeName);
             binding.challengeScreenDescription.setText(challengeDescription);
 
             //Label the question and answers
             //TODO:randomize
             binding.questionText.setText(question.getQuestionText());
-            binding.radioButton1.setText(questionAnswers.get(0).getAnswerText());
-            binding.radioButton2.setText(questionAnswers.get(1).getAnswerText());
-            binding.radioButton3.setText(questionAnswers.get(2).getAnswerText());
-            binding.radioButton4.setText(questionAnswers.get(3).getAnswerText());
 
-            //TODO: Create submit button & determine if selected answer is correct, update database accordingly
-            binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonID) {
-                    selectedAnswer = (RadioButton) radioGroup.findViewById(checkedButtonID);
-                }
-            });
+            String enteredAnswer = binding.answerTextPrompt.getText().toString();
 
             binding.submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
+//                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
+                    if (enteredAnswer.equals(correctAnswer.getAnswerText())) {
                         // update progress for this challenge
                         // record the date this challenge was completed
                         // increment level
@@ -155,7 +143,7 @@ public class ChallengeScreen extends AppCompatActivity {
     }
 
     public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
-        Intent intent = new Intent(context, ChallengeScreen.class);
+        Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, challengeId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME, challengeName);

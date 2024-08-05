@@ -82,15 +82,15 @@ public class MainUserInterface extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        binding.ChallengesLabel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
-////                startActivity(intent);
-//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+        binding.ChallengesLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
 //                startActivity(intent);
-//            }
-//        });
+                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
 //            @Override
