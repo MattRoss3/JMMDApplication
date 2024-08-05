@@ -23,6 +23,7 @@ public class AdminEditActivity extends AppCompatActivity {
     private ActivityAdminEditBinding binding;
     private DatabaseRepository repository;
     private UserWithDetails userWithDetails;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
