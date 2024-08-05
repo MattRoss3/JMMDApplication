@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityAdminEditBinding;
 import com.example.jmmdapplication.util.SessionManager;
+import com.example.jmmdapplication.util.SwipeToDeleteCallback;
 
 import java.util.List;
 
@@ -48,6 +50,9 @@ public class AdminEditActivity extends AppCompatActivity {
         UserAdapter adapter = new UserAdapter(users);
         binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.userRecyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(binding.userRecyclerView);
     }
 
 }
