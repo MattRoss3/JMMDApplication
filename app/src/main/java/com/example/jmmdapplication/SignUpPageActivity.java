@@ -21,15 +21,9 @@ public class SignUpPageActivity extends AppCompatActivity {
         binding = ActivitySignUpPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize the repository
         repository = DatabaseRepository.getRepository(getApplication());
 
-        // sign up the user
-        binding.signUpButton.setOnClickListener(view -> signUp());
-
-        // return to sign-in page
-        binding.cancelButton.setOnClickListener(view -> finish());
-    }
+        setupListeners();    }
 
     /**
      * This method will pull the username and password from the sign-up screen and create a new user in the database.
@@ -39,7 +33,7 @@ public class SignUpPageActivity extends AppCompatActivity {
      * then will prompt the user to log in.
      */
     private void signUp() {
-        String username = binding.usernameSignUp.getText() != null ? binding.usernameSignUp.getText().toString().trim() : "";
+        String username = binding.usernameSignUp.getText() != null ? binding.usernameSignUp.getText().toString().trim().toLowerCase() : "";
         String password = binding.password1SignUp.getText() != null ? binding.password1SignUp.getText().toString().trim() : "";
         String confirmPassword = binding.password2SignUp.getText() != null ? binding.password2SignUp.getText().toString().trim() : "";
 
@@ -71,5 +65,10 @@ public class SignUpPageActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void setupListeners() {
+        binding.signUpButton.setOnClickListener(view -> signUp());
+        binding.cancelButton.setOnClickListener(view -> finish());
     }
 }

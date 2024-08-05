@@ -1,26 +1,15 @@
 package com.example.jmmdapplication;
 
-import com.example.jmmdapplication.Database.Relations.ChallengeWithDetails;
-import com.example.jmmdapplication.Database.Relations.QuestionWithAnswer;
-import com.example.jmmdapplication.Database.Relations.UserWithDetails;
-import com.example.jmmdapplication.Database.entities.Answer;
-import com.example.jmmdapplication.Database.entities.Challenge;
-import com.example.jmmdapplication.Database.entities.Progress;
-import com.example.jmmdapplication.Database.entities.Question;
-import com.example.jmmdapplication.Database.entities.User;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.entities.User;
+import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
@@ -37,35 +26,56 @@ import java.util.List;
 
 public class MainUserInterface extends AppCompatActivity {
 
-
-    private UserWithDetails user;
+    private ActivityMainUserInterfaceBinding binding;
     private DatabaseRepository repository;
+    private UserWithDetails userWithDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main_user_interface);
-        com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding binding = ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
-
+        binding = ActivityMainUserInterfaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.newChallengeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainUserInterface.this, AddNewChallenge.class);
-                startActivity(intent);
+
+        repository = new DatabaseRepository(getApplication());
+        int userId = SessionManager.getUserSession(this);
+        userWithDetails = repository.getUserWithDetails(userId);
+
+
+        setupUI();
+        setupListeners();
+    }
+
+    private void setupUI() {
+        if (userWithDetails != null) {
+            User user = userWithDetails.user;
+            String welcomeMessage = getString(R.string.welcome_message, user.getUsername());
+            binding.mainUserHeader.setText(welcomeMessage);
+
+            if (user.isAdmin()) {
+                binding.editUserButton.setVisibility(View.VISIBLE);
+            } else {
+                binding.editUserButton.setVisibility(View.GONE);
             }
+        }
+    }
+
+    private void setupListeners() {
+        binding.newChallengeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+            startActivity(intent);
         });
 
-        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionManager.clearUserSession(MainUserInterface.this);
-                Intent intent = new Intent(MainUserInterface.this, SignInPageActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.logoutButton.setOnClickListener(v -> {
+            SessionManager.clearUserSession(MainUserInterface.this);
+            Intent intent = new Intent(MainUserInterface.this, SignInPageActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        binding.editUserButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainUserInterface.this, AdminEditActivity.class);
+            startActivity(intent);
         });
 
         binding.button1MainPage.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +85,7 @@ public class MainUserInterface extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 //---------------------------------Example of how to get the user with details---------------------------------
         // this is an example of how to get the user with details including challenges, questions, answers, and progress from the UserWithDetails object
@@ -126,10 +137,7 @@ public class MainUserInterface extends AppCompatActivity {
     }
 //---------------------------------Example of how to get the user with details---------------------------------
 
-    static Intent MainUserInterfaceIntentFactory(Context context, int userId){
+    public static Intent MainUserInterfaceIntentFactory(Context context) {
         return new Intent(context, MainUserInterface.class);
     }
-
-
-
 }

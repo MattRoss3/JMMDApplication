@@ -64,7 +64,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     databaseWriteExecutor.execute(() -> {
                         UserDAO userDao = INSTANCE.userDAO();
                         Log.d("AppDatabase", "Default values being inserted"); // Add logging
-                        userDao.insertUser(new User("admin", "password", false));
+                        userDao.insertUser(new User("admin", "password", true));
                         userDao.insertUser(new User("defaultUser2", "defaultPassword2", false));
                     });
                 }
