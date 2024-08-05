@@ -1,20 +1,14 @@
 package com.example.jmmdapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityAdminEditBinding;
-import com.example.jmmdapplication.util.SessionManager;
 import com.example.jmmdapplication.util.SwipeToDeleteCallback;
 
 import java.util.List;
@@ -37,7 +31,7 @@ public class AdminEditActivity extends AppCompatActivity {
 
         binding.dashboardButton.setOnClickListener(view -> finish());
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository();
 
         assert repository != null;
 

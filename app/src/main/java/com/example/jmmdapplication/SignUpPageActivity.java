@@ -21,7 +21,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         binding = ActivitySignUpPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository();
 
         setupListeners();    }
 

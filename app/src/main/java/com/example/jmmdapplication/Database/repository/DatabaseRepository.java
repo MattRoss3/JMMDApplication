@@ -86,7 +86,7 @@ public class DatabaseRepository {
         }
     }
 
-    public static DatabaseRepository getRepository(Application application) {
+    public static DatabaseRepository getRepository() {
         if (repository != null) {
             return repository;
         }
