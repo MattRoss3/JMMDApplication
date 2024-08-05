@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ItemUserInfoBinding;
 import java.util.List;
+import java.util.Objects;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -45,8 +47,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public void bind(UserWithDetails user) {
             binding.userName.setText(user.user.getUsername());
-            binding.userProgress.setText("Progress: " + user.progress.size()  + "%");
+            binding.userProgress.setText("Progress: " + user.challengeWithDetails.size()  + "%");
             binding.userChallenges.setText("Challenges: " + user.challengeWithDetails.size());
         }
+    }
+
+    public void deleteItem(int position) {
+        UserWithDetails user = users.get(position);
+
+        DatabaseRepository.getRepository().deleteUser(user.user);
+
+        users.remove(position);
+        notifyItemRemoved(position);
     }
 }
