@@ -13,8 +13,14 @@ import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
+import java.util.List;
+
 
 public class MainUserInterface extends AppCompatActivity {
+    private static final String CHALLENGE_PROMPT_USER_ID = "com.example.jmmdapplication.CHALLENGE_PROMPT_USER_ID";
+    private static final String CHALLENGE_PROMPT_CHALLENGE_ID = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_ID";
+    private static final String CHALLENGE_PROMPT_CHALLENGE_NAME = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_NAME";
+    private static final String CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION";
 
     private ActivityMainUserInterfaceBinding binding;
     private DatabaseRepository repository;
@@ -52,7 +58,7 @@ public class MainUserInterface extends AppCompatActivity {
 
     private void setupListeners() {
         binding.newChallengeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+            Intent intent = new Intent(MainUserInterface.this, AddNewChallenge.class);
             startActivity(intent);
         });
 
@@ -67,6 +73,25 @@ public class MainUserInterface extends AppCompatActivity {
             Intent intent = new Intent(MainUserInterface.this, AdminEditActivity.class);
             startActivity(intent);
         });
+
+//        binding.ChallengesLabel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
+////                startActivity(intent);
+//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+//        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+//                startActivity(intent);
+//            }
+//        });
+
     }
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
