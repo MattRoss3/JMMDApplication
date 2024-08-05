@@ -86,14 +86,15 @@ public class DatabaseRepository {
         }
     }
 
-    public static DatabaseRepository getRepository(Application application) {
+    public static DatabaseRepository getRepository() {
         if (repository != null) {
             return repository;
         }
         Future<DatabaseRepository> future = AppDatabase.databaseWriteExecutor.submit(new Callable<DatabaseRepository>() {
             @Override
             public DatabaseRepository call() throws Exception {
-                return new DatabaseRepository(application);
+                Application application = null;
+                return new DatabaseRepository(null);
             }
         });
 

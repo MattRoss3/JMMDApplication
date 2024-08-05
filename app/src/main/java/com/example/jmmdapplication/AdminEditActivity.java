@@ -1,19 +1,15 @@
 package com.example.jmmdapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityAdminEditBinding;
-import com.example.jmmdapplication.util.SessionManager;
+import com.example.jmmdapplication.util.SwipeToDeleteCallback;
 
 import java.util.List;
 
@@ -23,6 +19,7 @@ public class AdminEditActivity extends AppCompatActivity {
     private ActivityAdminEditBinding binding;
     private DatabaseRepository repository;
     private UserWithDetails userWithDetails;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +31,7 @@ public class AdminEditActivity extends AppCompatActivity {
 
         binding.dashboardButton.setOnClickListener(view -> finish());
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository();
 
         assert repository != null;
 
@@ -47,6 +44,9 @@ public class AdminEditActivity extends AppCompatActivity {
         UserAdapter adapter = new UserAdapter(users);
         binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.userRecyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(binding.userRecyclerView);
     }
 
 }
