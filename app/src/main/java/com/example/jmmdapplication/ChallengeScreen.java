@@ -69,7 +69,7 @@ public class ChallengeScreen extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository();
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
