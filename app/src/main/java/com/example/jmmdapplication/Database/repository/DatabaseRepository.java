@@ -93,7 +93,8 @@ public class DatabaseRepository {
         Future<DatabaseRepository> future = AppDatabase.databaseWriteExecutor.submit(new Callable<DatabaseRepository>() {
             @Override
             public DatabaseRepository call() throws Exception {
-                return new DatabaseRepository(application);
+                Application application = null;
+                return new DatabaseRepository(null);
             }
         });
 
