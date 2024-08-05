@@ -35,6 +35,23 @@
         app:layout_constraintEnd_toEndOf="@id/header_title"
         android:layout_marginTop="4dp" />
 
+    <!-- Edit User Button for Admins -->
+    <ImageButton
+        android:id="@+id/edit_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_edit_24"
+        android:contentDescription="@string/edit_users"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        app:tint="@android:color/darker_gray"
+        tools:ignore="TouchTargetSizeCheck"
+        android:visibility="gone" />
+
+    <!-- Settings Button -->
     <ImageButton
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
@@ -44,6 +61,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
         android:padding="8dp"
         app:tint="@android:color/darker_gray"
         tools:ignore="TouchTargetSizeCheck" />

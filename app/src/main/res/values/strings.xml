@@ -35,4 +35,9 @@
     <string name="cancel">Cancel</string>
     <string name="dashboard">Dashboard</string>
     <string name="welcome_message">Welcome %1$s</string>
+    <string name="edit_users">Edit Users</string>
+    <string name="admin_edit_title">Edit Users</string>
+    <string name="username">Username</string>
+    <string name="progress_0">Progress: 0%</string>
+    <string name="challenges_0">Challenges: 0</string>
 </resources>
