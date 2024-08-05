@@ -24,13 +24,8 @@ public class SignInPageActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = DatabaseRepository.getRepository(getApplication());
+        setupListeners();
 
-        binding.signInButtonSignInPage.setOnClickListener(view -> signInUser());
-
-        binding.signUpButtonSignInPage.setOnClickListener(view -> {
-            Intent intent = new Intent(SignInPageActivity.this, SignUpPageActivity.class);
-            startActivity(intent);
-        });
     }
 
     /**
@@ -39,7 +34,7 @@ public class SignInPageActivity extends AppCompatActivity {
      * If the user does not exist, it will show an error message.
      */
     private void signInUser() {
-        String username = binding.userNameSignInScreenEditText.getText() != null ? binding.userNameSignInScreenEditText.getText().toString().trim() : "";
+        String username = binding.userNameSignInScreenEditText.getText() != null ? binding.userNameSignInScreenEditText.getText().toString().trim().toLowerCase() : "";
         String password = binding.passwordSignInEditText.getText() != null ? binding.passwordSignInEditText.getText().toString().trim() : "";
 
         AppDatabase.databaseWriteExecutor.execute(() -> {
@@ -57,6 +52,13 @@ public class SignInPageActivity extends AppCompatActivity {
                 }
             });
         });
+    }
 
+    private void setupListeners() {
+        binding.signInButtonSignInPage.setOnClickListener(view -> signInUser());
+        binding.signUpButtonSignInPage.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInPageActivity.this, SignUpPageActivity.class);
+            startActivity(intent);
+        });
     }
 }
