@@ -31,11 +31,6 @@ public class MainUserInterface extends AppCompatActivity {
         int userId = SessionManager.getUserSession(this);
         userWithDetails = repository.getUserWithDetails(userId);
 
-        userWithDetails.challengeWithDetails.get(0).challenge.setAssigned(false);
-
-
-
-
 
         setupUI();
         setupListeners();
