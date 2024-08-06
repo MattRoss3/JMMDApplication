@@ -46,7 +46,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
-    //Test dependencies
+    //Android Test libraries
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -55,4 +55,7 @@ dependencies {
     androidTestImplementation libs.mockito.android
     androidTestImplementation "org.mockito-core:4.8.1"
     androidTestImplementation libs.core
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'android.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'org.mockito:mockito-android:4.8.1'
 }
