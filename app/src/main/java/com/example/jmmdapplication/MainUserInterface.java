@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +29,8 @@ public class MainUserInterface extends AppCompatActivity {
     private ActivityMainUserInterfaceBinding binding;
     private DatabaseRepository repository;
     private UserWithDetails userWithDetails;
+    private ChallengeAdapter challengeAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,15 @@ public class MainUserInterface extends AppCompatActivity {
 
         setupUI();
         setupListeners();
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
+        recyclerView = findViewById(R.id.myChallengesDisplayRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<Challenge> challenges = repository.getAllChallenges();
+        challengeAdapter = new ChallengeAdapter(challenges);
+        recyclerView.setAdapter(challengeAdapter);
     }
 
     private void setupUI() {
