@@ -13,14 +13,34 @@ import com.example.jmmdapplication.Database.entities.Challenge;
 
 import java.util.List;
 
+/**
+ * Adapter for displaying a list of {@link Challenge} items in a {@link RecyclerView}.
+ * <p>
+ * This adapter binds {@link Challenge} data to the views in the RecyclerView, managing how each item is displayed.
+ * </p>
+ */
 
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder> {
 
     private final List<Challenge> challengeList;
 
+    /**
+     * Creates a new ChallengeAdapter.
+     *
+     * @param challengeList The list of {@link Challenge} items to be displayed in the RecyclerView.
+     */
+
     public ChallengeAdapter(List<Challenge> challengeList) {
         this.challengeList = challengeList;
     }
+
+    /**
+     * Called when RecyclerView needs a new {@link ChallengeViewHolder} of the given type to represent an item.
+     *
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new {@link ChallengeViewHolder} that holds a View of the given view type.
+     */
 
     @NonNull
     @Override
@@ -30,6 +50,13 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         return new ChallengeViewHolder(view);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position.
+     *
+     * @param holder   The {@link ChallengeViewHolder} which should be updated to represent the contents of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
+     */
+
     @Override
     public void onBindViewHolder(@NonNull ChallengeViewHolder holder, int position) {
         Challenge challenge = challengeList.get(position);
@@ -37,14 +64,30 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         holder.challengeDescription.setText(challenge.getDescription());
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
+
     @Override
     public int getItemCount() {
         return challengeList.size();
     }
 
+    /**
+     * ViewHolder for displaying individual challenge items.
+     */
+
     public static class ChallengeViewHolder extends RecyclerView.ViewHolder {
         private final TextView challengeName;
         private final TextView challengeDescription;
+
+        /**
+         * Creates a new {@link ChallengeViewHolder} instance.
+         *
+         * @param itemView The view of the item.
+         */
 
         public ChallengeViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -19,6 +19,13 @@ import com.example.jmmdapplication.util.SessionManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main user interface activity of the application.
+ * <p>
+ * This activity displays the user's information, challenges, and provides navigation to different parts of the app.
+ * It handles user session management, challenge display, and provides buttons for creating new challenges, logging out, and editing user details.
+ * </p>
+ */
 
 public class MainUserInterface extends AppCompatActivity {
     private static final String CHALLENGE_PROMPT_USER_ID = "com.example.jmmdapplication.CHALLENGE_PROMPT_USER_ID";
@@ -49,6 +56,10 @@ public class MainUserInterface extends AppCompatActivity {
         setupRecyclerView();
     }
 
+    /**
+     * Sets up the RecyclerView to display the list of challenges.
+     */
+
     private void setupRecyclerView() {
         recyclerView = findViewById(R.id.myChallengesDisplayRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,6 +67,10 @@ public class MainUserInterface extends AppCompatActivity {
         challengeAdapter = new ChallengeAdapter(challenges);
         recyclerView.setAdapter(challengeAdapter);
     }
+
+    /**
+     * Sets up the user interface elements based on user details.
+     */
 
     private void setupUI() {
         if (userWithDetails != null) {
@@ -70,6 +85,10 @@ public class MainUserInterface extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Sets up the event listeners for UI components.
+     */
 
     private void setupListeners() {
         binding.newChallengeButton.setOnClickListener(v -> {
@@ -108,6 +127,13 @@ public class MainUserInterface extends AppCompatActivity {
 //        });
 
     }
+
+    /**
+     * Creates an intent for starting the {@link MainUserInterface} activity.
+     *
+     * @param context The context to use for creating the intent.
+     * @return An intent for starting the {@link MainUserInterface} activity.
+     */
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
         return new Intent(context, MainUserInterface.class);
