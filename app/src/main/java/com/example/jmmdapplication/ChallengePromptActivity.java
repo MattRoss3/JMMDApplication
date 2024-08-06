@@ -13,6 +13,7 @@ import com.example.jmmdapplication.databinding.ActivityChallengePromptBinding;
  * This activity will ask the user if they want the challenge to be multiple choice or using a write-in answer box.
  * The user will be presented with a button to start the multiple choice activity and a button to start the write-in activity.
  *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @authors Dakota Fouch
  * @since 08/05/2024
  * CST 338 Software Design with Dr. C

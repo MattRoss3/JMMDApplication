@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * This application will act as a quick and easy language learning app.
  *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @authors Jerrick Wallace, Mohamed Othman, Matthew Ross, Dakota Fouch
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C

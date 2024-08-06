@@ -14,6 +14,7 @@ import com.example.jmmdapplication.util.SessionManager;
  * If the user is logged in, it will redirect to the main user interface.
  * If the user is not logged in, it will redirect to the sign-in page.
  *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @author Mohamed Othman
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C
