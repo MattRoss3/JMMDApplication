@@ -79,7 +79,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
     }
 
     public static Intent ChallengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
-        Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
+        Intent intent = new Intent(context, ChallengePromptActivity.class);
         intent.putExtra(CHALLENGE_PROMPT_USER_ID, userId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challengeId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challengeName);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -138,6 +139,8 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                                 progress.setLevel(progress.getLevel() + 1);
 
                                 if (progress.getLevel() == challengeQuestions.size()) {
+                                    Toast.makeText(ChallengeScreenMultipleChoice.this, "Congratulations! You completed all questions in this challenge.", Toast.LENGTH_SHORT).show();
+
                                     progress.setStatus("isComplete");
                                     progress.setCompletionDate(LocalDateTime.now());
                                 }
@@ -147,6 +150,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                         }
 
                     } else { // the user chose the incorrect answer
+                        Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, the correct answer was " + questionAnswers.get(0).getAnswerText(), Toast.LENGTH_SHORT).show();
 
                     }
                 }

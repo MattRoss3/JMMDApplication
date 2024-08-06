@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -133,6 +134,8 @@ public class ChallengeScreenWritein extends AppCompatActivity {
                                 progress.setLevel(progress.getLevel() + 1);
 
                                 if (progress.getLevel() == challengeQuestions.size()) {
+                                    Toast.makeText(ChallengeScreenWritein.this, "Congratulations! You completed all questions in this challenge.", Toast.LENGTH_SHORT).show();
+
                                     progress.setStatus("isComplete");
                                     progress.setCompletionDate(LocalDateTime.now());
                                 }
@@ -142,6 +145,7 @@ public class ChallengeScreenWritein extends AppCompatActivity {
                         }
 
                     } else { // the user chose the incorrect answer
+                        Toast.makeText(ChallengeScreenWritein.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -156,7 +160,7 @@ public class ChallengeScreenWritein extends AppCompatActivity {
     }
 
     public static Intent ChallengeWriteinIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
-        Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
+        Intent intent = new Intent(context, ChallengeScreenWritein.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, challengeId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME, challengeName);
