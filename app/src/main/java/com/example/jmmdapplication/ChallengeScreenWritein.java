@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jmmdapplication.Database.entities.Answer;
+import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
@@ -103,46 +104,104 @@ public class ChallengeScreenWritein extends AppCompatActivity {
 ////            adapter.submitList(userChallenges);
 ////        });
 
-        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
-        for (Question question : challengeQuestions) {
-            ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
-            Answer correctAnswer = questionAnswers.get(0);
+//        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
+//        for (Question question : challengeQuestions) {
+//            ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
+//            Answer correctAnswer = questionAnswers.get(0);
+//
+//
+//            binding.challengeScreenHeader.setText(challengeName);
+//            binding.challengeScreenDescription.setText(challengeDescription);
+//
+//            //Label the question and answers
+//            //TODO:randomize
+//            binding.questionText.setText(question.getQuestionText());
+//
+//            String enteredAnswer = binding.answerTextPrompt.getText().toString();
+//
+//            binding.submitButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
+//                    if (enteredAnswer.equals(correctAnswer.getAnswerText())) {
+//                        // update progress for this challenge
+//                        // record the date this challenge was completed
+//                        // increment level
+//
+//                        List<Progress> allProgress = repository.getProgressByUserId(userId);
+//                        for (Progress currProgress : allProgress) {
+//                            if (currProgress.getChallengeId() == challengeId) {
+//                                Progress progress = currProgress;
+//                                progress.setLevel(progress.getLevel() + 1);
+//
+//                                if (progress.getLevel() == challengeQuestions.size()) {
+//                                    Toast.makeText(ChallengeScreenWritein.this, "Congratulations! You completed all questions in this challenge.", Toast.LENGTH_SHORT).show();
+//
+//                                    progress.setStatus("isComplete");
+//                                    progress.setCompletionDate(LocalDateTime.now());
+//                                }
+//
+//                                repository.updateProgress(progress);
+//                            }
+//                        }
+//
+//                    } else { // the user chose the incorrect answer
+//                        Toast.makeText(ChallengeScreenWritein.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//            });
+//        }
 
+        Challenge tempCHallnege = new Challenge("Spanish 1", "The first challenge for Spanish", false);
+        tempCHallnege.setChallengeId(1);
+        tempCHallnege.setUserId(userId);
 
-            binding.challengeScreenHeader.setText(challengeName);
-            binding.challengeScreenDescription.setText(challengeDescription);
+        Progress progress = new Progress(userId, tempCHallnege.getChallengeId(), "notComplete", LocalDateTime.now(), 0);
+        progress.setProgressId(1);
+        progress.setChallengeId(tempCHallnege.getChallengeId());
+        for (int i = 1; i < 3; i++) {
+            Answer correctAnswer = new Answer(1, "ans");
+            correctAnswer.setAnswerId(1);
+
+            binding.challengeScreenHeader.setText(tempCHallnege.getName());
+            binding.challengeScreenDescription.setText(tempCHallnege.getDescription());
 
             //Label the question and answers
             //TODO:randomize
-            binding.questionText.setText(question.getQuestionText());
+            binding.questionText.setText(new Question(1, "What is the Spanish word for never?", "Spanish").getQuestionText());
 
-            String enteredAnswer = binding.answerTextPrompt.getText().toString();
+            //String enteredAnswer = binding.answerTextPrompt.getText().toString();
 
             binding.submitButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String enteredAnswer = binding.answerTextPrompt.getText().toString();
 //                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
                     if (enteredAnswer.equals(correctAnswer.getAnswerText())) {
                         // update progress for this challenge
                         // record the date this challenge was completed
                         // increment level
 
-                        List<Progress> allProgress = repository.getProgressByUserId(userId);
-                        for (Progress currProgress : allProgress) {
-                            if (currProgress.getChallengeId() == challengeId) {
-                                Progress progress = currProgress;
+                        //List<Progress> allProgress = repository.getProgressByUserId(userId);
+                        //for (Progress currProgress : allProgress) {
+                            //if (currProgress.getChallengeId() == challengeId) {
+
                                 progress.setLevel(progress.getLevel() + 1);
 
-                                if (progress.getLevel() == challengeQuestions.size()) {
+                                if (progress.getLevel() == 2) {
                                     Toast.makeText(ChallengeScreenWritein.this, "Congratulations! You completed all questions in this challenge.", Toast.LENGTH_SHORT).show();
 
                                     progress.setStatus("isComplete");
                                     progress.setCompletionDate(LocalDateTime.now());
+
+                                    Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
+                                    startActivity(intent);
                                 }
 
                                 repository.updateProgress(progress);
-                            }
-                        }
+                           // }
+                       // }
 
                     } else { // the user chose the incorrect answer
                         Toast.makeText(ChallengeScreenWritein.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show();
@@ -151,7 +210,6 @@ public class ChallengeScreenWritein extends AppCompatActivity {
                 }
             });
         }
-
 
 
         //binding.radioButton1.setText(getString(repository.));
