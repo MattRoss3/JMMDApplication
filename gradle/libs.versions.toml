@@ -22,6 +22,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 mockito-android = { module = "org.mockito:mockito-android", version.ref = "mockitoAndroid" }
+mockito-core-x-8-1 = { module = "org.mockito-core:4.8.1" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 x-8-1 = { module = "org.mockito-core:4.8.1" }
