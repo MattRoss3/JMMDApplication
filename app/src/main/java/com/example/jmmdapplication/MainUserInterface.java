@@ -64,7 +64,17 @@ public class MainUserInterface extends AppCompatActivity {
         recyclerView = findViewById(R.id.myChallengesDisplayRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<Challenge> challenges = repository.getAllChallenges();
-        challengeAdapter = new ChallengeAdapter(challenges);
+        challengeAdapter = new ChallengeAdapter(challenges, new ChallengeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Challenge challenge) {
+                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
+                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
+                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
+                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(challengeAdapter);
     }
 
@@ -108,23 +118,14 @@ public class MainUserInterface extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        binding.ChallengesLabel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
-////                startActivity(intent);
-//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
-//        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
-//                startActivity(intent);
-//            }
-//        });
+        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -136,6 +137,6 @@ public class MainUserInterface extends AppCompatActivity {
      */
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
-        return new Intent(context, MainUserInterface.class);
+        return new Intent(context, ChallengePromptActivity.class);
     }
 }
