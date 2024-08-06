@@ -9,6 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.jmmdapplication.databinding.ActivityChallengePromptBinding;
 
+/**
+ * This activity will ask the user if they want the challenge to be multiple choice or using a write-in answer box.
+ * The user will be presented with a button to start the multiple choice activity and a button to start the write-in activity.
+ *
+ * @authors Dakota Fouch
+ * @since 08/05/2024
+ * CST 338 Software Design with Dr. C
+ * wk07: Project 2
+ */
+
 public class ChallengePromptActivity extends AppCompatActivity {
 
     private static final String CHALLENGE_PROMPT_USER_ID = "com.example.jmmdapplication.CHALLENGE_PROMPT_USER_ID";
@@ -40,7 +50,10 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.multipleChoiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenMultipleChoice.class);
+//                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenMultipleChoice.class);
+//                startActivity(intent);
+
+                Intent intent = ChallengeScreenMultipleChoice.ChallengeMultipleChoiceIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
@@ -48,7 +61,10 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.writeinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenWritein.class);
+//                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenWritein.class);
+//                startActivity(intent);
+
+                Intent intent = ChallengeScreenWritein.ChallengeWriteinIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
@@ -62,7 +78,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
         });
     }
 
-    public static Intent challengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
+    public static Intent ChallengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_PROMPT_USER_ID, userId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challengeId);

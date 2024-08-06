@@ -23,6 +23,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This activity is the challenge section of the app. The user will be presented with a series of
+ * language questions in the challenge they chose, using a write-in answer box. The user's progress
+ * is kept track of. Once the user completes each question in the challenge, it is marked as
+ * completed and the date is recorded.
+ *
+ *
+ * @authors Dakota Fouch
+ * @since 08/05/2024
+ * CST 338 Software Design with Dr. C
+ * wk07: Project 2
+ */
+
 public class ChallengeScreenWritein extends AppCompatActivity {
 
     private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
@@ -64,7 +77,7 @@ public class ChallengeScreenWritein extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = DatabaseRepository.getRepository();
+        repository = DatabaseRepository.getRepository(getApplication());
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +155,7 @@ public class ChallengeScreenWritein extends AppCompatActivity {
 
     }
 
-    public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
+    public static Intent ChallengeWriteinIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, challengeId);

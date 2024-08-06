@@ -87,7 +87,12 @@ public class MainUserInterface extends AppCompatActivity {
             public void onClick(View view) {
 //                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
 //                startActivity(intent);
-                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                startActivity(intent);
+
+                //int userId = userWithDetails.user.getUserId();
+
+                Intent intent = ChallengePromptActivity.ChallengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), 1, "Spanish 1", "The first challenge for Spanish");
                 startActivity(intent);
             }
         });

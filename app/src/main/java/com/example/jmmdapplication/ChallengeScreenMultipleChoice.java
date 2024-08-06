@@ -19,6 +19,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This activity is the challenge section of the app. The user will be presented with a series of
+ * language questions in the challenge they chose, using a write-in answer box. The user's progress
+ * is kept track of. Once the user completes each question in the challenge, it is marked as
+ * completed and the date is recorded.
+ *
+ *
+ * @authors Matthew Ross, Mohamed Othman, Dakota Fouch
+ * @since 07/20/2024
+ * CST 338 Software Design with Dr. C
+ * wk07: Project 2
+ */
 
 public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
@@ -148,7 +160,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
     }
 
-    public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
+    public static Intent ChallengeMultipleChoiceIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
         intent.putExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, challengeId);
