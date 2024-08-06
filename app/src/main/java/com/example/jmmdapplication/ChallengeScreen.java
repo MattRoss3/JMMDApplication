@@ -27,6 +27,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity that displays a challenge and its associated questions to the user.
+ * <p>
+ * This activity handles the display of a challenge, its questions, and multiple-choice answers.
+ * It also manages user interactions for answering questions and updating challenge progress.
+ * </p>
+ */
 
 public class ChallengeScreen extends AppCompatActivity {
 
@@ -153,6 +160,17 @@ public class ChallengeScreen extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Creates an intent for starting the {@link ChallengeScreen} activity.
+     *
+     * @param context             The context to use for creating the intent.
+     * @param userId              The ID of the user.
+     * @param challengeId         The ID of the challenge.
+     * @param challengeName       The name of the challenge.
+     * @param challengeDescription The description of the challenge.
+     * @return The intent to start {@link ChallengeScreen}.
+     */
 
     public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreen.class);

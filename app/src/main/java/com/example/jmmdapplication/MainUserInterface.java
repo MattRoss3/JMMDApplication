@@ -6,15 +6,26 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main user interface activity of the application.
+ * <p>
+ * This activity displays the user's information, challenges, and provides navigation to different parts of the app.
+ * It handles user session management, challenge display, and provides buttons for creating new challenges, logging out, and editing user details.
+ * </p>
+ */
 
 public class MainUserInterface extends AppCompatActivity {
     private static final String CHALLENGE_PROMPT_USER_ID = "com.example.jmmdapplication.CHALLENGE_PROMPT_USER_ID";
@@ -25,6 +36,8 @@ public class MainUserInterface extends AppCompatActivity {
     private ActivityMainUserInterfaceBinding binding;
     private DatabaseRepository repository;
     private UserWithDetails userWithDetails;
+    private ChallengeAdapter challengeAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +53,24 @@ public class MainUserInterface extends AppCompatActivity {
 
         setupUI();
         setupListeners();
+        setupRecyclerView();
     }
+
+    /**
+     * Sets up the RecyclerView to display the list of challenges.
+     */
+
+    private void setupRecyclerView() {
+        recyclerView = findViewById(R.id.myChallengesDisplayRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<Challenge> challenges = repository.getAllChallenges();
+        challengeAdapter = new ChallengeAdapter(challenges);
+        recyclerView.setAdapter(challengeAdapter);
+    }
+
+    /**
+     * Sets up the user interface elements based on user details.
+     */
 
     private void setupUI() {
         if (userWithDetails != null) {
@@ -55,6 +85,10 @@ public class MainUserInterface extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Sets up the event listeners for UI components.
+     */
 
     private void setupListeners() {
         binding.newChallengeButton.setOnClickListener(v -> {
@@ -93,6 +127,13 @@ public class MainUserInterface extends AppCompatActivity {
 //        });
 
     }
+
+    /**
+     * Creates an intent for starting the {@link MainUserInterface} activity.
+     *
+     * @param context The context to use for creating the intent.
+     * @return An intent for starting the {@link MainUserInterface} activity.
+     */
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
         return new Intent(context, MainUserInterface.class);
