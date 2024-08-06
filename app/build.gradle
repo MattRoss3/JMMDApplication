@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    //App dependencies
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -45,4 +46,13 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+    //Test dependencies
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    //Mockito dependencies for Android tests
+    androidTestImplementation libs.mockito.android
+    androidTestImplementation "org.mockito-core:4.8.1"
+    androidTestImplementation libs.core
 }
