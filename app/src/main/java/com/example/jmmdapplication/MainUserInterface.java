@@ -25,6 +25,12 @@ import java.util.List;
  * This activity displays the user's information, challenges, and provides navigation to different parts of the app.
  * It handles user session management, challenge display, and provides buttons for creating new challenges, logging out, and editing user details.
  * </p>
+ *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
+ * @authors Jerrick Wallace, Mohamed Othman, Matthew Ross, Dakota Fouch
+ * @since 07/20/2024
+ * CST 338 Software Design with Dr. C
+ * wk05: Project 2
  */
 
 public class MainUserInterface extends AppCompatActivity {
@@ -67,11 +73,13 @@ public class MainUserInterface extends AppCompatActivity {
         challengeAdapter = new ChallengeAdapter(challenges, new ChallengeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Challenge challenge) {
-                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
-                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
+                Intent intent = ChallengePromptActivity.ChallengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), challenge.getChallengeId(), challenge.getName(), challenge.getDescription());
+
+//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
                 startActivity(intent);
             }
         });
@@ -119,13 +127,13 @@ public class MainUserInterface extends AppCompatActivity {
         });
 
 
-        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
-                startActivity(intent);
-            }
-        });
+//        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainUserInterface.this, ChallengeScreen.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

@@ -5,14 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jmmdapplication.databinding.ActivityChallengePromptBinding;
-import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 
 /**
  * Activity that displays a prompt for a challenge.
@@ -21,6 +16,10 @@ import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
  * in either multiple-choice or write-in formats. It also provides a way to navigate back to the
  * main user interface.
  * </p>
+ * @authors Jerrick Wallace, Dakota Fouch
+ * @since 08/05/2024
+ * CST 338 Software Design with Dr. C
+ * wk07: Project 2
  */
 
 public class ChallengePromptActivity extends AppCompatActivity {
@@ -37,7 +36,6 @@ public class ChallengePromptActivity extends AppCompatActivity {
     private String challengeName;
     private String challengeDescription;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,22 +50,25 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.challengeScreenHeader.setText(challengeName);
         binding.challengeScreenDescription.setText(challengeDescription);
 
+        // this button will start the challenge in multiple choice format
         binding.multipleChoiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreen.class);
+                Intent intent = ChallengeScreenMultipleChoice.ChallengeMultipleChoiceIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
 
+        // this button will start the challenge in a write in format
         binding.writeinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreen.class);
+                Intent intent = ChallengeScreenWritein.ChallengeWriteinIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
 
+        // this back button will return to the main user interface activity
         binding.backButtonChallengePrompt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,9 +88,8 @@ public class ChallengePromptActivity extends AppCompatActivity {
      * @param challengeDescription The description of the challenge.
      * @return The intent to start {@link ChallengePromptActivity}.
      */
-
-    public static Intent challengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
-        Intent intent = new Intent(context, ChallengeScreen.class);
+    public static Intent ChallengePromptIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
+        Intent intent = new Intent(context, ChallengePromptActivity.class);
         intent.putExtra(CHALLENGE_PROMPT_USER_ID, userId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challengeId);
         intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challengeName);
