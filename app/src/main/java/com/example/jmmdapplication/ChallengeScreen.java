@@ -76,7 +76,7 @@ public class ChallengeScreen extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = DatabaseRepository.getRepository();
+        repository = DatabaseRepository.getRepository( this.getApplication());
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override

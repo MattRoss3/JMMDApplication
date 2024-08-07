@@ -137,6 +137,6 @@ public class MainUserInterface extends AppCompatActivity {
      */
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
-        return new Intent(context, ChallengePromptActivity.class);
+        return new Intent(context, MainUserInterface.class);
     }
 }

@@ -18,12 +18,15 @@ public class Answer {
 
     private int questionId;
 
+    private boolean isCorrect;
+
     @NonNull
     private String answerText;
 
-    public Answer(int questionId, @NonNull String answerText) {
+    public Answer(int questionId, @NonNull String answerText, boolean isCorrect) {
         this.questionId = questionId;
         this.answerText = answerText;
+        this.isCorrect = isCorrect;
     }
 
     public int getAnswerId() { return answerId; }
@@ -35,4 +38,12 @@ public class Answer {
     @NonNull
     public String getAnswerText() { return answerText; }
     public void setAnswerText(@NonNull String answerText) { this.answerText = answerText; }
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
 }
