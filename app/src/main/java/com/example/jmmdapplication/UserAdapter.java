@@ -1,5 +1,8 @@
 package com.example.jmmdapplication;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -10,6 +13,8 @@ import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ItemUserInfoBinding;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Adapter class for displaying a list of users in a {@link RecyclerView}.
@@ -21,6 +26,8 @@ import java.util.Objects;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private List<UserWithDetails> users;
+    private final DatabaseRepository repository;
+    private final ExecutorService executorService;
 
     /**
      * Constructs a new {@link UserAdapter}.
@@ -28,8 +35,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      * @param users List of {@link UserWithDetails} to be displayed in the RecyclerView.
      */
 
-    public UserAdapter(List<UserWithDetails> users) {
+    public UserAdapter(List<UserWithDetails> users, DatabaseRepository repository) {
         this.users = users;
+        this.repository = repository;
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
     @NonNull
@@ -90,9 +99,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void deleteItem(int position) {
         UserWithDetails user = users.get(position);
 
-        DatabaseRepository.getRepository().deleteUser(user.user);
-
-        users.remove(position);
-        notifyItemRemoved(position);
+        executorService.execute(() -> {
+            try {
+                repository.deleteUser(user.user);
+                // UI updates must be done on the main thread
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    users.remove(position);
+                    notifyItemRemoved(position);
+                });
+            } catch (Exception e) {
+                Log.e("UserAdapter", "Error deleting user", e);
+            }
+        });
     }
 }

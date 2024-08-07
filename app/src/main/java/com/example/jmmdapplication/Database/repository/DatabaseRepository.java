@@ -86,15 +86,14 @@ public class DatabaseRepository {
         }
     }
 
-    public static DatabaseRepository getRepository() {
+    public static DatabaseRepository getRepository(Application application) {
         if (repository != null) {
             return repository;
         }
         Future<DatabaseRepository> future = AppDatabase.databaseWriteExecutor.submit(new Callable<DatabaseRepository>() {
             @Override
             public DatabaseRepository call() throws Exception {
-                Application application = null;
-                return new DatabaseRepository(null);
+                return new DatabaseRepository(application);
             }
         });
 
@@ -176,6 +175,10 @@ public class DatabaseRepository {
             challengeDAO.insertChallenge(challenge);
             Log.i(TAG, "Inserted challenge: " + challenge.getName());
         });
+    }
+
+    public List<Challenge> getChallengesByUserId(int userId) {
+        return challengeDAO.getChallengesByUserId(userId);
     }
 
     public ArrayList<Challenge> getAllChallenges() {

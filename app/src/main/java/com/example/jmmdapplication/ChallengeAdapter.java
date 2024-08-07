@@ -3,6 +3,7 @@ package com.example.jmmdapplication;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 
@@ -23,6 +24,11 @@ import java.util.List;
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder> {
 
     private final List<Challenge> challengeList;
+    private final OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Challenge challenge);
+    }
 
     /**
      * Creates a new ChallengeAdapter.
@@ -30,8 +36,9 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
      * @param challengeList The list of {@link Challenge} items to be displayed in the RecyclerView.
      */
 
-    public ChallengeAdapter(List<Challenge> challengeList) {
+    public ChallengeAdapter(List<Challenge> challengeList ,OnItemClickListener listener) {
         this.challengeList = challengeList;
+        this.listener = listener;
     }
 
     /**
@@ -62,6 +69,14 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         Challenge challenge = challengeList.get(position);
         holder.challengeName.setText(challenge.getName());
         holder.challengeDescription.setText(challenge.getDescription());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(challenge);
+            }
+        });
+
     }
 
     /**

@@ -48,7 +48,7 @@ public class AdminEditActivity extends AppCompatActivity {
 
         binding.dashboardButton.setOnClickListener(view -> finish());
 
-        repository = DatabaseRepository.getRepository();
+        repository = DatabaseRepository.getRepository(this.getApplication());
 
         assert repository != null;
 
@@ -67,7 +67,7 @@ public class AdminEditActivity extends AppCompatActivity {
      */
 
     private void setupRecyclerView(List<UserWithDetails> users) {
-        UserAdapter adapter = new UserAdapter(users);
+        UserAdapter adapter = new UserAdapter(users, repository);
         binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.userRecyclerView.setAdapter(adapter);
 

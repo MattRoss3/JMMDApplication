@@ -23,7 +23,7 @@ public class SignInPageActivity extends AppCompatActivity {
         binding = ActivitySignInPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository();
+        repository = DatabaseRepository.getRepository( this.getApplication());
         setupListeners();
 
     }
