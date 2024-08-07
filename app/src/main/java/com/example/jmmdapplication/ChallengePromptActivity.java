@@ -16,6 +16,8 @@ import com.example.jmmdapplication.databinding.ActivityChallengePromptBinding;
  * in either multiple-choice or write-in formats. It also provides a way to navigate back to the
  * main user interface.
  * </p>
+ *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @authors Jerrick Wallace, Dakota Fouch
  * @since 08/05/2024
  * CST 338 Software Design with Dr. C

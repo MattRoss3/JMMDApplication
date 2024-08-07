@@ -15,6 +15,7 @@ import com.example.jmmdapplication.databinding.ActivityAdminpageBinding;
  * <p>
  * This activity provides the layout and user interface for admin functionalities. Currently, it sets up the view binding for the admin page.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 
 public class Adminpage extends AppCompatActivity {

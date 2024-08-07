@@ -25,6 +25,7 @@ import com.example.jmmdapplication.util.SessionManager;
  * <p>
  * This activity provides options for users to configure their settings. It allows users to interact with settings-related UI elements.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 
 public class Settings_page extends AppCompatActivity {
