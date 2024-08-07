@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This activity is the challenge section of the app. The user will be presented with a series of
- * language questions in the challenge they chose, using a write-in answer box. The user's progress
- * is kept track of. Once the user completes each question in the challenge, it is marked as
- * completed and the date is recorded.
+ * Activity that displays a challenge and its associated questions to the user.
+ * <p>
+ * This activity handles the display of a challenge, its questions, and multiple-choice answers.
+ * It also manages user interactions for answering questions and updating challenge progress.
+ * </p>
  *
- *
- * @authors Matthew Ross, Mohamed Othman, Dakota Fouch
+ * @authors Jerrick Wallace, Matthew Ross, Mohamed Othman, Dakota Fouch
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C
  * wk07: Project 2
@@ -74,7 +74,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository( this.getApplication());
 
         binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +164,16 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
     }
 
+    /**
+     * Creates an intent for starting the {@link ChallengeScreenMultipleChoice} activity.
+     *
+     * @param context             The context to use for creating the intent.
+     * @param userId              The ID of the user.
+     * @param challengeId         The ID of the challenge.
+     * @param challengeName       The name of the challenge.
+     * @param challengeDescription The description of the challenge.
+     * @return The intent to start {@link ChallengeScreenMultipleChoice}.
+     */
     public static Intent ChallengeMultipleChoiceIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreenMultipleChoice.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);

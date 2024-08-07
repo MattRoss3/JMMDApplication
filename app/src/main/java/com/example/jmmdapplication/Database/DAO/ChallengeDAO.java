@@ -16,6 +16,9 @@ public interface ChallengeDAO {
     @Query("SELECT * FROM challenges")
     List<Challenge> getAllChallenges();
 
+    @Query("SELECT * FROM challenges WHERE userId = :userId")
+    List<Challenge> getChallengesByUserId(int userId);
+
     @Update
     void updateChallenge(Challenge challenge);
 

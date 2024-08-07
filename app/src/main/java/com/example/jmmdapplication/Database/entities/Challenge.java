@@ -24,11 +24,15 @@ public class Challenge {
     @NonNull
     private String description;
 
+    @NonNull
+    private String category;
+
     private boolean isAssigned;
 
-    public Challenge(@NonNull String name, @NonNull String description, boolean isAssigned) {
+    public Challenge(@NonNull String name, @NonNull String description, @NonNull String category, boolean isAssigned) {
         this.name = name;
         this.description = description;
+        this.category = category;
         this.isAssigned = isAssigned;
     }
 
@@ -52,5 +56,14 @@ public class Challenge {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @NonNull
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(@NonNull String category) {
+        this.category = category;
     }
 }

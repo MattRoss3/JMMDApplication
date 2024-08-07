@@ -14,6 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.databinding.ActivitySettingsPageBinding;
 
+/**
+ * The settings page activity of the application.
+ * <p>
+ * This activity provides options for users to configure their settings. It allows users to interact with settings-related UI elements.
+ * </p>
+ */
+
 public class Settings_page extends AppCompatActivity {
     private ActivitySettingsPageBinding binding;
     @Override
@@ -31,6 +38,13 @@ public class Settings_page extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Creates an intent for starting the {@link Settings_page} activity.
+     *
+     * @param context The context to use for creating the intent.
+     * @return An intent for starting the {@link Settings_page} activity.
+     */
     static Intent intentFactory(Context context){
         return new Intent(context, Settings_page.class);
 
