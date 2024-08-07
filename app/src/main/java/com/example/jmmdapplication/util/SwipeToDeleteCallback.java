@@ -49,7 +49,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      * Called when a swipe action is detected. This method handles the deletion of the swiped item.
      *
      * @param viewHolder The {@link RecyclerView.ViewHolder} that was swiped.
-     * @param direction The direction of the swipe. Either {@link ItemTouchHelper.LEFT} or {@link ItemTouchHelper.RIGHT}.
+     * @param direction The direction of the swipe.
      */
 
     @Override
