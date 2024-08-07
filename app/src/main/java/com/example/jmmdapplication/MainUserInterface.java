@@ -73,11 +73,13 @@ public class MainUserInterface extends AppCompatActivity {
         challengeAdapter = new ChallengeAdapter(challenges, new ChallengeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Challenge challenge) {
-                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
-                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
-                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
+                Intent intent = ChallengePromptActivity.ChallengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), challenge.getChallengeId(), challenge.getName(), challenge.getDescription());
+
+//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
                 startActivity(intent);
             }
         });
