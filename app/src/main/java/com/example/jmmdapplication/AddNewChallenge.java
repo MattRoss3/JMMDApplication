@@ -29,6 +29,9 @@ public class AddNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
     private DatabaseRepository repository=DatabaseRepository.getRepository(this.getApplication());
     private Challenge chal=null;
+    Challenge challengeTest=new Challenge("Spanish 1","Easy Spanish Challenge","Spanish",false);
+    Challenge challengeTest1=new Challenge("French 2","Easy Spanish Challenge","French",false);
+
     /**
      * Called when the activity is first created.
      * <p>
