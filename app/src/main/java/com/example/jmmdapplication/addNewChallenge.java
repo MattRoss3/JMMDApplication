@@ -28,6 +28,7 @@ public class addNewChallenge extends AppCompatActivity {
 
         });
     }
+
     static Intent intentFactory(Context context){
         return new Intent(context, addNewChallenge.class);
     }
