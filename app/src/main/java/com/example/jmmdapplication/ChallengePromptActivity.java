@@ -50,28 +50,25 @@ public class ChallengePromptActivity extends AppCompatActivity {
         binding.challengeScreenHeader.setText(challengeName);
         binding.challengeScreenDescription.setText(challengeDescription);
 
+        // this button will start the challenge in multiple choice format
         binding.multipleChoiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenMultipleChoice.class);
-//                startActivity(intent);
-
                 Intent intent = ChallengeScreenMultipleChoice.ChallengeMultipleChoiceIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
 
+        // this button will start the challenge in a write in format
         binding.writeinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ChallengePromptActivity.this, ChallengeScreenWritein.class);
-//                startActivity(intent);
-
                 Intent intent = ChallengeScreenWritein.ChallengeWriteinIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
                 startActivity(intent);
             }
         });
 
+        // this back button will return to the main user interface activity
         binding.backButtonChallengePrompt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
