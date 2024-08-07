@@ -18,6 +18,8 @@ import com.example.jmmdapplication.databinding.ActivityChallengeScreenMultipleCh
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -155,12 +157,13 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
         Question question = challengeQuestions.get(questionIndexInChallenge); // get current question in challenge
         ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers for question
+        Collections.shuffle(questionAnswers); // randomize the order of answers before displaying
 
         binding.questionText.setText(question.getQuestionText()); // set the question text to the current question
-        binding.radioButton1.setText(questionAnswers.get(0).getAnswerText()); // set the first answer text to the current answer
-        binding.radioButton2.setText(questionAnswers.get(1).getAnswerText()); // set the second answer text to the current answer
-        binding.radioButton3.setText(questionAnswers.get(2).getAnswerText()); // set the third answer text to the current answer
-        binding.radioButton4.setText(questionAnswers.get(3).getAnswerText()); // set the fourth answer text to the current answer
+        binding.radioButton1.setText(questionAnswers.get(0).getAnswerText()); // set the first answer text to the current question
+        binding.radioButton2.setText(questionAnswers.get(1).getAnswerText()); // set the second answer text to the current question
+        binding.radioButton3.setText(questionAnswers.get(2).getAnswerText()); // set the third answer text to the current question
+        binding.radioButton4.setText(questionAnswers.get(3).getAnswerText()); // set the fourth answer text to the current question
     }
 
     /**
