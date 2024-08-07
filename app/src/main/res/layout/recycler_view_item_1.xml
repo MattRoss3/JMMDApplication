@@ -6,7 +6,19 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
   <Button
-      android:id="@+id/textView1"
+      android:id="@+id/button"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:backgroundTint="@color/bluec"
+      android:text="@string/french_n_challenge_1_15_n_press_to_add_to_current_tasks" />
+  <Button
+      android:id="@+id/button1"
+      android:layout_width="340dp"
+      android:layout_height="100dp"
+      android:backgroundTint="@color/bluec"
+      android:text="@string/french_n_challenge_1_15_n_press_to_add_to_current_tasks" />
+  <Button
+      android:id="@+id/button2"
       android:layout_width="340dp"
       android:layout_height="100dp"
       android:backgroundTint="@color/bluec"
