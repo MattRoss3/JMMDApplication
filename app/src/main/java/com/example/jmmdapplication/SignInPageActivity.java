@@ -13,7 +13,7 @@ import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
 public class SignInPageActivity extends AppCompatActivity {
-    private ActivitySignInPageBinding binding;
+    ActivitySignInPageBinding binding;
     DatabaseRepository repository;
 
 
