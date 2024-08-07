@@ -27,6 +27,7 @@ import java.util.List;
  * It also manages user interactions for answering questions and updating challenge progress.
  * </p>
  *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @authors Jerrick Wallace, Matthew Ross, Mohamed Othman, Dakota Fouch
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C

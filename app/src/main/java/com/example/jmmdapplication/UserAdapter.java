@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
  * <p>
  * This adapter binds a list of {@link UserWithDetails} objects to a RecyclerView, allowing for the display and management of user data.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {

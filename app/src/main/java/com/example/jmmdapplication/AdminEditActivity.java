@@ -34,6 +34,7 @@ public class AdminEditActivity extends AppCompatActivity {
      * This method sets up the user interface, initializes the repository, retrieves the list of users with details,
      * and sets up the RecyclerView with a swipe-to-delete feature.
      * </p>
+     * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
      *
      * @param savedInstanceState If the activity is being re-created from a previous saved state, this bundle contains the data it most recently supplied in {@link #onSaveInstanceState(Bundle)}. <b>Note:</b> Otherwise it is null.
      */

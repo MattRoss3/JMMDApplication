@@ -23,6 +23,7 @@ import java.util.ArrayList;
  * This activity provides an interface for users to input details for a new challenge.
  * It includes a button to navigate back to the main user interface.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 public class AddNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
