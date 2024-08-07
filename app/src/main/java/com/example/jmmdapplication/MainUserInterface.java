@@ -6,17 +6,25 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainUserInterfaceBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This application will act as a quick and easy language learning app.
+ * The main user interface activity of the application.
+ * <p>
+ * This activity displays the user's information, challenges, and provides navigation to different parts of the app.
+ * It handles user session management, challenge display, and provides buttons for creating new challenges, logging out, and editing user details.
+ * </p>
  *
  * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  * @authors Jerrick Wallace, Mohamed Othman, Matthew Ross, Dakota Fouch
@@ -34,6 +42,8 @@ public class MainUserInterface extends AppCompatActivity {
     private ActivityMainUserInterfaceBinding binding;
     private DatabaseRepository repository;
     private UserWithDetails userWithDetails;
+    private ChallengeAdapter challengeAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +59,36 @@ public class MainUserInterface extends AppCompatActivity {
 
         setupUI();
         setupListeners();
+        setupRecyclerView();
     }
+
+    /**
+     * Sets up the RecyclerView to display the list of challenges.
+     */
+
+    private void setupRecyclerView() {
+        recyclerView = findViewById(R.id.myChallengesDisplayRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<Challenge> challenges = repository.getAllChallenges();
+        challengeAdapter = new ChallengeAdapter(challenges, new ChallengeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Challenge challenge) {
+                Intent intent = ChallengePromptActivity.ChallengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), challenge.getChallengeId(), challenge.getName(), challenge.getDescription());
+
+//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
+//                intent.putExtra(CHALLENGE_PROMPT_USER_ID, userWithDetails.user.getUserId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_ID, challenge.getChallengeId());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_NAME, challenge.getName());
+//                intent.putExtra(CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION, challenge.getDescription());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(challengeAdapter);
+    }
+
+    /**
+     * Sets up the user interface elements based on user details.
+     */
 
     private void setupUI() {
         if (userWithDetails != null) {
@@ -64,6 +103,10 @@ public class MainUserInterface extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Sets up the event listeners for UI components.
+     */
 
     private void setupListeners() {
         binding.newChallengeButton.setOnClickListener(v -> {
@@ -83,20 +126,6 @@ public class MainUserInterface extends AppCompatActivity {
             startActivity(intent);
         });
 
-        binding.ChallengesLabel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = ChallengePromptActivity.challengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), [challengeID], [challengeName], [challengeDescription]);
-//                startActivity(intent);
-//                Intent intent = new Intent(MainUserInterface.this, ChallengePromptActivity.class);
-//                startActivity(intent);
-
-                //int userId = userWithDetails.user.getUserId();
-
-                Intent intent = ChallengePromptActivity.ChallengePromptIntentFactory(getApplicationContext(), userWithDetails.user.getUserId(), 1, "Spanish 1", "The first challenge for Spanish");
-                startActivity(intent);
-            }
-        });
 
 //        binding.myChallengesDisplayRecyclerView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -106,56 +135,14 @@ public class MainUserInterface extends AppCompatActivity {
 //            }
 //        });
 
-//
-////---------------------------------Example of how to get the user with details---------------------------------
-//        // this is an example of how to get the user with details including challenges, questions, answers, and progress from the UserWithDetails object
-//
-//        // first initialize the repository
-//        repository = new DatabaseRepository(getApplication());
-//
-//        // get the user id from the session
-//        int userId = SessionManager.getUserSession(this);
-//
-//        // get the user with details
-//        UserWithDetails userWithDetails = repository.getUserWithDetails(userId);
-//
-//        // if the user is not null, then we can extract the user, challenges, questions, answers, and progress from userWithDetails
-//        if (userWithDetails != null) {
-//
-//            // get the user object
-//            User user = userWithDetails.user;
-//
-//            // get the challenges with details
-//            List<ChallengeWithDetails> challenges = userWithDetails.challengeWithDetails;
-//
-//            // loop through the challenges and get the questions and answers
-//            for (ChallengeWithDetails challengeDetails : challenges) {
-//                Challenge challenge = challengeDetails.challenge;
-//                List<QuestionWithAnswer> questionWithAnswers = challengeDetails.questionWithAnswers;
-//
-//                for (QuestionWithAnswer questionWithAnswer : questionWithAnswers) {
-//                    Question question = questionWithAnswer.question;
-//                    Answer answer = questionWithAnswer.answer;
-//
-//                    // Process the data as needed
-//                    // For example:
-//                    Log.d("ExampleActivity", "Question: " + question.getQuestionText());
-//                    if (answer != null) {
-//                        Log.d("ExampleActivity", "Answer: " + answer.getAnswerText());
-//                    }
-//                }
-//            }
-//
-//            // get the progress Object
-//            List<Progress> progresses = userWithDetails.progress;
-//            for (Progress progress : progresses) {
-//                // Process the data as needed
-//                // For example:
-//                Log.d("ExampleActivity", "Progress: " + progress.getCompletionDate());
-//            }
-//        }
-////---------------------------------Example of how to get the user with details---------------------------------
     }
+
+    /**
+     * Creates an intent for starting the {@link MainUserInterface} activity.
+     *
+     * @param context The context to use for creating the intent.
+     * @return An intent for starting the {@link MainUserInterface} activity.
+     */
 
     public static Intent MainUserInterfaceIntentFactory(Context context) {
         return new Intent(context, MainUserInterface.class);

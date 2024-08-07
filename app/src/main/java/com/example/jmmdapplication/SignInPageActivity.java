@@ -13,7 +13,7 @@ import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
 public class SignInPageActivity extends AppCompatActivity {
-    private ActivitySignInPageBinding binding;
+    ActivitySignInPageBinding binding;
     DatabaseRepository repository;
 
 
@@ -23,7 +23,7 @@ public class SignInPageActivity extends AppCompatActivity {
         binding = ActivitySignInPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository( this.getApplication());
         setupListeners();
 
     }
@@ -53,6 +53,14 @@ public class SignInPageActivity extends AppCompatActivity {
             });
         });
     }
+
+    /**
+     * Sets up listeners for the sign-in and sign-up buttons.
+     * <p>
+     * This method binds click listeners to the sign-in and sign-up buttons. The sign-in button triggers the {@link #signInUser()} method,
+     * while the sign-up button navigates to the sign-up page.
+     * </p>
+     */
 
     private void setupListeners() {
         binding.signInButtonSignInPage.setOnClickListener(view -> signInUser());

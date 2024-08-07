@@ -12,6 +12,14 @@ import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityMainBinding;
 
+/**
+ * The main activity for the application that handles user login and session management.
+ * <p>
+ * This activity checks if a user is logged in by retrieving the user ID from shared preferences.
+ * If a user ID is found, it welcomes the user; otherwise, it redirects to the sign-in page.
+ * </p>
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String MAIN_ACTIVITY_USER_ID = "com.example.jmmdapplication.MAIN_ACTIVITY_USER_ID";
@@ -43,10 +51,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrieves the logged-in user's ID from shared preferences.
+     */
+
     private void loginUser() {
         SharedPreferences prefs = getSharedPreferences(USER_SESSION_PREFS, MODE_PRIVATE);
         loggedInUser = prefs.getInt(USER_ID_KEY, -1);
     }
+
+    /**
+     * Saves the user's session ID to shared preferences.
+     *
+     * @param context The context to use for accessing shared preferences.
+     * @param userId  The ID of the user to save in the session.
+     */
 
     public static void saveUserSession(Context context, int userId) {
         SharedPreferences prefs = context.getSharedPreferences(USER_SESSION_PREFS, MODE_PRIVATE);
@@ -54,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(USER_ID_KEY, userId);
         editor.apply();
     }
+
+    /**
+     * Clears the user's session from shared preferences.
+     *
+     * @param context The context to use for accessing shared preferences.
+     */
 
     public static void clearUserSession(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(USER_SESSION_PREFS, MODE_PRIVATE);

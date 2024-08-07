@@ -32,11 +32,13 @@ android {
 }
 
 dependencies {
+    //App dependencies
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.room.common
+    implementation libs.recyclerview
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -46,4 +48,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
 
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.6'
+    testImplementation 'androidx.test:core:1.4.0'
 }

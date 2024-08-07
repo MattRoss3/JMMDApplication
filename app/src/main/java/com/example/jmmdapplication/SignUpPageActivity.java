@@ -12,7 +12,7 @@ import com.example.jmmdapplication.databinding.ActivitySignUpPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
 
 public class SignUpPageActivity extends AppCompatActivity {
-    private ActivitySignUpPageBinding binding;
+    ActivitySignUpPageBinding binding;
     private DatabaseRepository repository;
 
     @Override
@@ -21,7 +21,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         binding = ActivitySignUpPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository(getApplication());
+        repository = DatabaseRepository.getRepository( this.getApplication());
 
         setupListeners();    }
 
@@ -32,7 +32,7 @@ public class SignUpPageActivity extends AppCompatActivity {
      * If the user is created successfully, it will save the user session and redirect to the sign-in screen.
      * then will prompt the user to log in.
      */
-    private void signUp() {
+    void signUp() {
         String username = binding.usernameSignUp.getText() != null ? binding.usernameSignUp.getText().toString().trim().toLowerCase() : "";
         String password = binding.password1SignUp.getText() != null ? binding.password1SignUp.getText().toString().trim() : "";
         String confirmPassword = binding.password2SignUp.getText() != null ? binding.password2SignUp.getText().toString().trim() : "";
