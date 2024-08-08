@@ -6,12 +6,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "questions",
-        foreignKeys = @ForeignKey(entity = Challenge.class,
-                parentColumns = "challengeId",
-                childColumns = "challengeId",
-                onDelete = ForeignKey.CASCADE),
-        indices = {@Index(value = "challengeId")})
+@Entity(tableName = "questions")
 public class Question {
     @PrimaryKey(autoGenerate = true)
     private int questionId;

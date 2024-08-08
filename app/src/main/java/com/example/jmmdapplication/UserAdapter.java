@@ -8,37 +8,36 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jmmdapplication.Database.Relations.UserWithDetails;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
+import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.databinding.ItemUserInfoBinding;
+import com.example.jmmdapplication.viewmodel.UserViewModel;
+
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
  * Adapter class for displaying a list of users in a {@link RecyclerView}.
  * <p>
- * This adapter binds a list of {@link UserWithDetails} objects to a RecyclerView, allowing for the display and management of user data.
+ * This adapter binds a list of {@link User} objects to a RecyclerView, allowing for the display and management of user data.
  * </p>
- * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
  */
-
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private List<UserWithDetails> users;
-    private final DatabaseRepository repository;
+    private List<User> users;
+    private final UserViewModel userViewModel;
     private final ExecutorService executorService;
 
     /**
      * Constructs a new {@link UserAdapter}.
      *
-     * @param users List of {@link UserWithDetails} to be displayed in the RecyclerView.
+     * @param users       List of {@link User} to be displayed in the RecyclerView.
+     * @param viewModel   The ViewModel instance for user operations.
      */
-
-    public UserAdapter(List<UserWithDetails> users, DatabaseRepository repository) {
+    public UserAdapter(List<User> users, UserViewModel viewModel) {
         this.users = users;
-        this.repository = repository;
+        this.userViewModel = viewModel;
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -51,7 +50,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        UserWithDetails user = users.get(position);
+        User user = users.get(position);
         holder.bind(user);
     }
 
@@ -63,8 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     /**
      * ViewHolder class for displaying user information.
      */
-
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder {
         private final ItemUserInfoBinding binding;
 
         /**
@@ -72,22 +70,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
          *
          * @param binding The binding object for item_user_info layout.
          */
-
         public UserViewHolder(ItemUserInfoBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
         /**
-         * Binds a {@link UserWithDetails} object to the views in the ViewHolder.
+         * Binds a {@link User} object to the views in the ViewHolder.
          *
-         * @param user The {@link UserWithDetails} object to be bound to the views.
+         * @param user The {@link User} object to be bound to the views.
          */
-
-        public void bind(UserWithDetails user) {
-            binding.userName.setText(user.user.getUsername());
-            binding.userProgress.setText("Progress: " + user.challengeWithDetails.size()  + "%");
-            binding.userChallenges.setText("Challenges: " + user.challengeWithDetails.size());
+        public void bind(User user) {
+            binding.userName.setText(user.getUsername());
+            // Assuming User entity has a method to get progress and challenges
+            binding.userProgress.setText("Progress: "  + "%");
+            binding.userChallenges.setText("Challenges: " );
         }
     }
 
@@ -96,13 +93,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      *
      * @param position The position of the item to be deleted.
      */
-
     public void deleteItem(int position) {
-        UserWithDetails user = users.get(position);
+        User user = users.get(position);
 
         executorService.execute(() -> {
             try {
-                repository.deleteUser(user.user);
+                userViewModel.delete(user);
                 // UI updates must be done on the main thread
                 new Handler(Looper.getMainLooper()).post(() -> {
                     users.remove(position);

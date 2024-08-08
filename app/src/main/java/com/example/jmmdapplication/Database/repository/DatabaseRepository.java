@@ -3,11 +3,15 @@ package com.example.jmmdapplication.Database.repository;
 import android.app.Application;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.jmmdapplication.Database.AppDatabase;
 import com.example.jmmdapplication.Database.DAO.AnswerDAO;
 import com.example.jmmdapplication.Database.DAO.QuestionDAO;
+import com.example.jmmdapplication.Database.DAO.UserChallengeDAO;
 import com.example.jmmdapplication.Database.DAO.UserDAO;
-import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.Relations.QuestionWithAnswers;
+import com.example.jmmdapplication.Database.Relations.UsersWithChallenges;
 import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.entities.User;
@@ -17,6 +21,7 @@ import com.example.jmmdapplication.Database.entities.Challenge;
 
 import com.example.jmmdapplication.Database.DAO.ProgressDAO;
 import com.example.jmmdapplication.Database.entities.Progress;
+import com.example.jmmdapplication.Database.entities.UserChallenge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,7 @@ public class DatabaseRepository {
 
     private final UserDAO userDAO;
     private final ChallengeDAO challengeDAO;
+    private final UserChallengeDAO userChallengeDAO;
     private final ProgressDAO progressDAO;
     private final QuestionDAO questionDAO;
     private final AnswerDAO answerDAO;
@@ -40,6 +46,7 @@ public class DatabaseRepository {
         AppDatabase db = AppDatabase.getDatabase(application);
         userDAO = db.userDAO();
         challengeDAO = db.challengeDAO();
+        userChallengeDAO = db.userChallengeDAO();
         progressDAO = db.progressDAO();
         questionDAO = db.questionDAO();
         answerDAO = db.answerDAO();
@@ -54,37 +61,6 @@ public class DatabaseRepository {
         });
     }
 
-    public List<UserWithDetails> getUsersWithDetails() {
-        Future<List<UserWithDetails>> future = executorService.submit(new Callable<List<UserWithDetails>>() {
-            @Override
-            public List<UserWithDetails> call() throws Exception {
-                return userDAO.getUsersWithDetails();
-            }
-        });
-
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error fetching users with details", e);
-            return null;
-        }
-    }
-
-
-    public UserWithDetails getUserWithDetails(int userId) {
-        Future<UserWithDetails> future = executorService.submit(new Callable<UserWithDetails>() {
-            @Override
-            public UserWithDetails call() throws Exception {
-                return userDAO.getUserWithDetails(userId);
-            }
-        });
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error fetching user with details", e);
-            return null;
-        }
-    }
 
     public static DatabaseRepository getRepository(Application application) {
         if (repository != null) {
@@ -107,23 +83,13 @@ public class DatabaseRepository {
         return null;
     }
 
+    public LiveData<User> getUserById(int userId) {
+        return userDAO.getUserById(userId);
+    }
 
-    public User getUserByUsername(String username) {
-        Future<User> future = executorService.submit(new Callable<User>() {
-            @Override
-            public User call() throws Exception {
-                return userDAO.getUserByUsername(username);
-            }
-        });
 
-        try {
-            User user = future.get();
-            Log.i(TAG, "Fetched user: " + username);
-            return user;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting user by username", e);
-        }
-        return null;
+    public LiveData<User> getUserByUsername(String username) {
+        return userDAO.getUserByUsername(username);
     }
 
     public void updateUser(User user) {
@@ -140,36 +106,12 @@ public class DatabaseRepository {
         });
     }
 
-    public ArrayList<User> getAllUsers() {
-        Future<ArrayList<User>> future = executorService.submit(new Callable<ArrayList<User>>() {
-            @Override
-            public ArrayList<User> call() throws Exception {
-                return (ArrayList<User>) userDAO.getAllUsers();
-            }
-        });
+    public LiveData<List<User>> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
 
-        try {
-            ArrayList<User> users = future.get();
-            Log.i(TAG, "Fetched all users: " + users.size() + " users found.");
-            return users;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting all users", e);
-        }
-        return null;
-    }
-    public void updateUsername(User user){
-        userDAO.updateUser(user);
-    }
-    public User getUserByUsernameAndPassword(String username, String password) {
-        Future<User> future = executorService.submit(() -> userDAO.getUserByUsernameAndPassword(username, password));
-        try {
-            User user = future.get();
-            Log.i(TAG, "Fetched user with username: " + username);
-            return user;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting user by username and password", e);
-        }
-        return null;
+    public LiveData<User> getUserByUsernameAndPassword(String username, String password) {
+        return userDAO.getUserByUsernameAndPassword(username, password);
     }
 
     public void insertChallenge(Challenge challenge) {
@@ -179,26 +121,9 @@ public class DatabaseRepository {
         });
     }
 
-    public List<Challenge> getChallengesByUserId(int userId) {
-        return challengeDAO.getChallengesByUserId(userId);
-    }
 
-    public ArrayList<Challenge> getAllChallenges() {
-        Future<List<Challenge>> future = executorService.submit(new Callable<List<Challenge>>() {
-            @Override
-            public ArrayList<Challenge> call() throws Exception {
-                return (ArrayList<Challenge>)challengeDAO.getAllChallenges();
-            }
-        });
-
-        try {
-            ArrayList<Challenge> challenges = (ArrayList<Challenge>) future.get();
-            Log.i(TAG, "Fetched all challenges: " + challenges.size() + " challenges found.");
-            return challenges;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting all challenges", e);
-        }
-        return new ArrayList<>();
+    public LiveData<List<Challenge>> getAllChallenges() {
+        return challengeDAO.getAllChallenges();
     }
 
     public void updateChallenge(Challenge challenge) {
@@ -215,6 +140,29 @@ public class DatabaseRepository {
         });
     }
 
+    public void assignChallengeToUser(int userId, int challengeId) {
+        executorService.execute(() -> {
+                userChallengeDAO.insertUserChallenge(new UserChallenge(userId, challengeId));
+                Log.i(TAG, "Assigned challengeId: " + challengeId + " to userId: " + userId);
+        });
+    }
+
+    public void unassignChallengeFromUser(int userId, int challengeId) {
+        executorService.execute(() -> {
+            userChallengeDAO.deleteUserChallenge(userId, challengeId);
+            Log.i(TAG, "Unassigned challengeId: " + challengeId + " from userId: " + userId);
+        });
+    }
+
+    public LiveData<UsersWithChallenges> getChallengesAssignedToUser(int userId) {
+        return userChallengeDAO.getChallengesAssignedToUser(userId);
+    }
+
+    public LiveData<List<UsersWithChallenges>> getChallengesNotAssignedToUser(int userId) {
+        return userChallengeDAO.getChallengesNotAssignedToUser(userId);
+    }
+
+
     // Progress-related methods
     public void insertProgress(Progress progress) {
         executorService.execute(() -> {
@@ -223,22 +171,8 @@ public class DatabaseRepository {
         });
     }
 
-    public ArrayList<Progress> getProgressByUserId(int userId) {
-        Future<List<Progress>> future = executorService.submit(new Callable<List<Progress>>() {
-            @Override
-            public List<Progress> call() throws Exception {
-                return progressDAO.getProgressByUserId(userId);
-            }
-        });
-
-        try {
-            ArrayList<Progress> progressList = (ArrayList<Progress>) future.get();
-            Log.i(TAG, "Fetched progress for userId: " + userId);
-            return progressList;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting progress by userId", e);
-        }
-        return new ArrayList<>();
+    public LiveData<List<Progress>> getProgressByUserId(int userId) {
+        return progressDAO.getProgressByUserId(userId);
     }
 
     public void updateProgress(Progress progress) {
@@ -262,22 +196,8 @@ public class DatabaseRepository {
         });
     }
 
-    public ArrayList<Question> getQuestionsByChallengeId(int challengeId) {
-        Future<List<Question>> future = executorService.submit(new Callable<List<Question>>() {
-            @Override
-            public List<Question> call() throws Exception {
-                return questionDAO.getQuestionsByChallengeId(challengeId);
-            }
-        });
-
-        try {
-            ArrayList<Question> questions = (ArrayList<Question>) future.get();
-            Log.i(TAG, "Fetched questions for challengeId: " + challengeId);
-            return questions;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting questions by challengeId", e);
-        }
-        return new ArrayList<>();
+    public LiveData<List<Question>> getQuestionsByChallengeId(int challengeId) {
+        return questionDAO.getQuestionsByChallengeId(challengeId);
     }
 
     public void updateQuestion(Question question) {
@@ -301,22 +221,8 @@ public class DatabaseRepository {
         });
     }
 
-    public ArrayList<Answer> getAnswersByQuestionId(int questionId) {
-        Future<List<Answer>> future = executorService.submit(new Callable<List<Answer>>() {
-            @Override
-            public List<Answer> call() throws Exception {
-                return answerDAO.getAnswersByQuestionId(questionId);
-            }
-        });
-
-        try {
-            ArrayList<Answer> answers = (ArrayList<Answer>) future.get();
-            Log.i(TAG, "Fetched answers for questionId: " + questionId);
-            return answers;
-        } catch (InterruptedException | ExecutionException e) {
-            Log.e(TAG, "Error getting answers by questionId", e);
-        }
-        return new ArrayList<>();
+    public LiveData<List<QuestionWithAnswers>> getAnswersByQuestionId(int questionId) {
+        return answerDAO.getAnswersByQuestionId(questionId);
     }
 
     public void updateAnswer(Answer answer) {

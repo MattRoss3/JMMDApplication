@@ -4,25 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jmmdapplication.Database.entities.Answer;
-import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenWriteinBinding;
+import com.example.jmmdapplication.viewmodel.AnswerViewModel;
+import com.example.jmmdapplication.viewmodel.ProgressViewModel;
+import com.example.jmmdapplication.viewmodel.QuestionViewModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,13 +26,11 @@ import java.util.List;
  * is kept track of. Once the user completes each question in the challenge, it is marked as
  * completed and the date is recorded.
  *
- * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
- * @authors Jerrick Wallace, Matthew Ross, Mohamed Othman, Dakota Fouch
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
  * @since 08/05/2024
  * CST 338 Software Design with Dr. C
  * wk07: Project 2
  */
-
 public class ChallengeScreenWritein extends AppCompatActivity {
 
     private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
@@ -46,18 +39,19 @@ public class ChallengeScreenWritein extends AppCompatActivity {
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION";
 
     private ActivityChallengeScreenWriteinBinding binding;
-    private DatabaseRepository repository;
-
-    public static final String TAG = "CHALLENGE_SCREEN_WRITEIN_TAG";
+    private ProgressViewModel progressViewModel;
+    private QuestionViewModel questionViewModel;
+    private AnswerViewModel answerViewModel;
 
     private int userId;
     private int challengeId;
     private String challengeName;
     private String challengeDescription;
-    private Progress progress; // the user's progress for this challenge
-    private String enteredAnswer; // the answer button selected by the user
-    private int questionAttemptCounter = 0; // the counter for answer attempts by the user
-    private int amountOfQuestionsInChallenge = 0; // the amount of questions in the challenge
+    private Progress progress;
+    private String enteredAnswer;
+    private int questionAttemptCounter = 0;
+    private int amountOfQuestionsInChallenge = 0;
+    private List<Question> challengeQuestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,81 +59,37 @@ public class ChallengeScreenWritein extends AppCompatActivity {
         binding = ActivityChallengeScreenWriteinBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // get the user's id, the challenge's id, the challenge name, and challenge description
-        // passed from the previous activity
         userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
         challengeId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, -1);
         challengeName = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME);
         challengeDescription = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION);
 
-        repository = DatabaseRepository.getRepository(this.getApplication());
+        progressViewModel = new ViewModelProvider(this).get(ProgressViewModel.class);
+        questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
+        answerViewModel = new ViewModelProvider(this).get(AnswerViewModel.class);
 
-        binding.challengeScreenHeader.setText(challengeName); // set the challenge title header
-        binding.challengeScreenDescription.setText(challengeDescription); // set the challenge description header
+        binding.challengeScreenHeader.setText(challengeName);
+        binding.challengeScreenDescription.setText(challengeDescription);
 
-        progress = findProgress(); // create a local Progress object containing the user's progress for this challenge from the database
-
-        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId); // pull an ArrayList of Question objects under this Challenge by calling Repo method with challengeId
-        amountOfQuestionsInChallenge = challengeQuestions.size();// create local variable of amount of questions in challenge
-
-        displayQuestion(challengeQuestions, questionAttemptCounter); // display the first question in the challenge to the user
-
-        // set on click listener for submit button
-        binding.submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                enteredAnswer =  binding.answerTextPrompt.getText().toString();
-
-                Question question = challengeQuestions.get(questionAttemptCounter); // get copy of current Question in challenge
-                Answer correctAnswer = findCorrectAnswer(repository.getAnswersByQuestionId(question.getQuestionId())); // get copy of the correct Answer in this challenge
-                if (correctAnswer == null) { // ensures the question in the database has a correct answer associated with it
-                    Toast.makeText(ChallengeScreenWritein.this, "Sorry, there is a unique issue with displaying this question. Returning to main screen.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
-                    startActivity(intent);
-                }
-
-                if (enteredAnswer.equals(correctAnswer.getAnswerText())) { // the user chose the correct answer
-
-                    Toast.makeText(ChallengeScreenWritein.this, "Congrats! That is the correct answer", Toast.LENGTH_SHORT).show(); // popup message notifying user they answered correctly
-
-                    progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-
-                    repository.updateProgress(progress); // update the user's progress in the database
-
-                } else { // the user chose the incorrect answer
-                    Toast.makeText(ChallengeScreenWritein.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show(); // popup message notifying user they answered incorrectly
-                }
-
-                ++questionAttemptCounter; // count the user's current attempt
-
-                if (progress.getLevel() == amountOfQuestionsInChallenge) { // the user finished the challenge and answered each question correctly
-                    Toast.makeText(ChallengeScreenWritein.this, "Congratulations! You completed all questions in this challenge. Returning to Main Menu.", Toast.LENGTH_SHORT).show(); // popup message notifying user they completed the challenge
-
-                    progress.setStatus("isComplete"); // set user progress for this challenge as complete
-                    progress.setCompletionDate(LocalDateTime.now()); // record the date and time the user completed this challenge
-                    repository.updateProgress(progress); // update the user's progress in the database
-
-                    // Challenge finished, returning to Main User Interface
-                    Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
-                    startActivity(intent);
-                } else if (questionAttemptCounter == amountOfQuestionsInChallenge) { // the user missed at least 1 question, but finished the challenge
-                    Toast.makeText(ChallengeScreenWritein.this, "Challenge finished, but not 100%. Returning to main menu", Toast.LENGTH_SHORT).show(); // popup message notifying user they finished the challenge, but aren't 100%
-
-                    // Challenge finished, returning to Main User Interface
-                    Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
-                    startActivity(intent);
-                } else { // the challenge isn't finished
-                    displayQuestion(challengeQuestions, questionAttemptCounter); // display the next question in the challenge for the user
-                }
-            }
+        progressViewModel.getProgressByUserId(userId).observe(this, allProgress -> {
+            progress = findOrCreateProgress(allProgress);
+            loadQuestions();
         });
 
-        // set setOnClickListener to back button to return to main user interface
-        binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
-                startActivity(intent);
+        binding.submitButton.setOnClickListener(view -> handleAnswerSubmission());
+
+        binding.backButtonChallengeScreen.setOnClickListener(v -> {
+            Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
+            startActivity(intent);
+        });
+    }
+
+    private void loadQuestions() {
+        questionViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> {
+            if (questions != null && !questions.isEmpty()) {
+                challengeQuestions = questions;
+                amountOfQuestionsInChallenge = questions.size();
+                displayQuestion(challengeQuestions.get(questionAttemptCounter));
             }
         });
     }
@@ -147,63 +97,118 @@ public class ChallengeScreenWritein extends AppCompatActivity {
     /**
      * Displays the current question in the challenge.
      *
-     * @param challengeQuestions An ArrayList of Questions under this Challenge.
-     * @param questionIndexInChallenge An int representing the index of the current question in this challenge.
-     *
+     * @param question The current question to be displayed.
      */
-    private void displayQuestion (ArrayList<Question> challengeQuestions, int questionIndexInChallenge) {
+    private void displayQuestion(Question question) {
+        binding.questionText.setText(question.getQuestionText());
+    }
 
-        Question question = challengeQuestions.get(questionIndexInChallenge); // get current question in challenge
+    /**
+     * Handles the submission of the user's entered answer.
+     */
+    private void handleAnswerSubmission() {
+        enteredAnswer = binding.answerTextPrompt.getText().toString();
+        Question currentQuestion = challengeQuestions.get(questionAttemptCounter);
 
-        binding.questionText.setText(question.getQuestionText()); // set the question text to the current question
+        answerViewModel.getAnswersByQuestionId(currentQuestion.getQuestionId()).observe(this, questionWithAnswers -> {
+            if (questionWithAnswers != null && !questionWithAnswers.isEmpty()) {
+                Answer correctAnswer = findCorrectAnswer(questionWithAnswers.get(0).answers);
+
+                if (correctAnswer == null) {
+                    Toast.makeText(ChallengeScreenWritein.this, "Sorry, there is an issue with displaying this question. Returning to main screen.", Toast.LENGTH_SHORT).show();
+                    navigateToMainUserInterface();
+                    return;
+                }
+
+                if (enteredAnswer.equals(correctAnswer.getAnswerText())) {
+                    Toast.makeText(ChallengeScreenWritein.this, "Congrats! That is the correct answer", Toast.LENGTH_SHORT).show();
+                    progress.setLevel(progress.getLevel() + 1);
+                } else {
+
+                    Toast.makeText(ChallengeScreenWritein.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show();
+                }
+
+                ++questionAttemptCounter;
+                if (progress.getLevel() == amountOfQuestionsInChallenge) {
+                    completeChallenge();
+                } else if (questionAttemptCounter == amountOfQuestionsInChallenge) {
+                    finishChallenge();
+                } else {
+                    displayQuestion(challengeQuestions.get(questionAttemptCounter));
+                }
+            }
+        });
     }
 
     /**
      * Finds the correct Answer for the current question.
      *
-     * @param questionAnswers An ArrayList of Answers under this Question.
-     *
+     * @param questionAnswers A list of Answers under this Question.
      * @return An Answer object that is the correct answer for the current Question.
      */
-    private Answer findCorrectAnswer(ArrayList<Answer> questionAnswers) {
-
-        for (Answer currAnswer : questionAnswers) { // iterate through each possible answer for this question
-            if (currAnswer.isCorrect()) { // determine if answer has field indicating it's the correct answer
+    private Answer findCorrectAnswer(List<Answer> questionAnswers) {
+        for (Answer currAnswer : questionAnswers) {
+            if (currAnswer.isCorrect()) {
                 return currAnswer;
             }
         }
-        return null; // this question doesn't have a correct answer in the database
+        return null;
     }
 
     /**
-     * Finds the Progress of this Challenge for the user.
+     * Finds or creates the Progress object for the user's current challenge.
      *
-     * @return A Progress object that represents the user's progress for this challenge
+     * @param allProgress The list of all progress objects for the user.
+     * @return The Progress object for the current challenge.
      */
-    private Progress findProgress() {
-        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a List of Progress objects under this Challenge by calling Repo method with userId
-        if (allProgress.isEmpty()) { // this is the first challenge the user has started
-            return new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+    private Progress findOrCreateProgress(List<Progress> allProgress) {
+        if (allProgress == null || allProgress.isEmpty()) {
+            return new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0);
         } else {
-            for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-                if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-                    return currProgress; // create a copy of their progress for this challenge
+            for (Progress currProgress : allProgress) {
+                if (currProgress.getChallengeId() == challengeId) {
+                    return currProgress;
                 }
             }
         }
-        // this challenge is new to the user
-        return new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+        return new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0);
     }
 
     /**
-     * Creates an intent for starting the {@link ChallengeScreenMultipleChoice} activity.
+     * Completes the challenge and updates the progress.
+     */
+    private void completeChallenge() {
+        Toast.makeText(this, "Congratulations! You completed all questions in this challenge. Returning to Main Menu.", Toast.LENGTH_SHORT).show();
+        progress.setStatus("isComplete");
+        progress.setCompletionDate(LocalDateTime.now());
+        navigateToMainUserInterface();
+    }
+
+    /**
+     * Finishes the challenge but not completely.
+     */
+    private void finishChallenge() {
+        Toast.makeText(this, "Challenge finished, but not 100%. Returning to main menu", Toast.LENGTH_SHORT).show();
+        navigateToMainUserInterface();
+    }
+
+    /**
+     * Navigates to the main user interface.
+     */
+    private void navigateToMainUserInterface() {
+        Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
+        startActivity(intent);
+    }
+
+    /**
+     * Creates an intent for starting the {@link ChallengeScreenWritein} activity.
      *
      * @param context             The context to use for creating the intent.
      * @param userId              The ID of the user.
      * @param challengeId         The ID of the challenge.
      * @param challengeName       The name of the challenge.
      * @param challengeDescription The description of the challenge.
-     * @return The intent to start {@link ChallengeScreenMultipleChoice}.
+     * @return The intent to start {@link ChallengeScreenWritein}.
      */
     public static Intent ChallengeWriteinIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreenWritein.class);

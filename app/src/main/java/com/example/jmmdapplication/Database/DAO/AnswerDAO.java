@@ -1,6 +1,9 @@
 package com.example.jmmdapplication.Database.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.*;
+
+import com.example.jmmdapplication.Database.Relations.QuestionWithAnswers;
 import com.example.jmmdapplication.Database.entities.Answer;
 
 import java.util.List;
@@ -11,8 +14,9 @@ public interface AnswerDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAnswer(Answer answer);
 
-    @Query("SELECT * FROM answers WHERE questionId = :questionId")
-    List<Answer> getAnswersByQuestionId(int questionId);
+    @Transaction
+    @Query("SELECT * FROM questions WHERE questionId = :questionId")
+    LiveData<List<QuestionWithAnswers>> getAnswersByQuestionId(int questionId);
 
     @Update
     void updateAnswer(Answer answer);
