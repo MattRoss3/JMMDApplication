@@ -40,4 +40,5 @@
     <string name="username">Username</string>
     <string name="progress_0">Progress: 0%</string>
     <string name="challenges_0">Challenges: 0</string>
+    <string name="advanced_settings">Advanced Settings</string>
 </resources>
