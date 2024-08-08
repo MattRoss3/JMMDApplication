@@ -29,20 +29,22 @@ import org.junit.runner.RunWith;
 /**
  * Local unit test for class UserDAO.java, which will execute on the development machine (host).
  *
- *
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
+ * @authors Jerrick Wallace, Matthew Ross, Mohamed Othman, Dakota Fouch
+ * @since 08/05/2024
+ * CST 338 Software Design with Dr. C
+ * wk07: Project 2
  */
 @RunWith(AndroidJUnit4.class)
 public class UserDAOUnitTest {
     private UserDAO userDao;
     private AppDatabase database;
-    //private DatabaseRepository repository;
 
     @Before
     public void createDb() {
         Context context = ApplicationProvider.getApplicationContext();
         database = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
         userDao = database.userDAO();
-        //repository = new DatabaseRepository(ApplicationProvider.getApplicationContext());
     }
 
     @After
