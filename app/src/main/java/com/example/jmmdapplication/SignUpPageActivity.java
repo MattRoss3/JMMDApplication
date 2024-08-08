@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.jmmdapplication.Database.AppDatabase;
 import com.example.jmmdapplication.Database.entities.User;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivitySignUpPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
+import com.example.jmmdapplication.viewmodel.UserViewModel;
 
+/**
+ * Activity for handling user sign-up.
+ * This activity provides a user interface for signing up, validates user input, and creates a new user in the database.
+ */
 public class SignUpPageActivity extends AppCompatActivity {
-    ActivitySignUpPageBinding binding;
-    private DatabaseRepository repository;
+    private ActivitySignUpPageBinding binding;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +25,19 @@ public class SignUpPageActivity extends AppCompatActivity {
         binding = ActivitySignUpPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository( this.getApplication());
+        // Initialize UserViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        setupListeners();    }
+        setupListeners();
+    }
 
     /**
      * This method will pull the username and password from the sign-up screen and create a new user in the database.
      * If the username is already taken, it will show an error message.
      * If the password fields do not match, it will show an error message.
      * If the user is created successfully, it will save the user session and redirect to the sign-in screen.
-     * then will prompt the user to log in.
      */
-    void signUp() {
+    private void signUp() {
         String username = binding.usernameSignUp.getText() != null ? binding.usernameSignUp.getText().toString().trim().toLowerCase() : "";
         String password = binding.password1SignUp.getText() != null ? binding.password1SignUp.getText().toString().trim() : "";
         String confirmPassword = binding.password2SignUp.getText() != null ? binding.password2SignUp.getText().toString().trim() : "";
@@ -47,27 +52,25 @@ public class SignUpPageActivity extends AppCompatActivity {
             return;
         }
 
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            User existingUser = repository.getUserByUsername(username);
+        userViewModel.getUserByUsername(username).observe(this, existingUser -> {
             if (existingUser == null) {
                 // Create new user
                 User newUser = new User(username, password, false);
-                repository.insertUser(newUser);
+                userViewModel.insert(newUser);
                 SessionManager.saveUserSession(SignUpPageActivity.this, newUser.getUserId());
 
-                runOnUiThread(() -> {
-                    Toast.makeText(SignUpPageActivity.this, "Account created successfully. Please log in.", Toast.LENGTH_SHORT).show();
-                    finish(); // Close the sign-up activity and return to the sign-in screen
-                });
+                Toast.makeText(SignUpPageActivity.this, "Account created successfully. Please log in.", Toast.LENGTH_SHORT).show();
+                finish(); // Close the sign-up activity and return to the sign-in screen
             } else {
-                runOnUiThread(() -> {
-                    Toast.makeText(SignUpPageActivity.this, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
-                });
+                Toast.makeText(SignUpPageActivity.this, "Username already taken. Please choose another.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void setupListeners() {
+    /**
+     * Sets up the event listeners for the UI components.
+     */
+    private void setupListeners() {
         binding.signUpButton.setOnClickListener(view -> signUp());
         binding.cancelButton.setOnClickListener(view -> finish());
     }

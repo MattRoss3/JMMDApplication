@@ -43,7 +43,7 @@
             android:name=".AddNewChallenge"
             android:exported="false" />
         <activity
-            android:name=".Settings_page"
+            android:name=".SettingsPage"
             android:exported="false" />
         <activity
             android:name=".MainUserInterface"
