@@ -3,14 +3,22 @@ package com.example.jmmdapplication;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.jmmdapplication.Database.Relations.UserWithDetails;
+import com.example.jmmdapplication.Database.Relations.UsersWithChallenges;
+import com.example.jmmdapplication.Database.entities.Challenge;
+import com.example.jmmdapplication.Database.entities.User;
+import com.example.jmmdapplication.Database.entities.UserChallenge;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityAdminEditBinding;
+import com.example.jmmdapplication.util.SessionManager;
 import com.example.jmmdapplication.util.SwipeToDeleteCallback;
+import com.example.jmmdapplication.viewmodel.UserChallengeViewModel;
+import com.example.jmmdapplication.viewmodel.UserViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,8 +33,10 @@ public class AdminEditActivity extends AppCompatActivity {
     // get the binding
     private ActivityAdminEditBinding binding;
     private DatabaseRepository repository;
-    private UserWithDetails userWithDetails;
     private UserAdapter userAdapter;
+    private UserViewModel userViewModel;
+    private UserChallengeViewModel userChallengeViewModel;
+
 
     /**
      * Called when the activity is first created.
@@ -52,10 +62,19 @@ public class AdminEditActivity extends AppCompatActivity {
 
         assert repository != null;
 
-        // get all the users and their info.
-        List<UserWithDetails> usersWithDetails = repository.getUsersWithDetails();
+        int userId = SessionManager.getUserSession(this);
 
-        setupRecyclerView(usersWithDetails);    }
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userChallengeViewModel = new ViewModelProvider(this).get(UserChallengeViewModel.class);
+
+
+        userViewModel.getAllUsers().observe(this, users -> {
+            userChallengeViewModel.getChallengesAssignedToUser(userId).observe(this, usersWithChallenges -> {
+                setupRecyclerView(users, usersWithChallenges);
+            });
+        });
+
+    }
 
     /**
      * Configures the RecyclerView for displaying the list of users.
@@ -63,11 +82,11 @@ public class AdminEditActivity extends AppCompatActivity {
      * Sets up the RecyclerView's layout manager, adapter, and attaches a swipe-to-delete callback to enable item removal.
      * </p>
      *
-     * @param users A list of {@link UserWithDetails} to be displayed in the RecyclerView.
+     * @param users A list of {@link User & Challenges} to be displayed in the RecyclerView.
      */
 
-    private void setupRecyclerView(List<UserWithDetails> users) {
-        UserAdapter adapter = new UserAdapter(users, repository);
+    private void setupRecyclerView(List<User> users, UsersWithChallenges usersWithChallenges) {
+        UserAdapter adapter = new UserAdapter(users,usersWithChallenges, userViewModel);
         binding.userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.userRecyclerView.setAdapter(adapter);
 

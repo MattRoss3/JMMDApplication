@@ -1,114 +1,91 @@
 package com.example.jmmdapplication;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jmmdapplication.Database.Relations.UsersWithChallenges;
 import com.example.jmmdapplication.Database.entities.Challenge;
+import com.example.jmmdapplication.databinding.ItemChallengeBinding;
 
 import java.util.List;
 
 /**
- * Adapter for displaying a list of {@link Challenge} items in a {@link RecyclerView}.
+ * Adapter class for displaying a list of challenges in a {@link RecyclerView}.
  * <p>
- * This adapter binds {@link Challenge} data to the views in the RecyclerView, managing how each item is displayed.
+ * This adapter binds a list of {@link Challenge} objects to a RecyclerView, allowing for the display and management of challenge data.
  * </p>
  */
-
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder> {
 
-    private final List<Challenge> challengeList;
-    private final OnItemClickListener listener;
+    private final List<Challenge> challenges;
+    private final OnItemClickListener onItemClickListener;
 
+    /**
+     * Interface for handling item click events.
+     */
     public interface OnItemClickListener {
         void onItemClick(Challenge challenge);
     }
 
     /**
-     * Creates a new ChallengeAdapter.
+     * Constructs a new {@link ChallengeAdapter}.
      *
-     * @param challengeList The list of {@link Challenge} items to be displayed in the RecyclerView.
+     * @param usersWithChallenges A {@link UsersWithChallenges} object containing the challenges to be displayed.
+     * @param onItemClickListener An instance of {@link OnItemClickListener} for handling item click events.
      */
-
-    public ChallengeAdapter(List<Challenge> challengeList ,OnItemClickListener listener) {
-        this.challengeList = challengeList;
-        this.listener = listener;
+    public ChallengeAdapter(UsersWithChallenges usersWithChallenges, OnItemClickListener onItemClickListener) {
+        this.challenges = (usersWithChallenges != null) ? usersWithChallenges.challenges : null;
+        this.onItemClickListener = onItemClickListener;
     }
-
-    /**
-     * Called when RecyclerView needs a new {@link ChallengeViewHolder} of the given type to represent an item.
-     *
-     * @param parent   The ViewGroup into which the new View will be added after it is bound to an adapter position.
-     * @param viewType The view type of the new View.
-     * @return A new {@link ChallengeViewHolder} that holds a View of the given view type.
-     */
 
     @NonNull
     @Override
     public ChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_challenge, parent, false);
-        return new ChallengeViewHolder(view);
+        ItemChallengeBinding binding = ItemChallengeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ChallengeViewHolder(binding);
     }
-
-    /**
-     * Called by RecyclerView to display the data at the specified position.
-     *
-     * @param holder   The {@link ChallengeViewHolder} which should be updated to represent the contents of the item at the given position in the data set.
-     * @param position The position of the item within the adapter's data set.
-     */
 
     @Override
     public void onBindViewHolder(@NonNull ChallengeViewHolder holder, int position) {
-        Challenge challenge = challengeList.get(position);
-        holder.challengeName.setText(challenge.getName());
-        holder.challengeDescription.setText(challenge.getDescription());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(challenge);
-            }
-        });
-
+        if (challenges != null && !challenges.isEmpty()) {
+            holder.bind(challenges.get(position));
+        }
     }
-
-    /**
-     * Returns the total number of items in the data set held by the adapter.
-     *
-     * @return The total number of items in this adapter.
-     */
 
     @Override
     public int getItemCount() {
-        return challengeList.size();
+        return (challenges != null) ? challenges.size() : 0;
     }
 
     /**
-     * ViewHolder for displaying individual challenge items.
+     * ViewHolder class for displaying challenge information.
      */
+    public class ChallengeViewHolder extends RecyclerView.ViewHolder {
 
-    public static class ChallengeViewHolder extends RecyclerView.ViewHolder {
-        private final TextView challengeName;
-        private final TextView challengeDescription;
+        private final ItemChallengeBinding binding;
 
         /**
-         * Creates a new {@link ChallengeViewHolder} instance.
+         * Constructs a new {@link ChallengeViewHolder}.
          *
-         * @param itemView The view of the item.
+         * @param binding The binding object for item_challenge layout.
          */
-
-        public ChallengeViewHolder(@NonNull View itemView) {
-            super(itemView);
-            challengeName = itemView.findViewById(R.id.challenge_name);
-            challengeDescription = itemView.findViewById(R.id.challenge_description);
+        public ChallengeViewHolder(ItemChallengeBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
+        /**
+         * Binds a {@link Challenge} object to the views in the ViewHolder.
+         *
+         * @param challenge The {@link Challenge} object to be bound to the views.
+         */
+        public void bind(Challenge challenge) {
+            binding.challengeName.setText(challenge.getName());
+            binding.challengeDescription.setText(challenge.getDescription());
+            binding.getRoot().setOnClickListener(v -> onItemClickListener.onItemClick(challenge));
+        }
     }
 }

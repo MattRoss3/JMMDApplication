@@ -7,24 +7,18 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jmmdapplication.Database.entities.Answer;
-import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenBinding;
+import com.example.jmmdapplication.viewmodel.AnswerViewModel;
+import com.example.jmmdapplication.viewmodel.ProgressViewModel;
+import com.example.jmmdapplication.viewmodel.QuestionViewModel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +28,6 @@ import java.util.List;
  * It also manages user interactions for answering questions and updating challenge progress.
  * </p>
  */
-
 public class ChallengeScreen extends AppCompatActivity {
 
     private static final String CHALLENGE_ACTIVITY_USER_ID = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_USER_ID";
@@ -42,13 +35,10 @@ public class ChallengeScreen extends AppCompatActivity {
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_NAME = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_NAME";
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION";
 
-
     private ActivityChallengeScreenBinding binding;
-    private DatabaseRepository repository;
-
-
-
-    public static final String TAG = "CHALLENGE_SCREEN_TAG";
+    private ProgressViewModel progressViewModel;
+    private QuestionViewModel questionViewModel;
+    private AnswerViewModel answerViewModel;
 
     private int userId;
     private int challengeId;
@@ -56,109 +46,112 @@ public class ChallengeScreen extends AppCompatActivity {
     private String challengeDescription;
     private RadioButton selectedAnswer;
 
+    /**
+     * Called when the activity is first created.
+     * This method sets up the user interface, initializes the ViewModels, retrieves the challenge details and questions,
+     * and sets up event listeners for user interactions.
+     *
+     * @param savedInstanceState If the activity is being re-created from a previous saved state, this bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityChallengeScreenBinding.inflate(getLayoutInflater());
-
         setContentView(binding.getRoot());
+
+        // Initialize ViewModels
+        progressViewModel = new ViewModelProvider(this).get(ProgressViewModel.class);
+        questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
+        answerViewModel = new ViewModelProvider(this).get(AnswerViewModel.class);
+
         userId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_USER_ID, -1);
         challengeId = getIntent().getIntExtra(CHALLENGE_ACTIVITY_CHALLENGE_ID, -1);
         challengeName = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME);
         challengeDescription = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION);
 
-        //challengeScreenViewModel = new ViewModelProvider(this).get([app]ViewModel.class); // TODO: ViewModel not yet exists
+        setupUI();
+        setupListeners();
+        loadChallengeData();
+    }
 
-        //TODO: RecyclerView / viewHolders
-//        RecyclerView recyclerView = binding.logDisplayRecyclerView;
-//        final GymLogAdapter adapter = new GymLogAdapter(new GymLogAdapter.GymLogDiff());
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    /**
+     * Sets up the user interface elements based on challenge details.
+     */
+    private void setupUI() {
+        binding.challengeScreenHeader.setText(challengeName);
+        binding.challengeScreenDescription.setText(challengeDescription);
+    }
 
-        repository = DatabaseRepository.getRepository( this.getApplication());
+    /**
+     * Sets up the event listeners for UI components.
+     */
+    private void setupListeners() {
+        binding.backButtonChallengeScreen.setOnClickListener(v -> {
+            Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
+            startActivity(intent);
+        });
 
-        binding.backButtonChallengeScreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
-                startActivity(intent);
+        binding.submitButton.setOnClickListener(view -> {
+            if (selectedAnswer != null) {
+                checkAnswerAndUpdateProgress();
             }
         });
 
-        //TODO: Display challenge title and description
-        //1: find the challenge object
+        binding.radioGroup.setOnCheckedChangeListener((radioGroup, checkedButtonID) -> {
+            selectedAnswer = radioGroup.findViewById(checkedButtonID);
+        });
+    }
 
-        //2: set the text for the header with the title and description
-        //binding.challengeScreenHeader.setText();
+    /**
+     * Loads the challenge data including questions and answers.
+     */
+    private void loadChallengeData() {
+        questionViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> {
+            if (questions != null && !questions.isEmpty()) {
+                displayQuestion(questions.get(0)); // Assuming single question display for simplicity
+            }
+        });
+    }
 
-        // TODO: Display the multiple choice question
-        // TODO: ViewModel not yet exists
-//        ViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> { // TODO: pass a list of 4 answers to the adapter to display the 4 questions of the challenge
-//            adapter.submitList(questions);
-//        }
-////
-////            adapter.submitList(userChallenges);
-////        });
-
-        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId);
-        for (Question question : challengeQuestions) {
-            //Display question, answers in multiple choice format with radio buttons, & submit button for each question in the challenge
-            ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers
-            binding.challengeScreenHeader.setText(challengeName);
-            binding.challengeScreenDescription.setText(challengeDescription);
-
-            //Label the question and answers
-            //TODO:randomize
+    /**
+     * Displays a question and its answers in the UI.
+     *
+     * @param question The question to display.
+     */
+    private void displayQuestion(Question question) {
+        answerViewModel.getAnswersByQuestionId(question.getQuestionId()).observe(this, questionWithAnswers -> {
             binding.questionText.setText(question.getQuestionText());
-            binding.radioButton1.setText(questionAnswers.get(0).getAnswerText());
-            binding.radioButton2.setText(questionAnswers.get(1).getAnswerText());
-            binding.radioButton3.setText(questionAnswers.get(2).getAnswerText());
-            binding.radioButton4.setText(questionAnswers.get(3).getAnswerText());
+            List<Answer> answers = questionWithAnswers.get(0).answers;  // Assume the first entry contains the answers
+            binding.radioButton1.setText(answers.get(0).getAnswerText());
+            binding.radioButton2.setText(answers.get(1).getAnswerText());
+            binding.radioButton3.setText(answers.get(2).getAnswerText());
+            binding.radioButton4.setText(answers.get(3).getAnswerText());
+        });
+    }
 
-            //TODO: Create submit button & determine if selected answer is correct, update database accordingly
-            binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int checkedButtonID) {
-                    selectedAnswer = (RadioButton) radioGroup.findViewById(checkedButtonID);
-                }
-            });
-
-            binding.submitButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (selectedAnswer.getText().equals(questionAnswers.get(0).getAnswerText())) { // the user chose the correct answer
-                        // update progress for this challenge
-                        // record the date this challenge was completed
-                        // increment level
-
-                        List<Progress> allProgress = repository.getProgressByUserId(userId);
-                        for (Progress currProgress : allProgress) {
-                            if (currProgress.getChallengeId() == challengeId) {
-                                Progress progress = currProgress;
-                                progress.setLevel(progress.getLevel() + 1);
-
-                                if (progress.getLevel() == challengeQuestions.size()) {
-                                    progress.setStatus("isComplete");
-                                    progress.setCompletionDate(LocalDateTime.now());
-                                }
-
-                                repository.updateProgress(progress);
+    /**
+     * Checks the selected answer and updates the challenge progress accordingly.
+     */
+    private void checkAnswerAndUpdateProgress() {
+        answerViewModel.getAnswersByQuestionId(challengeId).observe(this, questionWithAnswers -> {
+            boolean isCorrect = selectedAnswer.getText().equals(questionWithAnswers.get(0).answers.get(0).getAnswerText()); // Assume the first answer is correct for simplicity
+            if (isCorrect) {
+                progressViewModel.getProgressByUserId(userId).observe(this, progressList -> {
+                    for (Progress progress : progressList) {
+                        if (progress.getChallengeId() == challengeId) {
+                            progress.setLevel(progress.getLevel() + 1);
+                            if (progress.getLevel() == questionViewModel.getQuestionsByChallengeId(challengeId).getValue().size()) {
+                                progress.setStatus("isComplete");
+                                progress.setCompletionDate(LocalDateTime.now());
                             }
+
                         }
-
-                    } else { // the user chose the incorrect answer
-
                     }
-                }
-            });
-        }
-
-
-
-        //binding.radioButton1.setText(getString(repository.));
-
-
+                });
+            } else {
+                // Handle incorrect answer scenario
+            }
+        });
     }
 
     /**
@@ -171,7 +164,6 @@ public class ChallengeScreen extends AppCompatActivity {
      * @param challengeDescription The description of the challenge.
      * @return The intent to start {@link ChallengeScreen}.
      */
-
     public static Intent challengeIntentFactory(Context context, int userId, int challengeId, String challengeName, String challengeDescription) {
         Intent intent = new Intent(context, ChallengeScreen.class);
         intent.putExtra(CHALLENGE_ACTIVITY_USER_ID, userId);
