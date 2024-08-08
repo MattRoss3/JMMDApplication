@@ -58,7 +58,6 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
     private int questionAttemptCounter = 0; // the counter for answer attempts by the user
     private int amountOfQuestionsInChallenge = 0; // the amount of questions in the challenge
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +75,6 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
         binding.challengeScreenHeader.setText(challengeName); // set the challenge title header
         binding.challengeScreenDescription.setText(challengeDescription); // set the challenge description header
-
-        //progress = findProgress(); // find the Progress object containing the user's progress for this challenge from the database
 
         ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId); // pull an ArrayList of Question objects under this Challenge by calling Repo method with challengeId
         amountOfQuestionsInChallenge = challengeQuestions.size();// create local variable of amount of questions in challenge
@@ -98,64 +95,34 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                         startActivity(intent);
                     }
 
+                    setupProgress();
+
                     if (selectedAnswer.getText().equals(correctAnswer.getAnswerText())) { // the user chose the correct answer
 
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Congrats! That is the correct answer", Toast.LENGTH_SHORT).show(); // popup message notifying user they answered correctly
 
-                        progress = findExistingProgress();
+                        //progress = findExistingProgress(); // attempt finding a Progress object of this Challenge for the User
 
-                        incrementLevel();
+                        progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
 
-//                        if (progress == null) {
-//                            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//                            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
-//                        } else {
-//                            progress = findExistingProgress();
-//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//                            repository.updateProgress(progress); // update the user's progress in the database
-//                        }
-//                        if (challengeProgressExists()) {
-//                            progress = findExistingProgress();
-//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//                            repository.updateProgress(progress); // update the user's progress in the database
-//                        } else {
-//                            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//                            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
-//                        }
+                        repository.updateProgress(progress);
+//                        updateProgress();
 
+//                        incrementLevel(); // increment the level of the User's Progress for this Challenge
 
                     } else { // the user chose the incorrect answer
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show(); // popup message notifying user they answered incorrectly
+
+                        //progress = findExistingProgress(); // attempt finding a Progress object of this Challenge for the User
+
                     }
 
                     ++questionAttemptCounter; // count the user's current attempt
 
-                    if ((progress.getLevel() == amountOfQuestionsInChallenge) && (questionAttemptCounter != amountOfQuestionsInChallenge)) { // the user finished the challenge and answered each question correctly
-                        Toast.makeText(ChallengeScreenMultipleChoice.this, "Congratulations! You completed all questions in this challenge. Returning to Main Menu.", Toast.LENGTH_SHORT).show(); // popup message notifying user they completed the challenge
+                    assessChallengeStatus(); // determine if the User answered all Questions in the Challenge, if so, return to Main UI
 
-                        progress.setStatus("isComplete"); // set user progress for this challenge as complete
-                        progress.setCompletionDate(LocalDateTime.now()); // record the date and time the user completed this challenge
-                        repository.updateProgress(progress); // update the user's progress in the database
-
-                        questionAttemptCounter = 0;
-
-                        // Challenge finished, returning to Main User Interface
-                        Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
-                        startActivity(intent);
-                    } else if (questionAttemptCounter == amountOfQuestionsInChallenge) { // the user missed at least 1 question, but finished the challenge
-                        Toast.makeText(ChallengeScreenMultipleChoice.this, "Challenge finished, but not 100%. Returning to main menu", Toast.LENGTH_SHORT).show(); // popup message notifying user they finished the challenge, but aren't 100%
-
-                        questionAttemptCounter = 0;
-
-                        // Challenge finished, returning to Main User Interface
-                        Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
-                        startActivity(intent);
-                    } else { // the challenge isn't finished
-                        displayQuestion(challengeQuestions, questionAttemptCounter); // display the next question in the challenge for the user
-                        identifySelectedAnswer(); // record their selected answer
-                    }
+                    displayQuestion(challengeQuestions, questionAttemptCounter); // display the next question in the challenge for the user
+                    identifySelectedAnswer(); // record their selected answer
                 }
             }
         });
@@ -213,7 +180,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      *
      * @param questionAnswers An ArrayList of Answers under this Question.
      *
-     * @return An Answer object that is the correct answer for the current Question.
+     * @return An Answer object that is the correct answer for the current Question, otherwise null if not found.
      */
     private Answer findCorrectAnswer(ArrayList<Answer> questionAnswers) {
 
@@ -225,24 +192,11 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         return null; // this question doesn't have a correct answer in the database
     }
 
-    private boolean progressExists() {
-        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-        if (!allProgress.isEmpty()) {
-            return true;
-        }
-        return false;
-    }
-
-//    private boolean challengeProgressExists() {
-//        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-//            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
+    /**
+     * Attempts to find a Progress object associated with this Challenge for the user.
+     *
+     * @return A Progress object that reflects the User's Progress on this Challenge, otherwise null if it doesn't exist yet.
+     */
     private Progress findExistingProgress() {
         List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
         for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
@@ -253,41 +207,66 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         return null;
     }
 
-    private void incrementLevel() {
-        if (progress == null) {
+    private void setupProgress() {
+        progress = findExistingProgress();
+
+        if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
             progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
             repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
-        } else {
-            //progress = findExistingProgress();
-            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+        } else { // the user has attempted this Challenge before, and has existing Progress.
             repository.updateProgress(progress); // update the user's progress in the database
         }
     }
 
-    private void assessChallengeStatus() {
-
+    private void updateProgress() {
+        progress = findExistingProgress();
     }
 
-    /**
-     * Finds the Progress of this Challenge for the user.
-     *
-     */
-//    private Progress findProgress() {
-//
-//        if (!progressExists() || !challengeProgressExists()) {
-//            Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//            repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
+//    /**
+//     * Increments the Progress level this User has for this Challenge.
+//     * Inserts or updates the Progress for this Challenge.
+//     */
+//    private void incrementLevel() {
+//        if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
+//            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+//            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+//        } else { // the user has attempted this Challenge before, and has existing Progress.
+//            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//            repository.updateProgress(progress); // update the user's progress in the database
 //        }
-//
-//        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-//            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-//                return currProgress; // return a copy of their progress for this challenge
-//            }
-//        }
-//        return null;
 //    }
+
+    /**
+     * Determines if the User answered every Question in the Challenge during this attempt.
+     * If so, notify whether they answered every Question correctly or if they missed any,
+     * and return to the main UI activity.
+     */
+    private void assessChallengeStatus() { // if the user completed the challenge, it will return to the main screen
+        if ((progress.getLevel() == amountOfQuestionsInChallenge) && (questionAttemptCounter == amountOfQuestionsInChallenge)) { // the user finished the challenge and answered each question correctly
+
+            Toast.makeText(ChallengeScreenMultipleChoice.this, "Congratulations! You completed all questions in this challenge. Returning to Main Menu.", Toast.LENGTH_SHORT).show(); // popup message notifying user they completed the challenge
+
+            progress.setStatus("isComplete"); // set user progress for this challenge as complete
+            progress.setCompletionDate(LocalDateTime.now()); // record the date and time the user completed this challenge
+            repository.updateProgress(progress); // update the user's progress in the database
+
+            questionAttemptCounter = 0; // reset the question attempt counter
+
+            // Challenge finished, returning to Main User Interface
+            Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
+            startActivity(intent);
+        } else if (questionAttemptCounter == amountOfQuestionsInChallenge) { // the user missed at least 1 question, but finished the challenge
+            Toast.makeText(ChallengeScreenMultipleChoice.this, "Challenge finished, but not 100%. Returning to main menu", Toast.LENGTH_SHORT).show(); // popup message notifying user they finished the challenge, but aren't 100%
+
+            questionAttemptCounter = 0; // reset the question attempt counter
+
+            // Challenge finished, returning to Main User Interface
+            Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
+            startActivity(intent);
+        }
+
+    }
 
     /**
      * Creates an intent for starting the {@link ChallengeScreenMultipleChoice} activity.
