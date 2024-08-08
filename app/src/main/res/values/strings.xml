@@ -41,4 +41,12 @@
     <string name="progress_0">Progress: 0%</string>
     <string name="challenges_0">Challenges: 0</string>
     <string name="advanced_settings">Advanced Settings</string>
+    <string name="multiple_choice_challenge">Multiple Choice Challenge</string>
+    <string name="write_in_challenge">Write-In Challenge</string>
+    <string name="choose_the_format_for_your_challenge">Choose the format for your challenge</string>
+    <string name="challenge_description">Challenge Description</string>
+    <string name="challenge_title">Challenge Title</string>
+    <string name="question">Question</string>
+    <string name="enter_your_answer_here">Enter your answer here</string>
+    <string name="submit">Submit</string>
 </resources>
