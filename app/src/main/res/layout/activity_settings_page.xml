@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Settings_page"
-    android:background="@color/pink">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/settingsHeader_textView"
@@ -23,53 +23,25 @@
         android:layout_marginTop="40dp"
         />
 
-    <EditText
-        android:id="@+id/userName_settings_edit_text"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="New Username"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settingsHeader_textView" />
-
-    <EditText
-        android:id="@+id/Password_sign_in_edit_text"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="386dp" />
-
     <Button
-        android:id="@+id/changepassword_button"
-        android:layout_width="203dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="44dp"
+        android:id="@+id/changeUsername_button_button"
+        android:layout_width="283dp"
+        android:layout_height="97dp"
         android:text="@string/change_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName_settings_edit_text" />
+        tools:layout_editor_absoluteY="162dp" />
 
     <Button
         android:id="@+id/button"
 
-        android:layout_width="203dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="283dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="60dp"
         android:text="@string/change_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password_sign_in_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/changeUsername_button_button" />
 
     <Button
         android:id="@+id/back_button_settings_screen"

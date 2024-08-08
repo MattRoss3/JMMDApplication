@@ -39,12 +39,12 @@ public class AdvancedSettings extends AppCompatActivity {
                 this.user = user;
             }
         });
-        binding.changeusernameButton.setOnClickListener(v -> changeUsername());
+        binding.changeUsernameButton.setOnClickListener(v -> changeUsername());
         binding.backButtonSettingsScreen.setOnClickListener(v-> SettingsPage.intentFactory(getApplicationContext()));
         };
     private void changeUsername() {
-        String newUsername = Objects.requireNonNull(binding.newusernameSignInEditText.getText()).toString().trim();
-        String username= Objects.requireNonNull(binding.userNameChangeunInScreenEditText.getText()).toString().trim();
+        String newUsername = Objects.requireNonNull(binding.newNMSignInEditText.getText()).toString().trim();
+        String username= Objects.requireNonNull(binding.userNameChangeUNInScreenEditText.getText()).toString().trim();
         String password= Objects.requireNonNull(binding.passwordSignInEditText.getText().toString().trim());
         userViewModel.getUserByUsernameAndPassword(username,password).observe(this,user1 -> {
             if(user1.equals(user)){
@@ -65,7 +65,7 @@ public class AdvancedSettings extends AppCompatActivity {
 
     }
     public static Intent intentFactory(Context context) {
-        return new Intent(context, SettingsPage.class);
+        return new Intent(context, AdvancedSettings.class);
     }
 
 }

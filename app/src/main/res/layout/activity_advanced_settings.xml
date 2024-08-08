@@ -36,7 +36,7 @@
         app:layout_constraintWidth_percent="0.7">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userName_changepw_in_screen_edit_text"
+            android:id="@+id/userName_changeUN_in_screen_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Current Username"
@@ -59,7 +59,7 @@
         app:layout_constraintWidth_percent="0.7">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newPW_sign_in_edit_text"
+            android:id="@+id/newNM_sign_in_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter New Username"
@@ -89,7 +89,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/changepassword_button"
+        android:id="@+id/changeUsername_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
