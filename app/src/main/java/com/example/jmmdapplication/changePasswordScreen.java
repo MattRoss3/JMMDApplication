@@ -39,7 +39,7 @@ public class changePasswordScreen extends AppCompatActivity {
             }
         });
         binding.changepasswordButton.setOnClickListener(v -> changePassword());
-        binding.backButtonSettingsScreen.setOnClickListener(v-> SettingsPage.intentFactory(getApplicationContext()));
+        binding.backButtonSettingsScreen.setOnClickListener(v->navigateToSettings() );
 
         }
     private void changePassword() {
@@ -73,6 +73,10 @@ public class changePasswordScreen extends AppCompatActivity {
     }
     public static Intent intentFactory(Context context) {
         return new Intent(context, changePasswordScreen.class);
+    }
+    private void navigateToSettings(){
+        Intent intent=SettingsPage.intentFactory(getApplicationContext());
+        startActivity(intent);
     }
     }
 
