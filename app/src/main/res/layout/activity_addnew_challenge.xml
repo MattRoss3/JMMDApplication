@@ -45,7 +45,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/enterLanguage_bar"
         app:layout_constraintTop_toBottomOf="@+id/addChallenge_header"
-        android:backgroundTint="@color/bluec"
         />
 
     <TextView
@@ -66,7 +65,6 @@
         android:layout_width="340dp"
         android:layout_height="100dp"
         android:layout_marginTop="40dp"
-        android:backgroundTint="@color/bluec"
         android:text=""
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +77,6 @@
         android:layout_width="340dp"
         android:layout_height="100dp"
         android:layout_marginTop="52dp"
-        android:backgroundTint="@color/bluec"
         android:text=""
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +89,6 @@
         android:layout_width="340dp"
         android:layout_height="100dp"
         android:layout_marginTop="52dp"
-        android:backgroundTint="@color/bluec"
         android:text=""
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,6 +105,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="10dp"
-
-        android:backgroundTint="@color/bluec"/>
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
