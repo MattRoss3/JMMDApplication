@@ -79,6 +79,7 @@ public class Settings_page extends AppCompatActivity {
         } else{
             user.setPassword(binding.PasswordSignInEditText.getText().toString().trim());
             Toast.makeText(this, "Password successfully changed", Toast.LENGTH_SHORT).show();
+            repository.updateUser(user);
         }
     }
     private void changeUserName(){
