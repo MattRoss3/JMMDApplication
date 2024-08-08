@@ -21,7 +21,7 @@ public class AdvancedSettings extends AppCompatActivity {
         binding.funbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setTheme(R.style.Theme_JMMDApplication);
             }
         });
 
