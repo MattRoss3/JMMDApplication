@@ -58,7 +58,7 @@ public class AddNewChallenge extends AppCompatActivity {
         binding.SearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 chal=displayChallenge(binding.enterLanguageBar.getText().toString());
+                 displayChallenge(binding.enterLanguageBar.getText().toString());
             }
         });
 
@@ -86,19 +86,33 @@ public class AddNewChallenge extends AppCompatActivity {
 
 
     }
-    private Challenge displayChallenge(String language){
-        int check=0;
+    private void displayChallenge(String language){
+        int check=1;
 
         for(Challenge challenge:repository.getAllChallenges()) {
             if (challenge.getCategory().equalsIgnoreCase(language)) {
                 String temp = challenge.getCategory() + "\n" + challenge.getDescription();
-                binding.button1.setText(temp);
-                binding.button1.setVisibility(View.VISIBLE);
-                return challenge;
+                if(check==1) {
+                    binding.button1.setText(temp);
+                    binding.button1.setVisibility(View.VISIBLE);
+                    check=check+1;
+                }
+                else if(check==2){
+                    binding.button2.setText(temp);
+                    binding.button2.setVisibility(View.VISIBLE);
+                    check=check+1;
+                }
+                else if(check==3){
+                    binding.button2.setText(temp);
+                    binding.button2.setVisibility(View.VISIBLE);
+                    check=check+1;
+                }
             }
         }
+        if(check==1) {
             Toast.makeText(this, "Language not Found", Toast.LENGTH_SHORT).show();
-            return null;
+        }
+
     }
     /**
      * Factory method to create an {@link Intent} for starting {@link AddNewChallenge}.
