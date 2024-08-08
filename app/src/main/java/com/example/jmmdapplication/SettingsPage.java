@@ -34,8 +34,8 @@ public class SettingsPage extends AppCompatActivity {
 
 
         binding.backButtonSettingsScreen.setOnClickListener(v -> navigateToMainUserInterface());
-        binding.changeUsernameButtonButton.setOnClickListener(v -> AdvancedSettings.intentFactory(getApplicationContext()));
-        binding.button.setOnClickListener(v -> changePasswordScreen.intentFactory(getApplicationContext()));
+        binding.changeUsernameButtonButton.setOnClickListener(v -> navigatetoAdvancedSettings());
+        binding.button.setOnClickListener(v -> navigateToChangePassword());
     }
 
 
@@ -47,6 +47,15 @@ public class SettingsPage extends AppCompatActivity {
         Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
         startActivity(intent);
     }
+    private void navigatetoAdvancedSettings(){
+        Intent intent = AdvancedSettings.intentFactory(getApplicationContext());
+        startActivity(intent);
+    }
+    private void navigateToChangePassword(){
+        Intent intent=changePasswordScreen.intentFactory(getApplicationContext());
+        startActivity(intent);
+    }
+
 
     /**
      * Creates an intent for starting the {@link SettingsPage} activity.

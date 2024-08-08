@@ -47,14 +47,14 @@ public class changePasswordScreen extends AppCompatActivity {
         String newPassword2= Objects.requireNonNull(binding.passwordSignInEditText.getText()).toString().trim();
         String username= Objects.requireNonNull(binding.userNameChangepwInScreenEditText.getText()).toString().trim();
         String password= Objects.requireNonNull(binding.passwordSignInEditText.getText().toString().trim());
-        userViewModel.getUserByUsernameAndPassword(username,password).observe(this,user1 -> {
-            if(user1.equals(user)){
-
-                if (newPassword1.isEmpty()||newPassword2.isEmpty()) {
+        if(user.getUsername().equals(username))
+        {
+            if(user.getPassword().equals(password)) {
+                if (newPassword1.isEmpty() || newPassword2.isEmpty()) {
                     Toast.makeText(this, "New Password cannot be empty.", Toast.LENGTH_SHORT).show();
                 } else if (newPassword1.equals(user.getPassword())) {
                     Toast.makeText(this, "Password is already set.", Toast.LENGTH_SHORT).show();
-                } else if(!(newPassword1.equals(newPassword2))){
+                } else if (!(newPassword1.equals(newPassword2))) {
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                 } else {
                     user.setPassword(newPassword1);
@@ -63,9 +63,12 @@ public class changePasswordScreen extends AppCompatActivity {
                 }
             }
             else{
+                Toast.makeText(this, "Incorrect Current Password", Toast.LENGTH_SHORT).show();
+            }
+            }
+            else{
                 Toast.makeText(this, "You do not have access to this user", Toast.LENGTH_SHORT).show();
             }
-        });
 
     }
     public static Intent intentFactory(Context context) {

@@ -3,19 +3,13 @@ package com.example.jmmdapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.databinding.ActivityAdvancedSettingsBinding;
-import com.example.jmmdapplication.databinding.ActivitySettingsPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
 import com.example.jmmdapplication.viewmodel.UserViewModel;
 
@@ -40,32 +34,39 @@ public class AdvancedSettings extends AppCompatActivity {
             }
         });
         binding.changeUsernameButton.setOnClickListener(v -> changeUsername());
-        binding.backButtonSettingsScreen.setOnClickListener(v-> SettingsPage.intentFactory(getApplicationContext()));
+        binding.backButtonSettingsScreen.setOnClickListener(v-> navigateToSettings());
         };
     private void changeUsername() {
         String newUsername = Objects.requireNonNull(binding.newNMSignInEditText.getText()).toString().trim();
         String username= Objects.requireNonNull(binding.userNameChangeUNInScreenEditText.getText()).toString().trim();
         String password= Objects.requireNonNull(binding.passwordSignInEditText.getText().toString().trim());
-        userViewModel.getUserByUsernameAndPassword(username,password).observe(this,user1 -> {
-            if(user1.equals(user)){
-                if (newUsername.isEmpty()) {
-                    Toast.makeText(this, "Username cannot be empty.", Toast.LENGTH_SHORT).show();
-                } else if (newUsername.equals(user.getUsername())) {
-                    Toast.makeText(this, "Username is already set.", Toast.LENGTH_SHORT).show();
+        if(user.getUsername().equals(username)){
+            if(user.getPassword().equals(password)){
+                    if (newUsername.isEmpty()) {
+                        Toast.makeText(this, "Username cannot be empty.", Toast.LENGTH_SHORT).show();
+                    } else if (newUsername.equals(user.getUsername())) {
+                        Toast.makeText(this, "Username is already set.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        user.setUsername(newUsername);
+                        userViewModel.update(user);
+                        Toast.makeText(this, "Username successfully changed", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    user.setUsername(newUsername);
-                    userViewModel.update(user);
-                    Toast.makeText(this, "Username successfully changed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Incorrect Password", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else{
-                Toast.makeText(this, "You do not have access to this user", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }
+        else{
+            Toast.makeText(this, "Not Correct User", Toast.LENGTH_SHORT).show();
+        }
 
     }
     public static Intent intentFactory(Context context) {
         return new Intent(context, AdvancedSettings.class);
     }
+    private void navigateToSettings(){
+        Intent intent=SettingsPage.intentFactory(getApplicationContext());
+        startActivity(intent);
+    }
+
 
 }
