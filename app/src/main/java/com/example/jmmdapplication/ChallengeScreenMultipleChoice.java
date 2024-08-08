@@ -95,26 +95,18 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                         startActivity(intent);
                     }
 
-                    setupProgress();
+                    setupProgress(); // get the User's current Progress object for this challenge or create one
 
                     if (selectedAnswer.getText().equals(correctAnswer.getAnswerText())) { // the user chose the correct answer
 
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Congrats! That is the correct answer", Toast.LENGTH_SHORT).show(); // popup message notifying user they answered correctly
 
-                        //progress = findExistingProgress(); // attempt finding a Progress object of this Challenge for the User
-
                         progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
 
-                        repository.updateProgress(progress);
-//                        updateProgress();
-
-//                        incrementLevel(); // increment the level of the User's Progress for this Challenge
+                        repository.updateProgress(progress); // update the User's Progress for this Challenge
 
                     } else { // the user chose the incorrect answer
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show(); // popup message notifying user they answered incorrectly
-
-                        //progress = findExistingProgress(); // attempt finding a Progress object of this Challenge for the User
-
                     }
 
                     ++questionAttemptCounter; // count the user's current attempt
@@ -207,6 +199,10 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Prepares a Progress object with the Database for updating the User's Progress for this Challenge.
+     * Inserts the local Progress object into the database or updates the existing Progress.
+     */
     private void setupProgress() {
         progress = findExistingProgress();
 
@@ -217,25 +213,6 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
             repository.updateProgress(progress); // update the user's progress in the database
         }
     }
-
-    private void updateProgress() {
-        progress = findExistingProgress();
-    }
-
-//    /**
-//     * Increments the Progress level this User has for this Challenge.
-//     * Inserts or updates the Progress for this Challenge.
-//     */
-//    private void incrementLevel() {
-//        if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
-//            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
-//        } else { // the user has attempted this Challenge before, and has existing Progress.
-//            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-//            repository.updateProgress(progress); // update the user's progress in the database
-//        }
-//    }
 
     /**
      * Determines if the User answered every Question in the Challenge during this attempt.
@@ -265,7 +242,6 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
             Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
             startActivity(intent);
         }
-
     }
 
     /**
