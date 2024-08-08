@@ -1,6 +1,7 @@
 package com.example.jmmdapplication;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,14 @@ public class AdvancedSettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=
+        binding=ActivityAdvancedSettingsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.funbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         });
     }
