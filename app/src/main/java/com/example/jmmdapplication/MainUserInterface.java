@@ -74,15 +74,6 @@ public class MainUserInterface extends AppCompatActivity {
                 recyclerView.setAdapter(challengeAdapter);
             }
         });
-
-        // Set up UserAdapter
-        userViewModel.getAllUsers().observe(this, users -> {
-            if (users != null) {
-                userAdapter = new UserAdapter(users, userViewModel);
-                binding.myChallengesDisplayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-                binding.myChallengesDisplayRecyclerView.setAdapter(userAdapter);
-            }
-        });
     }
 
     /**

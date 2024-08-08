@@ -25,7 +25,6 @@ import java.util.List;
  * language questions in the challenge they chose, using a write-in answer box. The user's progress
  * is kept track of. Once the user completes each question in the challenge, it is marked as
  * completed and the date is recorded.
- *
  * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
  * @since 08/05/2024
  * CST 338 Software Design with Dr. C
