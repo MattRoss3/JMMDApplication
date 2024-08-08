@@ -40,4 +40,7 @@
     <string name="username">Username</string>
     <string name="progress_0">Progress: 0%</string>
     <string name="challenges_0">Challenges: 0</string>
+    <string name="enter_language_followed_by_course_number_ie_spanish_2">Enter Language followed by course number ie Spanish 2</string>
+    <string name="advance_settings">Advance Settings</string>
+    <string name="advanced_settings">Advanced Settings</string>
 </resources>

@@ -26,10 +26,10 @@
     <EditText
         android:id="@+id/enterLanguage_bar"
         android:layout_width="248dp"
-        android:layout_height="50dp"
+        android:layout_height="84dp"
         android:layout_marginTop="48dp"
         android:gravity="center"
-        android:hint="@string/enter_language"
+        android:hint="@string/enter_language_followed_by_course_number_ie_spanish_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,26 +37,26 @@
 
     <Button
         android:id="@+id/Search_Button"
-        android:layout_width="98dp"
-        android:layout_height="52dp"
+        android:layout_width="104dp"
+        android:layout_height="71dp"
         android:layout_marginTop="48dp"
         android:text="@string/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/enterLanguage_bar"
-        app:layout_constraintTop_toBottomOf="@+id/addChallenge_header"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/addChallenge_header" />
 
     <TextView
         android:id="@+id/Challenges_label"
         android:layout_width="183dp"
         android:layout_height="78dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/challenges"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
 
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Search_Button" />
 
@@ -72,29 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Challenges_label" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="340dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="52dp"
-        android:text=""
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button1" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="340dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="52dp"
-        android:text=""
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button2" />
 
     <Button
         android:id="@+id/back_button"

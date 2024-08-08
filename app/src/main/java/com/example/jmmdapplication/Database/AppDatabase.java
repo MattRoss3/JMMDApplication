@@ -78,11 +78,11 @@ public abstract class AppDatabase extends RoomDatabase {
                 int adminId = adminUser.getUserId();
 
                 // Insert Spanish challenge
-                Challenge spanishChallenge = new Challenge("Spanish Basics", "Learn basic Spanish words.", "Spanish", true);
+                Challenge spanishChallenge = new Challenge("Spanish Basics", "Learn basic Spanish words.", "Spanish 1", true);
                 challengeDao.insertChallenge(spanishChallenge);
 
                 //Insert Spanish Challenge 2
-                Challenge spanish1Challenge = new Challenge("Spanish Basics 2", "Learn basic Spanish words.", "Spanish", true);
+                Challenge spanish1Challenge = new Challenge("Spanish Basics 2", "Learn basic Spanish words.", "Spanish 2", true);
                 challengeDao.insertChallenge(spanish1Challenge);
                 // Get the inserted Spanish challenge
                 Challenge insertedSpanishChallenge = challengeDao.getChallengeByNameSync("Spanish Basics");
@@ -100,10 +100,10 @@ public abstract class AppDatabase extends RoomDatabase {
                 insertSpanishQuestionsAndAnswers2(questionDao, answerDao, spanishChallenge1Id);
 
                 // Insert French challenge
-                Challenge frenchChallenge = new Challenge("French Basics", "Learn basic French words.", "French", true);
+                Challenge frenchChallenge = new Challenge("French Basics", "Learn basic French words.", "French 1", true);
                 challengeDao.insertChallenge(frenchChallenge);
 
-                Challenge french2Challenge = new Challenge("French Basics 2", "Learn basic French words.", "French", true);
+                Challenge french2Challenge = new Challenge("French Basics 2", "Learn basic French words.", "French 2", true);
                 challengeDao.insertChallenge(french2Challenge);
 
                 // Get the inserted French challenge
@@ -167,18 +167,18 @@ public abstract class AppDatabase extends RoomDatabase {
                     new String[]{"au revoir", "est", "de", "dans"}, new boolean[]{true, false, false, false});
         }
         private void insertFrenchQuestionsAndAnswers2(QuestionDAO questionDao, AnswerDAO answerDao, int challengeId) {
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for down?", "French",
-                    new String[]{"vers le bas", "Ennui", "Faux", "Escargot"}, new boolean[]{true, false, false, false});
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for run?", "French",
-                    new String[]{"courir", "Noir", "Jour", "Nouveau"}, new boolean[]{true, false, false, false});
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for around?", "French",
-                    new String[]{"autour", "Fromage", "comme", "je"}, new boolean[]{true, false, false, false});
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for and?", "French",
-                    new String[]{"et", "était", "que", "avec"}, new boolean[]{true, false, false, false});
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for hurt?", "French",
-                    new String[]{"blesser", "avoir", "chaud", "mais"}, new boolean[]{true, false, false, false});
-            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for goodbye?", "French",
-                    new String[]{"au revoir", "est", "de", "dans"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for time?", "French",
+                    new String[]{"temps", "jour", "monde", "Escargot"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for mister?", "French",
+                    new String[]{"monsieur", "raison", "madame", "Nouveau"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for cat?", "French",
+                    new String[]{"chat", "beau", "belle", "je"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for dog?", "French",
+                    new String[]{"chien", "chat", "que", "fort"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for you're?", "French",
+                    new String[]{"de rien", "excuez-moi", "raison", "mais"}, new boolean[]{true, false, false, false});
+            insertQuestionWithAnswers(questionDao, answerDao, challengeId, "What is the French word for reason?", "French",
+                    new String[]{"raison", "belle", "Madame", "dans"}, new boolean[]{true, false, false, false});
         }
 
         private void insertQuestionWithAnswers(QuestionDAO questionDao, AnswerDAO answerDao, int challengeId, String questionText, String language,

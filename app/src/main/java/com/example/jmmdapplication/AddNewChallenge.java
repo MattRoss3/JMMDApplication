@@ -16,6 +16,7 @@ import com.example.jmmdapplication.viewmodel.ChallengeViewModel;
 import com.example.jmmdapplication.viewmodel.UserChallengeViewModel;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Activity that allows users to add a new challenge.
@@ -68,15 +69,17 @@ public class AddNewChallenge extends AppCompatActivity {
      * Searches for a challenge based on the entered language.
      */
     private void searchChallenge() {
+        AtomicInteger check= new AtomicInteger(1);
         String language = binding.enterLanguageBar.getText().toString();
         if (!language.isEmpty()) {
             challengeViewModel.getAllChallenges().observe(this, challenges -> {
                 selectedChallenge = findChallengeByLanguage(challenges, language);
                 if (selectedChallenge != null) {
                     String challengeDetails = selectedChallenge.getCategory() + "\n" + selectedChallenge.getDescription();
-                    binding.button1.setText(challengeDetails);
-                    binding.button1.setVisibility(View.VISIBLE);
-                } else {
+                        binding.button1.setText(challengeDetails);
+                        binding.button1.setVisibility(View.VISIBLE);
+                        check.getAndIncrement();
+                }  else {
                     Toast.makeText(this, "Language not Found", Toast.LENGTH_SHORT).show();
                 }
             });
