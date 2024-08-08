@@ -92,7 +92,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                 if (selectedAnswer != null) { // ensure user has selected an answer
                     Question question = challengeQuestions.get(questionAttemptCounter); // get copy of current Question in challenge
                     Answer correctAnswer = findCorrectAnswer(repository.getAnswersByQuestionId(question.getQuestionId())); // get copy of the correct Answer in this challenge
-                    if (correctAnswer == null) { // ensures the question in the database has a correct answer associated with it
+                    if (correctAnswer == null)  { // ensures the question in the database has a correct answer associated with it
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, there is a unique issue with displaying this question. Returning to main screen.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
                         startActivity(intent);
@@ -102,17 +102,28 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Congrats! That is the correct answer", Toast.LENGTH_SHORT).show(); // popup message notifying user they answered correctly
 
-                        //progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+                        progress = findExistingProgress();
 
-                        if (challengeProgressExists()) {
-                            progress = findExistingProgress();
-                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-                            repository.updateProgress(progress); // update the user's progress in the database
-                        } else {
-                            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
-                            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
-                        }
+                        incrementLevel();
+
+//                        if (progress == null) {
+//                            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//                            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+//                        } else {
+//                            progress = findExistingProgress();
+//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//                            repository.updateProgress(progress); // update the user's progress in the database
+//                        }
+//                        if (challengeProgressExists()) {
+//                            progress = findExistingProgress();
+//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//                            repository.updateProgress(progress); // update the user's progress in the database
+//                        } else {
+//                            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+//                            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+//                            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+//                        }
 
 
                     } else { // the user chose the incorrect answer
@@ -128,11 +139,15 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
                         progress.setCompletionDate(LocalDateTime.now()); // record the date and time the user completed this challenge
                         repository.updateProgress(progress); // update the user's progress in the database
 
+                        questionAttemptCounter = 0;
+
                         // Challenge finished, returning to Main User Interface
                         Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
                         startActivity(intent);
                     } else if (questionAttemptCounter == amountOfQuestionsInChallenge) { // the user missed at least 1 question, but finished the challenge
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Challenge finished, but not 100%. Returning to main menu", Toast.LENGTH_SHORT).show(); // popup message notifying user they finished the challenge, but aren't 100%
+
+                        questionAttemptCounter = 0;
 
                         // Challenge finished, returning to Main User Interface
                         Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
@@ -216,7 +231,9 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
             return true;
         }
         return false;
+    }
 
+//    private boolean challengeProgressExists() {
 //        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
 //        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
 //            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
@@ -224,17 +241,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 //            }
 //        }
 //        return false;
-    }
-
-    private boolean challengeProgressExists() {
-        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-                return true;
-            }
-        }
-        return false;
-    }
+//    }
 
     private Progress findExistingProgress() {
         List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
@@ -245,99 +252,42 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         }
         return null;
     }
-//
-//    private void createNewProgress() {
-//
-//    }
+
+    private void incrementLevel() {
+        if (progress == null) {
+            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+        } else {
+            //progress = findExistingProgress();
+            progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
+            repository.updateProgress(progress); // update the user's progress in the database
+        }
+    }
+
+    private void assessChallengeStatus() {
+
+    }
 
     /**
      * Finds the Progress of this Challenge for the user.
      *
      */
-    private Progress findProgress() {
-
-        if (!progressExists() || !challengeProgressExists()) {
-            Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-            repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
-        }
-
-        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-                return currProgress; // return a copy of their progress for this challenge
-            }
-        }
-
-//        progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//        repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+//    private Progress findProgress() {
 //
-//        List<Progress> allProgressUpdated = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//        for (Progress currProgress : allProgressUpdated) { // iterate through the user's progress for each challenge until finding the progress for this challenge
+//        if (!progressExists() || !challengeProgressExists()) {
+//            Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+//            repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
+//        }
+//
+//        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
+//        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
 //            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
 //                return currProgress; // return a copy of their progress for this challenge
 //            }
 //        }
-        return null;
-
-//        if (!progressExists()) {
-//            repository.insertProgress(new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0)); // insert the Progress object for this Challenge for the User
-//        } else {
-//            if (!challengeProgressExists()) {
-//                repository.insertProgress(new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0)); // insert the Progress object for this Challenge for the User
-//            }
-//        }
-//        findExistingProgress();
-
-
-
-//        boolean progressExists = false;
-//
-//        // check if this user has started this challenge before
-//        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a List of Progress objects under this Challenge by calling Repo method with userId
-//        if (allProgress.isEmpty()) {
-//            Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//            repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
-//        }
-//
-//        List<Progress> allProgressUpdated = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//        for (Progress currProgress : allProgressUpdated) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-//            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-//                return currProgress; // get a copy of their progress for this challenge
-//            }
-//        }
-//
-//        Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//        repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
-//        return newProgress;
-//
-//        Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//        repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
-////        repository.updateProgress(newProgress);
-//        return newProgress; // get a copy of their progress for this challenge
-
-//
-//        List<Progress> allProgressUpdated = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//        for (Progress currProgress : allProgressUpdated) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-//            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-//                return currProgress; // get a copy of their progress for this challenge
-//            }
-//        }
-
-//        return newProgress;
-
-//        if (!progressExists) { // this challenge is new to the user
-//            Progress newProgress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-//            repository.insertProgress(newProgress); // insert the Progress object for this Challenge for the User
-//
-//            allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-//            for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-//                if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-//                    progress = currProgress; // copy of their progress for this challenge
-//                    break;
-//                }
-//            }
-//        }
-    }
+//        return null;
+//    }
 
     /**
      * Creates an intent for starting the {@link ChallengeScreenMultipleChoice} activity.
