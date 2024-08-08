@@ -24,7 +24,5 @@ public class AdvancedSettings extends AppCompatActivity {
 
             }
         });
-
-        });
     }
 }
