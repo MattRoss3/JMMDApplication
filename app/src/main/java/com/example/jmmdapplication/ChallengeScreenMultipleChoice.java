@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jmmdapplication.Database.DAO.ProgressDAO;
 import com.example.jmmdapplication.Database.entities.Answer;
@@ -16,6 +17,9 @@ import com.example.jmmdapplication.Database.entities.Progress;
 import com.example.jmmdapplication.Database.entities.Question;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivityChallengeScreenMultipleChoiceBinding;
+import com.example.jmmdapplication.viewmodel.AnswerViewModel;
+import com.example.jmmdapplication.viewmodel.ProgressViewModel;
+import com.example.jmmdapplication.viewmodel.QuestionViewModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,7 +49,9 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
     private static final String CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION";
 
     private ActivityChallengeScreenMultipleChoiceBinding binding;
-    private DatabaseRepository repository;
+    private ProgressViewModel progressViewModel;
+    private QuestionViewModel questionViewModel;
+    private AnswerViewModel answerViewModel;
 
     public static final String TAG = "CHALLENGE_SCREEN_MULTIPLE_CHOICE_TAG";
 
@@ -57,6 +63,8 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
     private RadioButton selectedAnswer; // the answer button selected by the user
     private int questionAttemptCounter = 0; // the counter for answer attempts by the user
     private int amountOfQuestionsInChallenge = 0; // the amount of questions in the challenge
+    private List<Question> challengeQuestions;
+    private List<Answer> currentAnswers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +79,26 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         challengeName = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_NAME);
         challengeDescription = getIntent().getStringExtra(CHALLENGE_ACTIVITY_CHALLENGE_DESCRIPTION);
 
-        repository = DatabaseRepository.getRepository(this.getApplication());
+        progressViewModel = new ViewModelProvider(this).get(ProgressViewModel.class);
+        questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
+        answerViewModel = new ViewModelProvider(this).get(AnswerViewModel.class);
 
         binding.challengeScreenHeader.setText(challengeName); // set the challenge title header
         binding.challengeScreenDescription.setText(challengeDescription); // set the challenge description header
 
-        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId); // pull an ArrayList of Question objects under this Challenge by calling Repo method with challengeId
-        amountOfQuestionsInChallenge = challengeQuestions.size();// create local variable of amount of questions in challenge
+        // pull an ArrayList of Question objects under this Challenge by calling ViewModel method with challengeId
+        questionViewModel.getQuestionsByChallengeId(challengeId).observe(this, questions -> {
+            if (questions != null && !questions.isEmpty()) {
+                challengeQuestions = questions;
+                amountOfQuestionsInChallenge = questions.size(); // create local variable of amount of questions in challenge
+                displayQuestion(challengeQuestions, questionAttemptCounter); // display the first question in the challenge to the user
+            }
+        });
 
-        displayQuestion(challengeQuestions, questionAttemptCounter); // display the first question in the challenge to the user
+//        ArrayList<Question> challengeQuestions = repository.getQuestionsByChallengeId(challengeId); // pull an ArrayList of Question objects under this Challenge by calling Repo method with challengeId
+//        amountOfQuestionsInChallenge = challengeQuestions.size();// create local variable of amount of questions in challenge
+//
+//        displayQuestion(challengeQuestions, questionAttemptCounter); // display the first question in the challenge to the user
         identifySelectedAnswer(); // record their selected answer
 
         // set on click listener for submit button
@@ -88,7 +107,9 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
             public void onClick(View view) {
                 if (selectedAnswer != null) { // ensure user has selected an answer
                     Question question = challengeQuestions.get(questionAttemptCounter); // get copy of current Question in challenge
-                    Answer correctAnswer = findCorrectAnswer(repository.getAnswersByQuestionId(question.getQuestionId())); // get copy of the correct Answer in this challenge
+                    //Answer correctAnswer = findCorrectAnswer(repository.getAnswersByQuestionId(question.getQuestionId())); // get copy of the correct Answer in this challenge
+                    Answer correctAnswer = findCorrectAnswer(currentAnswers); // get copy of the correct Answer in this challenge
+
                     if (correctAnswer == null)  { // ensures the question in the database has a correct answer associated with it
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, there is a unique issue with displaying this question. Returning to main screen.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext()));
@@ -103,7 +124,8 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
                         progress.setLevel(progress.getLevel() + 1); // increment the user's current level in this challenge
 
-                        repository.updateProgress(progress); // update the User's Progress for this Challenge
+//                        repository.updateProgress(progress); // update the User's Progress for this Challenge
+                        progressViewModel.update(progress); // update the User's Progress for this Challenge
 
                     } else { // the user chose the incorrect answer
                         Toast.makeText(ChallengeScreenMultipleChoice.this, "Sorry, the correct answer was " + correctAnswer.getAnswerText(), Toast.LENGTH_SHORT).show(); // popup message notifying user they answered incorrectly
@@ -137,18 +159,37 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      * @param questionIndexInChallenge An int representing the index of the current question in this challenge.
      *
      */
-    private void displayQuestion (ArrayList<Question> challengeQuestions, int questionIndexInChallenge) {
+    private void displayQuestion (List<Question> challengeQuestions, int questionIndexInChallenge) {
+
+
         binding.radioGroup.clearCheck(); // clear any checked buttons
 
         Question question = challengeQuestions.get(questionIndexInChallenge); // get current question in challenge
-        ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers for question
-        Collections.shuffle(questionAnswers); // randomize the order of answers before displaying
+//        ArrayList<Answer> questionAnswers = repository.getAnswersByQuestionId(question.getQuestionId()); // get list of possible answers for question
+//
+//
+//        Collections.shuffle(questionAnswers); // randomize the order of answers before displaying
+//
+//        binding.questionText.setText(question.getQuestionText()); // set the question text to the current question
+//        binding.radioButton1.setText(questionAnswers.get(0).getAnswerText()); // set the first answer text to the current question
+//        binding.radioButton2.setText(questionAnswers.get(1).getAnswerText()); // set the second answer text to the current question
+//        binding.radioButton3.setText(questionAnswers.get(2).getAnswerText()); // set the third answer text to the current question
+//        binding.radioButton4.setText(questionAnswers.get(3).getAnswerText()); // set the fourth answer text to the current question
 
-        binding.questionText.setText(question.getQuestionText()); // set the question text to the current question
-        binding.radioButton1.setText(questionAnswers.get(0).getAnswerText()); // set the first answer text to the current question
-        binding.radioButton2.setText(questionAnswers.get(1).getAnswerText()); // set the second answer text to the current question
-        binding.radioButton3.setText(questionAnswers.get(2).getAnswerText()); // set the third answer text to the current question
-        binding.radioButton4.setText(questionAnswers.get(3).getAnswerText()); // set the fourth answer text to the current question
+
+        answerViewModel.getAnswersByQuestionId(question.getQuestionId()).observe(this, questionWithAnswers -> {
+            if (questionWithAnswers != null && !questionWithAnswers.isEmpty()) {
+                currentAnswers = questionWithAnswers.get(0).answers;
+                Collections.shuffle(currentAnswers); // randomize the order of answers before displaying
+                binding.questionText.setText(question.getQuestionText());
+                binding.radioButton1.setText(currentAnswers.get(0).getAnswerText()); // set the first answer text to the current question
+                binding.radioButton2.setText(currentAnswers.get(1).getAnswerText()); // set the second answer text to the current question
+                binding.radioButton3.setText(currentAnswers.get(2).getAnswerText()); // set the third answer text to the current question
+                binding.radioButton4.setText(currentAnswers.get(3).getAnswerText()); // set the fourth answer text to the current question
+
+                //binding.radioGroup.setOnCheckedChangeListener((radioGroup, checkedButtonID) -> selectedAnswer = radioGroup.findViewById(checkedButtonID));
+            }
+        });
     }
 
     /**
@@ -174,7 +215,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      *
      * @return An Answer object that is the correct answer for the current Question, otherwise null if not found.
      */
-    private Answer findCorrectAnswer(ArrayList<Answer> questionAnswers) {
+    private Answer findCorrectAnswer(List<Answer> questionAnswers) {
 
         for (Answer currAnswer : questionAnswers) { // iterate through each possible answer for this question
             if (currAnswer.isCorrect()) { // determine if answer has field indicating it's the correct answer
@@ -190,13 +231,18 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      * @return A Progress object that reflects the User's Progress on this Challenge, otherwise null if it doesn't exist yet.
      */
     private Progress findExistingProgress() {
-        List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
+
+        //List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
+        List<Progress> allProgress = progressViewModel.getProgressByUserId(userId).getValue();  // pull a updated List of Progress objects under this Challenge by calling ViewModel method with userId
+        if ((allProgress == null) || allProgress.isEmpty()) {
+            return null;
+        }
         for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
             if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
                 return currProgress; // copy their progress for this challenge
             }
         }
-        return null;
+        return null; // the user hasn't started this challenge before, but has started other challenges
     }
 
     /**
@@ -208,9 +254,10 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
         if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
             progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
-            repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+            //repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
+            progressViewModel.insert(progress); // insert the Progress object for this Challenge for the User
         } else { // the user has attempted this Challenge before, and has existing Progress.
-            repository.updateProgress(progress); // update the user's progress in the database
+            progressViewModel.update(progress); // update the user's progress in the database
         }
     }
 
@@ -226,7 +273,8 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
 
             progress.setStatus("isComplete"); // set user progress for this challenge as complete
             progress.setCompletionDate(LocalDateTime.now()); // record the date and time the user completed this challenge
-            repository.updateProgress(progress); // update the user's progress in the database
+//            repository.updateProgress(progress); // update the user's progress in the database
+            progressViewModel.update(progress); // update the user's progress in the database
 
             questionAttemptCounter = 0; // reset the question attempt counter
 

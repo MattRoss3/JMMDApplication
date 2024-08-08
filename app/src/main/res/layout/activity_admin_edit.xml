@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminEditActivity"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <!-- Dashboard Button -->
     <com.google.android.material.button.MaterialButton

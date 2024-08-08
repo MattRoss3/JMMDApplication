@@ -6,10 +6,14 @@ import androidx.room.Relation;
 import com.example.jmmdapplication.Database.entities.Answer;
 import com.example.jmmdapplication.Database.entities.Question;
 
-public class QuestionWithAnswer {
-    @Embedded
-    public Question question;
+import java.util.List;
 
-    @Relation(parentColumn = "questionId", entityColumn = "questionId")
-    public Answer answer;
+public class QuestionWithAnswers {
+    @Embedded public Question question;
+    @Relation(
+            parentColumn = "questionId",
+            entityColumn = "questionId"
+    )
+    public List<Answer> answers;
+
 }

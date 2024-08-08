@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Adminpage">
+    tools:context=".Adminpage"
+    android:background="@color/white">
     <TextView
         android:id="@+id/adminPage_Header"
         android:layout_width="wrap_content"
