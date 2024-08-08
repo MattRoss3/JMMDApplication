@@ -31,4 +31,15 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="10dp" />
 
+    <Button
+        android:id="@+id/funbutton"
+        android:layout_width="281dp"
+        android:layout_height="260dp"
+        android:layout_marginTop="108dp"
+        android:text="Fun Button"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/advancesettingsHeader_textView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
