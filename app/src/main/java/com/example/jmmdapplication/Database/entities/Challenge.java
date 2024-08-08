@@ -6,17 +6,10 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-@Entity(tableName = "challenges",
-        foreignKeys = @ForeignKey(entity = User.class,
-                parentColumns = "userId",
-                childColumns = "userId",
-                onDelete = ForeignKey.CASCADE),
-        indices = {@Index(value = "userId")})
+@Entity(tableName = "challenges")
 public class Challenge {
     @PrimaryKey(autoGenerate = true)
     private int challengeId;
-
-    private int userId;
 
     @NonNull
     private String name;
@@ -49,14 +42,6 @@ public class Challenge {
 
     public boolean isAssigned() { return isAssigned; }
     public void setAssigned(boolean assigned) { isAssigned = assigned; }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     @NonNull
     public String getCategory() {

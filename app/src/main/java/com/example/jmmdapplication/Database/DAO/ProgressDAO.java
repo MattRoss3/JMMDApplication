@@ -1,5 +1,6 @@
 package com.example.jmmdapplication.Database.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
 import com.example.jmmdapplication.Database.entities.Progress;
@@ -13,7 +14,7 @@ public interface ProgressDAO {
     void insertProgress(Progress progress);
 
     @Query("SELECT * FROM progress WHERE userId = :userId")
-    List<Progress> getProgressByUserId(int userId);
+    LiveData<List<Progress>> getProgressByUserId(int userId);
 
     @Update
     void updateProgress(Progress progress);

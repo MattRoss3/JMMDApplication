@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.jmmdapplication.Database.AppDatabase;
-import com.example.jmmdapplication.Database.entities.User;
-import com.example.jmmdapplication.Database.repository.DatabaseRepository;
 import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
+import com.example.jmmdapplication.viewmodel.UserViewModel;
 
+/**
+ * Activity for signing in the user.
+ * <p>
+ * This activity handles the sign-in process, checks the user credentials, and navigates to the main user interface if successful.
+ * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
+ */
 public class SignInPageActivity extends AppCompatActivity {
-    ActivitySignInPageBinding binding;
-    DatabaseRepository repository;
-
+    private ActivitySignInPageBinding binding;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +28,9 @@ public class SignInPageActivity extends AppCompatActivity {
         binding = ActivitySignInPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = DatabaseRepository.getRepository( this.getApplication());
+        // Initialize ViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         setupListeners();
-
     }
 
     /**
@@ -37,20 +42,16 @@ public class SignInPageActivity extends AppCompatActivity {
         String username = binding.userNameSignInScreenEditText.getText() != null ? binding.userNameSignInScreenEditText.getText().toString().trim().toLowerCase() : "";
         String password = binding.passwordSignInEditText.getText() != null ? binding.passwordSignInEditText.getText().toString().trim() : "";
 
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            User user = repository.getUserByUsernameAndPassword(username, password);
-
-            runOnUiThread(() -> {
-                if (user != null) {
-                    SessionManager.saveUserSession(SignInPageActivity.this, user.getUserId());
-                    Intent intent = new Intent(SignInPageActivity.this, MainUserInterface.class);
-                    startActivity(intent);
-                    finish(); // Close the sign-in activity
-                } else {
-                    // Login failed, show error message
-                    Toast.makeText(SignInPageActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
-                }
-            });
+        userViewModel.getUserByUsernameAndPassword(username, password).observe(this, user -> {
+            if (user != null) {
+                SessionManager.saveUserSession(SignInPageActivity.this, user.getUserId());
+                Intent intent = new Intent(SignInPageActivity.this, MainUserInterface.class);
+                startActivity(intent);
+                finish(); // Close the sign-in activity
+            } else {
+                // Login failed, show error message
+                Toast.makeText(SignInPageActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -61,7 +62,6 @@ public class SignInPageActivity extends AppCompatActivity {
      * while the sign-up button navigates to the sign-up page.
      * </p>
      */
-
     private void setupListeners() {
         binding.signInButtonSignInPage.setOnClickListener(view -> signInUser());
         binding.signUpButtonSignInPage.setOnClickListener(view -> {
