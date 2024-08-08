@@ -189,6 +189,225 @@ public abstract class AppDatabase extends RoomDatabase {
                         answerDao.insertAnswer(new Answer(frenchQuestion6Id, "de", false));
                         answerDao.insertAnswer(new Answer(frenchQuestion6Id, "dans", false));
 
+                        Challenge spanish1Challenge = new Challenge("Spanish Basics 2", "Learn basic Spanish words.", "Spanish", true);
+                        spanishChallenge.setUserId(adminId); // Assigning to admin
+                        challengeDao.insertChallenge(spanish1Challenge);
+                        int spanish1ChallengeId = challengeDao.getChallengesByUserId(adminId).get(2).getChallengeId();
+
+
+// Spanish Questions and Answers
+                        Question spanish1Question1 = new Question(spanish1ChallengeId, "What is the Spanish word for hello?", "Spanish");
+                        questionDao.insertQuestion(spanish1Question1);
+                        int spanish1Question1Id = questionDao.getQuestionsByChallengeId(spanish1ChallengeId).get(0).getQuestionId();
+                        answerDao.insertAnswer(new Answer(spanish1Question1Id, "hola", true));
+                        answerDao.insertAnswer(new Answer(spanish1Question1Id, "buenos", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question1Id, "tardes", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question1Id, "amigo", false));
+// Spanish Question 2
+                        Question spanish1Question2 = new Question(spanish1ChallengeId, "What is the Spanish word for goodbye?", "Spanish");
+                        questionDao.insertQuestion(spanish1Question2);
+                        int spanish1Question2Id = questionDao.getQuestionsByChallengeId(spanish1ChallengeId).get(1).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish1Question2Id, "adios", true));
+                        answerDao.insertAnswer(new Answer(spanish1Question2Id, "mi", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question2Id, "nombre", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question2Id, "es", false));
+
+
+// Spanish Question 3
+                        Question spanish1Question3 = new Question(spanish1ChallengeId, "What is the Spanish word for library?", "Spanish");
+                        questionDao.insertQuestion(spanish1Question3);
+                        int spanish1Question3Id = questionDao.getQuestionsByChallengeId(spanish1ChallengeId).get(2).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish1Question3Id, "donde", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question3Id, "esta", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question3Id, "la", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question3Id, "biblioteca", true));
+
+
+// Spanish Question 4
+                        Question spanish1Question4 = new Question(spanish1ChallengeId, "What is the Spanish word for eat?", "Spanish");
+                        questionDao.insertQuestion(spanish1Question4);
+                        int spanish1Question4Id = questionDao.getQuestionsByChallengeId(spanish1ChallengeId).get(3).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish1Question4Id, "comer", true));
+                        answerDao.insertAnswer(new Answer(spanish1Question4Id, "caliente", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question4Id, "mucho", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question4Id, "grande", false));
+
+
+// Spanish Question 5
+                        Question spanish1Question5 = new Question(spanish1ChallengeId, "What is the Spanish word for play?", "Spanish");
+                        questionDao.insertQuestion(spanish1Question5);
+                        int spanish1Question5Id = questionDao.getQuestionsByChallengeId(spanish1ChallengeId).get(4).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish1Question5Id, "juego", true));
+                        answerDao.insertAnswer(new Answer(spanish1Question5Id, "nombre", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question5Id, "bien", false));
+                        answerDao.insertAnswer(new Answer(spanish1Question5Id, "siempre", false));
+
+                        Challenge spanish2Challenge = new Challenge("Spanish Basics 3", "Learn basic Spanish words.", "Spanish", true);
+                        spanishChallenge.setUserId(adminId); // Assigning to admin
+                        challengeDao.insertChallenge(spanish2Challenge);
+                        int spanish2ChallengeId = challengeDao.getChallengesByUserId(adminId).get(3).getChallengeId();
+
+
+// Spanish Questions and Answers
+                        Question spanish2Question1 = new Question(spanish2ChallengeId, "What is the Spanish word for goodbye?", "Spanish");
+                        questionDao.insertQuestion(spanish2Question1);
+                        int spanish2Question1Id = questionDao.getQuestionsByChallengeId(spanish2ChallengeId).get(0).getQuestionId();
+                        answerDao.insertAnswer(new Answer(spanish2Question1Id, "adios", true));
+                        answerDao.insertAnswer(new Answer(spanish2Question1Id, "domingo", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question1Id, "taco", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question1Id, "amigo", false));
+// Spanish Question 2
+                        Question spanish2Question2 = new Question(spanish2ChallengeId, "What is the Spanish word for Monday?", "Spanish");
+                        questionDao.insertQuestion(spanish2Question2);
+                        int spanish2Question2Id = questionDao.getQuestionsByChallengeId(spanish2ChallengeId).get(1).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish2Question2Id, "martes", true));
+                        answerDao.insertAnswer(new Answer(spanish2Question2Id, "burrito", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question2Id, "quesadilla", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question2Id, "birria", false));
+
+
+// Spanish Question 3
+                        Question spanish2Question3 = new Question(spanish2ChallengeId, "What is the Spanish word for butter?", "Spanish");
+                        questionDao.insertQuestion(spanish2Question3);
+                        int spanish2Question3Id = questionDao.getQuestionsByChallengeId(spanish2ChallengeId).get(2).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish2Question3Id, "manteca", true));
+                        answerDao.insertAnswer(new Answer(spanish2Question3Id, "luna", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question3Id, "sol", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question3Id, "torta", false));
+
+
+// Spanish Question 4
+                        Question spanish2Question4 = new Question(spanish2ChallengeId, "What is the Spanish word for love?", "Spanish");
+                        questionDao.insertQuestion(spanish2Question4);
+                        int spanish2Question4Id = questionDao.getQuestionsByChallengeId(spanish2ChallengeId).get(3).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish2Question4Id, "amar", true));
+                        answerDao.insertAnswer(new Answer(spanish2Question4Id, "luna", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question4Id, "mucho", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question4Id, "siempre", false));
+
+
+// Spanish Question 5
+                        Question spanish2Question5 = new Question(spanish2ChallengeId, "What is the Spanish word for rock?", "Spanish");
+                        questionDao.insertQuestion(spanish2Question5);
+                        int spanish2Question5Id = questionDao.getQuestionsByChallengeId(spanish2ChallengeId).get(4).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(spanish2Question5Id, "roca", true));
+                        answerDao.insertAnswer(new Answer(spanish2Question5Id, "manteca", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question5Id, "bien", false));
+                        answerDao.insertAnswer(new Answer(spanish2Question5Id, "sol", false));
+
+
+
+
+// Challenge 2: French
+                        Challenge french1Challenge = new Challenge("French Basics 1", "Learn basic French words.", "French", true);
+                        french1Challenge.setUserId(adminId); // Assigning to admin
+                        challengeDao.insertChallenge(french1Challenge);
+                        int french1ChallengeId = challengeDao.getChallengesByUserId(adminId).get(4).getChallengeId();
+
+
+
+
+// French Questions and Answers
+                        Question french1Question1 = new Question(french1ChallengeId, "What is the French word for hello?", "French");
+                        questionDao.insertQuestion(french1Question1);
+                        int french1Question1Id = questionDao.getQuestionsByChallengeId(french1ChallengeId).get(0).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french1Question1Id, "bonjour", true));
+                        answerDao.insertAnswer(new Answer(french1Question1Id, "oui", false));
+                        answerDao.insertAnswer(new Answer(french1Question1Id, "merci", false));
+                        answerDao.insertAnswer(new Answer(french1Question1Id, "Escargot", false));
+
+
+                        Question french1Question2 = new Question(french1ChallengeId, "What is the French word for no?", "French");
+                        questionDao.insertQuestion(french1Question2);
+                        int french1Question2Id = questionDao.getQuestionsByChallengeId(french1ChallengeId).get(1).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french1Question2Id, "non", true));
+                        answerDao.insertAnswer(new Answer(french1Question2Id, "femme", false));
+                        answerDao.insertAnswer(new Answer(french1Question2Id, "Jour", false));
+                        answerDao.insertAnswer(new Answer(french1Question2Id, "amour", false));
+
+
+                        Question french1Question3 = new Question(french1ChallengeId, "What is the French word for man", "French");
+                        questionDao.insertQuestion(frenchQuestion3);
+                        int french1Question3Id = questionDao.getQuestionsByChallengeId(french1ChallengeId).get(2).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french1Question3Id, "homme", true));
+                        answerDao.insertAnswer(new Answer(french1Question3Id, "bonsoir", false));
+                        answerDao.insertAnswer(new Answer(french1Question3Id, "comme", false));
+                        answerDao.insertAnswer(new Answer(french1Question3Id, "je", false));
+
+
+                        Question french1Question4 = new Question(french1ChallengeId, "What is the French word for time?", "French");
+                        questionDao.insertQuestion(french1Question4);
+                        int french1Question4Id = questionDao.getQuestionsByChallengeId(french1ChallengeId).get(3).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french1Question4Id, "temps", true));
+                        answerDao.insertAnswer(new Answer(french1Question4Id, "bonne nuit", false));
+                        answerDao.insertAnswer(new Answer(french1Question4Id, "de rien", false));
+                        answerDao.insertAnswer(new Answer(french1Question4Id, "jour", false));
+
+
+                        Question french1Question5 = new Question(french1ChallengeId, "What is the French word for day?", "French");
+                        questionDao.insertQuestion(french1Question5);
+                        int french1Question5Id = questionDao.getQuestionsByChallengeId(french1ChallengeId).get(4).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french1Question5Id, "jour", true));
+                        answerDao.insertAnswer(new Answer(french1Question5Id, "monde", false));
+                                answerDao.insertAnswer(new Answer(french1Question5Id, "raison", false));
+                        answerDao.insertAnswer(new Answer(french1Question5Id, "mais", false));
+
+
+
+
+// Challenge 2: French
+                        Challenge french2Challenge = new Challenge("French Basics 2", "Learn basic French words.", "French", true);
+                        french2Challenge.setUserId(adminId); // Assigning to admin
+                        challengeDao.insertChallenge(french2Challenge);
+                        int french2ChallengeId = challengeDao.getChallengesByUserId(adminId).get(5).getChallengeId();
+
+
+
+
+// French Questions and Answers
+                        Question french2Question1 = new Question(french2ChallengeId, "What is the French word for world?", "French");
+                        questionDao.insertQuestion(french2Question1);
+                        int french2Question1Id = questionDao.getQuestionsByChallengeId(french2ChallengeId).get(0).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french2Question1Id, "monde", true));
+                        answerDao.insertAnswer(new Answer(french2Question1Id, "monsieur", false));
+                        answerDao.insertAnswer(new Answer(french2Question1Id, "belle", false));
+                        answerDao.insertAnswer(new Answer(french2Question1Id, "Escargot", false));
+
+
+                        Question french2Question2 = new Question(french2ChallengeId, "What is the French word for reason?", "French");
+                        questionDao.insertQuestion(french2Question2);
+                        int french2Question2Id = questionDao.getQuestionsByChallengeId(french2ChallengeId).get(1).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french2Question2Id, "raison", true));
+                        answerDao.insertAnswer(new Answer(french2Question2Id, "beau", false));
+                        answerDao.insertAnswer(new Answer(french2Question2Id, "chat", false));
+                        answerDao.insertAnswer(new Answer(french2Question2Id, "chien", false));
+
+
+                        Question french2Question3 = new Question(french2ChallengeId, "What is the French word for dog?", "French");
+                        questionDao.insertQuestion(french2Question3);
+                        int french2Question3Id = questionDao.getQuestionsByChallengeId(french2ChallengeId).get(2).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french2Question3Id, "chien", true));
+                        answerDao.insertAnswer(new Answer(french2Question3Id, "chat", false));
+                        answerDao.insertAnswer(new Answer(french2Question3Id, "fort", false));
+                        answerDao.insertAnswer(new Answer(french2Question3Id, "je", false));
+
+
+                        Question french2Question4 = new Question(frenchChallengeId, "What is the French word for excuse me?", "French");
+                        questionDao.insertQuestion(french2Question4);
+                        int french2Question4Id = questionDao.getQuestionsByChallengeId(french2ChallengeId).get(3).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(french2Question4Id, "excusez-moi", true));
+                        answerDao.insertAnswer(new Answer(french2Question4Id, "de rien", false));
+                        answerDao.insertAnswer(new Answer(french2Question4Id, "bonsoir", false));
+                        answerDao.insertAnswer(new Answer(french2Question4Id, "avec", false));
+
+
+                        Question french2Question5 = new Question(french2ChallengeId, "What is the French word for miss?", "French");
+                        questionDao.insertQuestion(french2Question5);
+                        int french2Question5Id = questionDao.getQuestionsByChallengeId(french2ChallengeId).get(4).getQuestionId(); // Correct way to retrieve questionId
+                        answerDao.insertAnswer(new Answer(frenchQuestion5Id, "mademoiselle", true));
+                        answerDao.insertAnswer(new Answer(frenchQuestion5Id, "beau", false));
+                        answerDao.insertAnswer(new Answer(frenchQuestion5Id, "belle", false));
+                        answerDao.insertAnswer(new Answer(frenchQuestion5Id, "mais", false));
                     });
                 }
             };
