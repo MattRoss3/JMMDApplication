@@ -60,13 +60,6 @@ public class MainUserInterface extends AppCompatActivity {
         setupUI();
         setupListeners();
         setupRecyclerView();
-        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= Settings_page.intentFactory(getApplicationContext());
-                startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -132,6 +125,13 @@ public class MainUserInterface extends AppCompatActivity {
         binding.editUserButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainUserInterface.this, AdminEditActivity.class);
             startActivity(intent);
+        });
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=Settings_page.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
         });
 
 

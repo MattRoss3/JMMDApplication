@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.jmmdapplication.Database.DAO.UserDAO;
 import com.example.jmmdapplication.Database.Relations.UserWithDetails;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.repository.DatabaseRepository;
@@ -39,7 +40,7 @@ public class Settings_page extends AppCompatActivity {
         setContentView(R.layout.activity_settings_page);
         binding=ActivitySettingsPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        repository=new DatabaseRepository(getApplication());
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +63,13 @@ public class Settings_page extends AppCompatActivity {
         int userId = SessionManager.getUserSession(this);
         userWithDetails = repository.getUserWithDetails(userId);
         user=userWithDetails.user;
-
-
+        binding.backButtonSettingsScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
     }
     private void changePassword(){
         if(binding.PasswordSignInEditText.getText().toString().trim().equals(user.getPassword())){
@@ -82,7 +88,9 @@ public class Settings_page extends AppCompatActivity {
             Toast.makeText(this, "Username can not be changed.", Toast.LENGTH_SHORT).show();
         } else{
             user.setUsername(binding.userNameSettingsEditText.getText().toString().trim());
-            Toast.makeText(this, "Username successfully changed", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(this, "Username successfully changed to "+user.getUsername(), Toast.LENGTH_SHORT).show();
+            repository.updateUser(user);
         }
     }
 
@@ -94,8 +102,6 @@ public class Settings_page extends AppCompatActivity {
      * @return An intent for starting the {@link Settings_page} activity.
      */
     static Intent intentFactory(Context context){
-
         return new Intent(context, Settings_page.class);
-
     }
 }

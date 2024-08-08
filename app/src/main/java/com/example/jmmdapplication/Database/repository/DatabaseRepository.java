@@ -157,7 +157,9 @@ public class DatabaseRepository {
         }
         return null;
     }
-
+    public void updateUsername(User user){
+        userDAO.updateUser(user);
+    }
     public User getUserByUsernameAndPassword(String username, String password) {
         Future<User> future = executorService.submit(() -> userDAO.getUserByUsernameAndPassword(username, password));
         try {
