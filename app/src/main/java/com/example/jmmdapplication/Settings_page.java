@@ -94,6 +94,7 @@ public class Settings_page extends AppCompatActivity {
      * @return An intent for starting the {@link Settings_page} activity.
      */
     static Intent intentFactory(Context context){
+
         return new Intent(context, Settings_page.class);
 
     }
