@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jmmdapplication.Database.DAO.ProgressDAO;
@@ -231,17 +232,31 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      * @return A Progress object that reflects the User's Progress on this Challenge, otherwise null if it doesn't exist yet.
      */
     private Progress findExistingProgress() {
+//        LiveData<List<Progress>> allProgress;
+//        Progress progressTemp = null;
+//
+//        progressViewModel.getProgressByUserId(userId).observe(this, allProgress -> {
+//            if ((allProgress == null) || allProgress.isEmpty()) {
+//                progressTemp = null;
+//            }
+//            for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
+//                if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
+//                    progressTemp =  currProgress; // copy their progress for this challenge
+//                }
+//            }
+//        });
+//        return progressTemp;
 
         //List<Progress> allProgress = repository.getProgressByUserId(userId);  // pull a updated List of Progress objects under this Challenge by calling Repo method with userId
-        List<Progress> allProgress = progressViewModel.getProgressByUserId(userId).getValue();  // pull a updated List of Progress objects under this Challenge by calling ViewModel method with userId
-        if ((allProgress == null) || allProgress.isEmpty()) {
-            return null;
-        }
-        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
-            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
-                return currProgress; // copy their progress for this challenge
-            }
-        }
+//        List<Progress> allProgress = progressViewModel.getProgressByUserId(userId).getValue();  // pull a updated List of Progress objects under this Challenge by calling ViewModel method with userId
+//        if ((allProgress == null) || allProgress.isEmpty()) {
+//            return null;
+//        }
+//        for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
+//            if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
+//                return currProgress; // copy their progress for this challenge
+//            }
+//        }
         return null; // the user hasn't started this challenge before, but has started other challenges
     }
 
@@ -250,10 +265,24 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      * Inserts the local Progress object into the database or updates the existing Progress.
      */
     private void setupProgress() {
-        progress = findExistingProgress();
+
+        progressViewModel.getProgressByUserId(userId).observe(this, allProgress -> {
+            if ((allProgress == null) || allProgress.isEmpty()) {
+                progress = null;
+            }
+            for (Progress currProgress : allProgress) { // iterate through the user's progress for each challenge until finding the progress for this challenge
+                if (currProgress.getChallengeId() == challengeId) { // the user has worked on this challenge before
+                    progress =  currProgress; // copy their progress for this challenge
+                }
+            }
+        });
+
+
+
+        //progress = findExistingProgress();
 
         if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
-            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
+            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 1); // initialize the progress object for this challenge for the user
             //repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
             progressViewModel.insert(progress); // insert the Progress object for this Challenge for the User
         } else { // the user has attempted this Challenge before, and has existing Progress.
