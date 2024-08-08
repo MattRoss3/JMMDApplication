@@ -65,7 +65,6 @@ public class MainUserInterface extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent= Settings_page.intentFactory(getApplicationContext());
                 startActivity(intent);
-
             }
         });
     }
