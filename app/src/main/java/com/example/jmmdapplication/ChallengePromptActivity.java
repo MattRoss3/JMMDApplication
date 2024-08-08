@@ -61,14 +61,14 @@ public class ChallengePromptActivity extends AppCompatActivity {
             }
         });
 
-//        // this button will start the challenge in a write in format
-//        binding.writeinButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = ChallengeScreenWritein.ChallengeWriteinIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
-//                startActivity(intent);
-//            }
-//        });
+        // this button will start the challenge in a write in format
+        binding.writeinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = ChallengeScreenWritein.ChallengeWriteinIntentFactory(getApplicationContext(), userId, challengeId, challengeName, challengeDescription);
+                startActivity(intent);
+            }
+        });
 
         // this back button will return to the main user interface activity
         binding.backButtonChallengePrompt.setOnClickListener(new View.OnClickListener() {

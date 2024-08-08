@@ -277,8 +277,6 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
             }
         });
 
-
-
         //progress = findExistingProgress();
 
         if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
