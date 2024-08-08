@@ -84,6 +84,13 @@ public class MainUserInterface extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(challengeAdapter);
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Settings_page.intentFactory(getApplicationContext());
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -134,7 +141,6 @@ public class MainUserInterface extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
-
     }
 
     /**
