@@ -51,7 +51,7 @@
         tools:layout_editor_absoluteY="386dp" />
 
     <Button
-        android:id="@+id/changeusername_button"
+        android:id="@+id/changepassword_button"
         android:layout_width="203dp"
         android:layout_height="61dp"
         android:layout_marginTop="44dp"
