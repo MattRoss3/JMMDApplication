@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings_page"
-    android:background="@color/pink">
+    tools:context=".SettingsPage"
+    android:padding="16dp"
+    android:background="@color/white">
 
+    <!-- Back Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/back_button_settings_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="?attr/colorPrimary"
+        app:icon="@drawable/baseline_arrow_circle_left_24"
+        app:iconTint="?attr/colorPrimary"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Centered Header Title -->
     <TextView
         android:id="@+id/settingsHeader_textView"
-        android:layout_width="250dp"
-        android:layout_height="75dp"
-        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/settings"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="35dp"
         app:layout_constraintTop_toTopOf="parent"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
         android:layout_marginTop="40dp"
         />
 
-    <EditText
-        android:id="@+id/userName_settings_edit_text"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="New Username"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settingsHeader_textView" />
+    <!-- Decorative Underline Below Header Title -->
+    <View
+        android:layout_width="80dp"
+        android:layout_height="3dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="@id/settingsHeader_textView"
+        app:layout_constraintTop_toBottomOf="@id/settingsHeader_textView"
+        app:layout_constraintEnd_toEndOf="@id/settingsHeader_textView"
+        android:layout_marginTop="4dp" />
 
-    <EditText
-        android:id="@+id/Password_sign_in_edit_text"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="386dp" />
 
-    <Button
+    <!-- Change Password Button -->
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/changeusername_button"
-        android:layout_width="203dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="44dp"
-        android:text="@string/change_username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName_settings_edit_text" />
-
-    <Button
-        android:id="@+id/button"
-
-        android:layout_width="203dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/change_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password_sign_in_edit_text" />
-
-    <Button
-        android:id="@+id/back_button_settings_screen"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back"
-        tools:layout_editor_absoluteX="4dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="44dp"
+        android:text="@string/change_username"
+        android:textColor="@android:color/white"
+        app:backgroundTint="?attr/colorPrimary"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="10dp" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsHeader_textView" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/change_password_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/change_password"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/changeusername_button"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
