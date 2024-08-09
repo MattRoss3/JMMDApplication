@@ -280,7 +280,7 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
         //progress = findExistingProgress();
 
         if (progress == null) { // this is the first time the user attempted this Challenge. Create and insert a Progress object into the database
-            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 1); // initialize the progress object for this challenge for the user
+            progress = new Progress(userId, challengeId, "inProgress", LocalDateTime.of(1970, 1, 1, 1, 1, 1), 0); // initialize the progress object for this challenge for the user
             //repository.insertProgress(progress); // insert the Progress object for this Challenge for the User
             progressViewModel.insert(progress); // insert the Progress object for this Challenge for the User
         } else { // the user has attempted this Challenge before, and has existing Progress.
