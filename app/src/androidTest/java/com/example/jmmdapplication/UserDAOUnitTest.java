@@ -57,12 +57,12 @@ public class UserDAOUnitTest {
         User user = new User("Their Username", "Their Password", false);
         user.setUserId(1);
 
-        assertEquals(0,userDao.getAllUsers().size());
+        assertEquals(0,userDao.getAllUsersNonLive().size());
 
         userDao.insertUser(user);
 
-        assertEquals(1,userDao.getAllUsers().size());
-        assertEquals("Their Username", userDao.getUserByUsername("Their Username").getUsername());
+        assertEquals(1,userDao.getAllUsersNonLive().size());
+        assertEquals("Their Username", userDao.getUserByUsernameNonLive("Their Username").getUsername());
     }
 
     @Test
@@ -70,22 +70,22 @@ public class UserDAOUnitTest {
         User user = new User("Their Username", "Their Password", false);
         user.setUserId(1);
 
-        assertEquals(0,userDao.getAllUsers().size());
+        assertEquals(0,userDao.getAllUsersNonLive().size());
 
         userDao.insertUser(user);
 
-        assertEquals(1,userDao.getAllUsers().size());
-        assertEquals("Their Username", userDao.getUserByUsername("Their Username").getUsername());
-        assertFalse(userDao.getUserByUsername("Their Username").isAdmin());
+        assertEquals(1,userDao.getAllUsersNonLive().size());
+        assertEquals("Their Username", userDao.getUserByUsernameNonLive("Their Username").getUsername());
+        assertFalse(userDao.getUserByUsernameNonLive("Their Username").isAdmin());
 
         User user2 = new User("Their New Username", "Their New Password", true);
         user2.setUserId(1);
 
         userDao.updateUser(user2);
-        assertEquals(1,userDao.getAllUsers().size());
-        assertEquals("Their New Username", userDao.getUserByUsername("Their New Username").getUsername());
-        assertEquals("Their New Password", userDao.getUserByUsername("Their New Username").getPassword());
-        assertTrue(userDao.getUserByUsername("Their New Username").isAdmin());
+        assertEquals(1,userDao.getAllUsersNonLive().size());
+        assertEquals("Their New Username", userDao.getUserByUsernameNonLive("Their New Username").getUsername());
+        assertEquals("Their New Password", userDao.getUserByUsernameNonLive("Their New Username").getPassword());
+        assertTrue(userDao.getUserByUsernameNonLive("Their New Username").isAdmin());
     }
 
     @Test
@@ -93,16 +93,16 @@ public class UserDAOUnitTest {
         User user = new User("Their Username", "Their Password", false);
         user.setUserId(1);
 
-        assertEquals(0,userDao.getAllUsers().size());
+        assertEquals(0,userDao.getAllUsersNonLive().size());
 
         userDao.insertUser(user);
 
-        assertEquals(1,userDao.getAllUsers().size());
-        assertEquals("Their Username", userDao.getUserByUsername("Their Username").getUsername());
-        assertFalse(userDao.getUserByUsername("Their Username").isAdmin());
+        assertEquals(1,userDao.getAllUsersNonLive().size());
+        assertEquals("Their Username", userDao.getUserByUsernameNonLive("Their Username").getUsername());
+        assertFalse(userDao.getUserByUsernameNonLive("Their Username").isAdmin());
 
         userDao.deleteUser(user);
 
-        assertEquals(0,userDao.getAllUsers().size());
+        assertEquals(0,userDao.getAllUsersNonLive().size());
     }
 }
