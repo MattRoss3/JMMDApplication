@@ -49,4 +49,5 @@
     <string name="question">Question</string>
     <string name="enter_your_answer_here">Enter your answer here</string>
     <string name="submit">Submit</string>
+    <string name="please_type_a_language_and_click_search">Please type a language and click search</string>
 </resources>
