@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addNewChallenge">
+    tools:context=".addNewChallenge"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/addChallenge_header"
@@ -35,53 +36,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addChallenge_header" />
 
-    <Button
-        android:id="@+id/Search_Button"
-        android:layout_width="98dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="48dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/search_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="105dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="56dp"
         android:text="@string/search"
+        android:textColor="@android:color/white"
+        app:cornerRadius="16dp"
+        app:backgroundTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/enterLanguage_bar"
-        app:layout_constraintTop_toBottomOf="@+id/addChallenge_header"
-        android:backgroundTint="@color/bluec"
-        />
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="@id/enterLanguage_bar"
+        app:layout_constraintTop_toBottomOf="@id/addChallenge_header" />
 
     <TextView
         android:id="@+id/Challenges_label"
-        android:layout_width="183dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="189dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="44dp"
         android:gravity="center"
         android:text="@string/challenges"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Search_Button" />
+        app:layout_constraintTop_toBottomOf="@id/search_button" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="340dp"
-        android:layout_height="100dp"
-        android:backgroundTint="@color/bluec"
+    <View
+        android:layout_width="60dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@id/Challenges_label"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@id/Challenges_label"
+        app:layout_constraintTop_toBottomOf="@id/Challenges_label" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/challenge_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="304dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
         android:text=""
-        app:layout_constraintTop_toBottomOf="@id/Search_Button"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@android:color/white"
+        app:backgroundTint="?attr/colorPrimary"
+        app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible"
-        />
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Challenges_label"
+        android:visibility="invisible"/>
+    <View
+        android:layout_width="80dp"
+        android:layout_height="2dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="@id/addChallenge_header"
+        app:layout_constraintTop_toBottomOf="@id/addChallenge_header"
+        app:layout_constraintEnd_toEndOf="@id/addChallenge_header"
+        android:layout_marginTop="8dp" />
 
-    <Button
-        android:id="@+id/back_button"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back"
-        tools:layout_editor_absoluteX="4dp"
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="?attr/colorPrimary"
+        app:icon="@drawable/baseline_arrow_circle_left_24"
+        app:iconTint="?attr/colorPrimary"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="10dp"
-
-        android:backgroundTint="@color/bluec"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

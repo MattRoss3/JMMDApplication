@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jmmdapplication.Database.entities.Answer;
@@ -102,20 +103,44 @@ public class ChallengeScreenMultipleChoice extends AppCompatActivity {
      * @param question The current question to be displayed.
      */
     private void displayQuestion(Question question) {
-        binding.radioGroup.clearCheck();
+        // Clear previous selections
+        binding.radioButton1.setChecked(false);
+        binding.radioButton2.setChecked(false);
+        binding.radioButton3.setChecked(false);
+        binding.radioButton4.setChecked(false);
+
         answerViewModel.getAnswersByQuestionId(question.getQuestionId()).observe(this, questionWithAnswers -> {
             if (questionWithAnswers != null && !questionWithAnswers.isEmpty()) {
                 currentAnswers = questionWithAnswers.get(0).answers;
                 binding.questionText.setText(question.getQuestionText());
-                binding.radioButton1.setText(currentAnswers.get(0).getAnswerText());
-                binding.radioButton2.setText(currentAnswers.get(1).getAnswerText());
-                binding.radioButton3.setText(currentAnswers.get(2).getAnswerText());
-                binding.radioButton4.setText(currentAnswers.get(3).getAnswerText());
 
-                binding.radioGroup.setOnCheckedChangeListener((radioGroup, checkedButtonID) -> selectedAnswer = radioGroup.findViewById(checkedButtonID));
+                // Use utility method to set text and OnClickListener for RadioButtons within CardViews
+                setupRadioButton(binding.cardView1, R.id.radioButton1, currentAnswers.get(0).getAnswerText());
+                setupRadioButton(binding.cardView2, R.id.radioButton2, currentAnswers.get(1).getAnswerText());
+                setupRadioButton(binding.cardView3, R.id.radioButton3, currentAnswers.get(2).getAnswerText());
+                setupRadioButton(binding.cardView4, R.id.radioButton4, currentAnswers.get(3).getAnswerText());
             }
         });
     }
+
+    private void setupRadioButton(CardView cardView, int radioButtonId, String text) {
+        RadioButton radioButton = cardView.findViewById(radioButtonId);
+        radioButton.setText(text);
+        radioButton.setOnClickListener(view -> {
+            // Deselect all radio buttons
+            binding.radioButton1.setChecked(false);
+            binding.radioButton2.setChecked(false);
+            binding.radioButton3.setChecked(false);
+            binding.radioButton4.setChecked(false);
+
+            // Select the clicked radio button
+            radioButton.setChecked(true);
+
+            // Set the selected answer
+            selectedAnswer = (RadioButton) view;
+        });
+    }
+
 
     /**
      * Handles the submission of the user's selected answer.
