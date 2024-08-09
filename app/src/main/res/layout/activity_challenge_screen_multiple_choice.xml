@@ -1,203 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChallengeScreenMultipleChoice"
-    android:padding="16dp"
     android:background="@color/white">
 
-    <!-- Back Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/backButtonChallengeScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:textColor="?attr/colorPrimary"
-        app:icon="@drawable/baseline_arrow_circle_left_24"
-        app:iconTint="?attr/colorPrimary"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Centered Header Title -->
     <TextView
         android:id="@+id/challengeScreenHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/challenge_title"
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Challenge Title"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButtonChallengeScreen"
-        android:textStyle="bold"
-        android:gravity="center" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="34dp" />
 
-    <!-- Decorative Underline Below Header Title -->
-    <View
-        android:layout_width="80dp"
-        android:layout_height="3dp"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="@id/challengeScreenHeader"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenHeader"
-        app:layout_constraintEnd_toEndOf="@id/challengeScreenHeader"
-        android:layout_marginTop="4dp" />
-
-    <!-- Challenge Description -->
     <TextView
         android:id="@+id/challengeScreenDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/challenge_description"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginTop="20dp"
+        android:text="Challenge Description"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeScreenHeader" />
 
-    <!-- Question Text -->
+    <Button
+        android:id="@+id/backButtonChallengeScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="10dp" />
+
     <TextView
         android:id="@+id/questionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/multiple_choice_challenge"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:layout_marginTop="60dp"
         android:gravity="center"
+        android:text="Question"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeScreenDescription" />
 
-    <!-- CardViews for Answers -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView1"
-        android:layout_width="0dp"
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionText"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:clickable="true"
-        android:focusable="true">
+        app:layout_constraintTop_toBottomOf="@+id/questionText">
 
         <RadioButton
             android:id="@+id/radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="nunca"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:button="@null"
-            android:gravity="center_vertical|start"
-            android:drawablePadding="16dp"
-            android:drawableStart="@drawable/radio_button_selector" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView1"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:clickable="true"
-        android:focusable="true">
+            android:text="Answer1" />
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="sí"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:button="@null"
-            android:gravity="center_vertical|start"
-            android:drawablePadding="16dp"
-            android:drawableStart="@drawable/radio_button_selector" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView2"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:clickable="true"
-        android:focusable="true">
+            android:text="Answer2" />
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="no"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:button="@null"
-            android:gravity="center_vertical|start"
-            android:drawablePadding="16dp"
-            android:drawableStart="@drawable/radio_button_selector" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView3"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        android:clickable="true"
-        android:focusable="true">
+            android:text="Answer3" />
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="tengo"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:button="@null"
-            android:gravity="center_vertical|start"
-            android:drawablePadding="16dp"
-            android:drawableStart="@drawable/radio_button_selector" />
-    </androidx.cardview.widget.CardView>
+            android:text="Answer4" />
+    </RadioGroup>
 
-    <!-- Submit Button -->
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/submitButton"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
         android:text="Submit"
-        style="@style/Widget.MaterialComponents.Button"
-        app:backgroundTint="@android:color/white"
-        android:textColor="?attr/colorPrimary"
-        app:cornerRadius="16dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView4" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

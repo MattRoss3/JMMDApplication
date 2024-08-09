@@ -1,112 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChallengeScreenWritein"
-    android:padding="16dp"
     android:background="@color/white">
 
-    <!-- Back Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/backButtonChallengeScreen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:textColor="?attr/colorPrimary"
-        app:icon="@drawable/baseline_arrow_circle_left_24"
-        app:iconTint="?attr/colorPrimary"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Centered Header Title -->
     <TextView
         android:id="@+id/challengeScreenHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/challenge_title"
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Challenge Title"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButtonChallengeScreen"
-        android:textStyle="bold"
-        android:gravity="center" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="34dp" />
 
-    <!-- Decorative Underline Below Header Title -->
-    <View
-        android:layout_width="80dp"
-        android:layout_height="3dp"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintStart_toStartOf="@id/challengeScreenHeader"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenHeader"
-        app:layout_constraintEnd_toEndOf="@id/challengeScreenHeader"
-        android:layout_marginTop="4dp" />
-
-    <!-- Challenge Description -->
     <TextView
         android:id="@+id/challengeScreenDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/challenge_description"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginTop="20dp"
+        android:text="Challenge Description"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeScreenHeader" />
 
-    <!-- Question Text -->
+    <Button
+        android:id="@+id/backButtonChallengeScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="10dp" />
+
     <TextView
         android:id="@+id/questionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/question"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+        android:layout_marginTop="60dp"
         android:gravity="center"
+        android:text="Question"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/challengeScreenDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeScreenDescription" />
 
-    <!-- Answer Input Field -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/answerTextLayout"
-        android:layout_width="0dp"
+    <EditText
+        android:id="@+id/answerTextPrompt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Enter your answer here"
+        android:inputType="text"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionText">
+        app:layout_constraintTop_toBottomOf="@+id/questionText" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/answerTextPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_your_answer_here"
-            android:inputType="text"
-            android:textSize="18sp"
-            android:gravity="center"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Submit Button -->
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/submitButton"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/submit"
-        style="@style/Widget.MaterialComponents.Button"
-        app:backgroundTint="?attr/colorPrimary"
-        android:textColor="@android:color/white"
-        app:cornerRadius="16dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="120dp"
+        android:text="Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/answerTextLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/answerTextPrompt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
