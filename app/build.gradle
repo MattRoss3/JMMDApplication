@@ -6,6 +6,11 @@ android {
     namespace 'com.example.jmmdapplication'
     compileSdk 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     defaultConfig {
         applicationId "com.example.jmmdapplication"
         minSdk 34
@@ -17,7 +22,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "OPENAI_API_KEY", "\"${OPENAI_API_KEY}\""
+        }
+
         release {
+            buildConfigField "String", "OPENAI_API_KEY", "\"${OPENAI_API_KEY}\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -44,12 +54,25 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
     def room_version = "2.6.1"
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation libs.room.runtime
     annotationProcessor "androidx.room:room-compiler:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
+    // Retrofit for HTTP requests
+    implementation libs.retrofit
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.robolectric:robolectric:4.6'
-    testImplementation 'androidx.test:core:1.4.0'
+    // Gson converter for Retrofit
+    implementation libs.converter.gson
+
+    // OkHttp3 for logging HTTP requests/responses
+    implementation libs.logging.interceptor
+
+    // Gson for JSON parsing
+    implementation libs.gson
+
+
+
+    testImplementation libs.junit
+    testImplementation libs.robolectric
+    testImplementation libs.test.core
 }
