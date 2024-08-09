@@ -19,6 +19,7 @@ import com.example.jmmdapplication.util.SessionManager;
  * @since 07/20/2024
  * CST 338 Software Design with Dr. C
  * wk05: Project 2
+ * Fix git
  */
 public class LauncherActivity extends AppCompatActivity {
 

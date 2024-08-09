@@ -8,4 +8,5 @@
     tools:context=".LauncherActivity"
     android:background="@color/white">
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
