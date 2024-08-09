@@ -52,8 +52,8 @@ public class AddNewChallenge extends AppCompatActivity {
         userId = SessionManager.getUserSession(this);
 
         binding.backButton.setOnClickListener(view -> navigateToMainUserInterface());
-        binding.SearchButton.setOnClickListener(view -> searchChallenge());
-        binding.button1.setOnClickListener(view -> addChallenge());
+        binding.searchButton.setOnClickListener(view -> searchChallenge());
+        binding.challengeButton.setOnClickListener(view -> addChallenge());
     }
 
     /**
@@ -74,8 +74,8 @@ public class AddNewChallenge extends AppCompatActivity {
                 selectedChallenge = findChallengeByLanguage(challenges, language);
                 if (selectedChallenge != null) {
                     String challengeDetails = selectedChallenge.getCategory() + "\n" + selectedChallenge.getDescription();
-                    binding.button1.setText(challengeDetails);
-                    binding.button1.setVisibility(View.VISIBLE);
+                    binding.challengeButton.setText(challengeDetails);
+                    binding.challengeButton.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(this, "Language not Found", Toast.LENGTH_SHORT).show();
                 }
