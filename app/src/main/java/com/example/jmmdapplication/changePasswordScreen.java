@@ -22,7 +22,7 @@ import com.example.jmmdapplication.viewmodel.UserViewModel;
 import java.util.Objects;
 
 public class changePasswordScreen extends AppCompatActivity {
-    private ActivityChangePasswordScreenBinding binding;
+    ActivityChangePasswordScreenBinding binding;
     private UserViewModel userViewModel;
     private User user;
     @Override
@@ -46,7 +46,7 @@ public class changePasswordScreen extends AppCompatActivity {
         String newPassword1 = Objects.requireNonNull(binding.passwordSignInEditText1.getText()).toString().trim();
         String newPassword2= Objects.requireNonNull(binding.passwordSignInEditText.getText()).toString().trim();
         String username= Objects.requireNonNull(binding.userNameChangepwInScreenEditText.getText()).toString().trim();
-        String password= Objects.requireNonNull(binding.passwordSignInEditText.getText().toString().trim());
+        String password= Objects.requireNonNull(binding.newPWSignInEditText.getText().toString().trim());
         if(user.getUsername().equals(username))
         {
             if(user.getPassword().equals(password)) {

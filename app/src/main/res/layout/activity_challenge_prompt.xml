@@ -100,7 +100,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/write_in_challenge"
         style="@style/Widget.MaterialComponents.Button"
-        app:backgroundTint="@android:color/white"
+        app:backgroundTint="@color/white"
         android:textColor="?attr/colorPrimary"
         app:cornerRadius="16dp"
         app:strokeWidth="1dp"

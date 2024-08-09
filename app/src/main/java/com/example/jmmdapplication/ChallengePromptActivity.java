@@ -31,7 +31,7 @@ public class ChallengePromptActivity extends AppCompatActivity {
     private static final String CHALLENGE_PROMPT_CHALLENGE_NAME = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_NAME";
     private static final String CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION";
 
-    private ActivityChallengePromptBinding binding;
+    ActivityChallengePromptBinding binding;
 
     private int userId;
     private int challengeId;

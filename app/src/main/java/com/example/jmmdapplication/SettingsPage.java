@@ -21,7 +21,7 @@ import com.example.jmmdapplication.viewmodel.UserViewModel;
  * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
  */
 public class SettingsPage extends AppCompatActivity {
-    private ActivitySettingsPageBinding binding;
+    ActivitySettingsPageBinding binding;
     private UserViewModel userViewModel;
     private User user;
 
@@ -48,7 +48,7 @@ public class SettingsPage extends AppCompatActivity {
         Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
         startActivity(intent);
     }
-    private void navigatetoAdvancedSettings(){
+    void navigatetoAdvancedSettings(){
         Intent intent = AdvancedSettings.intentFactory(getApplicationContext());
         startActivity(intent);
     }

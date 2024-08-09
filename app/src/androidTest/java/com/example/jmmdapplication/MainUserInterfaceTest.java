@@ -8,9 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jmmdapplication.Database.entities.Challenge;
 import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.Database.Relations.UsersWithChallenges;
 import com.example.jmmdapplication.viewmodel.UserViewModel;
@@ -20,8 +18,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -138,7 +134,7 @@ public class MainUserInterfaceTest {
         activity.runOnUiThread(() -> {
             activity.binding.settingsButton.performClick();
 
-            Intent expectedIntent = new Intent(activity, SettingsPage.class);
+            Intent expectedIntent = new Intent(activity, intentFactoriesSettingPage.class);
             Intent actual = activity.getIntent(); // Simplified check
             assertNotNull("Intent should start SettingsPage", actual);
             assertEquals("Intent should start SettingsPage", expectedIntent.getComponent().getClassName(), actual.getComponent().getClassName());

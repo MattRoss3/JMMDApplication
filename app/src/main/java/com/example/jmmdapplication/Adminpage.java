@@ -19,7 +19,7 @@ import com.example.jmmdapplication.databinding.ActivityAdminpageBinding;
  */
 
 public class Adminpage extends AppCompatActivity {
-    private ActivityAdminpageBinding binding;
+    ActivityAdminpageBinding binding;
 
     /**
      * Called when the activity is first created.
