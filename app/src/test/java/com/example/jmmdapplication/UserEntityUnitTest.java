@@ -1,8 +1,10 @@
 package com.example.jmmdapplication;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.example.jmmdapplication.Database.entities.User;
 
@@ -175,6 +177,133 @@ public class UserEntityUnitTest {
         assertEquals(username3, user3.getUsername());
 
         assertNull(user4);
+    }
+
+    @Test
+    public void setUsernameTest() {
+        assertNotNull(user);
+        assertEquals("jerrick", user.getUsername());
+        user.setUsername("dakota");
+
+        assertNotNull(user1);
+        assertEquals("matthew", user1.getUsername());
+        user1.setUsername("mohamed");
+
+        assertNotNull(user2);
+        assertEquals("mohamed", user2.getUsername());
+        user2.setUsername("matthew");
+
+        assertNotNull(user3);
+        assertEquals("dakota", user3.getUsername());
+        user3.setUsername("jerrick");
+
+        assertNotNull(user);
+        assertEquals("dakota", user.getUsername());
+
+        assertNotNull(user1);
+        assertEquals("mohamed", user1.getUsername());
+
+        assertNotNull(user2);
+        assertEquals("matthew", user2.getUsername());
+
+        assertNotNull(user3);
+        assertEquals("jerrick", user3.getUsername());
+    }
+
+    @Test
+    public void getPasswordTest() {
+        assertNotNull(user);
+        assertEquals(password, user.getPassword());
+
+        assertNotNull(user1);
+        assertEquals(password1, user1.getPassword());
+
+        assertNotNull(user2);
+        assertEquals(password2, user2.getPassword());
+
+        assertNotNull(user3);
+        assertEquals(password3, user3.getPassword());
+
+        assertNull(user4);
+    }
+
+    @Test
+    public void setPasswordTest() {
+        assertNotNull(user);
+        assertEquals(password, user.getPassword());
+        user.setPassword(password3);
+
+        assertNotNull(user1);
+        assertEquals(password1, user1.getPassword());
+        user1.setPassword(password2);
+
+        assertNotNull(user2);
+        assertEquals(password2, user2.getPassword());
+        user2.setPassword(password1);
+
+        assertNotNull(user3);
+        assertEquals(password3, user3.getPassword());
+        user3.setPassword(password);
+
+        assertNotNull(user);
+        assertEquals(password3, user.getPassword());
+
+        assertNotNull(user1);
+        assertEquals(password2, user1.getPassword());
+
+        assertNotNull(user2);
+        assertEquals(password1, user2.getPassword());
+
+        assertNotNull(user3);
+        assertEquals(password, user3.getPassword());
+    }
+
+    @Test
+    public void isAdminTest() {
+        assertNotNull(user);
+        assertTrue(user.isAdmin());
+
+        assertNotNull(user1);
+        assertFalse(user1.isAdmin());
+
+        assertNotNull(user2);
+        assertTrue(user2.isAdmin());
+
+        assertNotNull(user3);
+        assertFalse(user3.isAdmin());
+
+        assertNull(user4);
+    }
+
+    @Test
+    public void setAdminTest() {
+        assertNotNull(user);
+        assertTrue(user.isAdmin());
+        user.setAdmin(false);
+
+        assertNotNull(user1);
+        assertFalse(user1.isAdmin());
+        user1.setAdmin(true);
+
+        assertNotNull(user2);
+        assertTrue(user2.isAdmin());
+        user2.setAdmin(false);
+
+        assertNotNull(user3);
+        assertFalse(user3.isAdmin());
+        user3.setAdmin(true);
+
+        assertNotNull(user);
+        assertFalse(user.isAdmin());
+
+        assertNotNull(user1);
+        assertTrue(user1.isAdmin());
+
+        assertNotNull(user2);
+        assertFalse(user2.isAdmin());
+
+        assertNotNull(user3);
+        assertTrue(user3.isAdmin());
     }
 }
 
