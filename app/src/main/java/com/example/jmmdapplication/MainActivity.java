@@ -18,6 +18,7 @@ import com.example.jmmdapplication.databinding.ActivityMainBinding;
  * This activity checks if a user is logged in by retrieving the user ID from shared preferences.
  * If a user ID is found, it welcomes the user; otherwise, it redirects to the sign-in page.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 
 public class MainActivity extends AppCompatActivity {

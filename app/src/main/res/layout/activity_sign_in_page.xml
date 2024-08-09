@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.example.jmmdapplication.SignInPageActivity">
+    tools:context="com.example.jmmdapplication.SignInPageActivity"
+    android:background="@color/white">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_of_sign_in_page"
@@ -46,7 +47,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_text_input_layout_sign_in"
+        android:id="@+id/password_text_input_layout_changePW"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -78,7 +79,7 @@
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password_text_input_layout_sign_in"
+        app:layout_constraintTop_toBottomOf="@id/password_text_input_layout_changePW"
         app:layout_constraintWidth_percent="0.5" />
 
     <com.google.android.material.button.MaterialButton

@@ -1,99 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addNewChallenge">
+    tools:context=".AddNewChallenge"
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/addChallenge_header"
-        android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:text="@string/add_challenges"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="34dp"
-        android:layout_marginTop="40dp"
-        />
-
-
-    <EditText
-        android:id="@+id/enterLanguage_bar"
-        android:layout_width="248dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:hint="@string/enter_language"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.276"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addChallenge_header" />
-
-    <Button
-        android:id="@+id/Search_Button"
-        android:layout_width="98dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/enterLanguage_bar"
-        app:layout_constraintTop_toBottomOf="@+id/addChallenge_header"
-        android:backgroundTint="@color/bluec"
-        />
-
-    <TextView
-        android:id="@+id/Challenges_label"
-        android:layout_width="183dp"
-        android:layout_height="78dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="@string/challenges"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Search_Button" />
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="361dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="10dp"
-        android:fillViewport="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Challenges_label">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                tools:listitem="@layout/recycler_view_item_1" />
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <Button
+    <!-- Back Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back"
-        tools:layout_editor_absoluteX="4dp"
-        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="?attr/colorPrimary"
+        app:icon="@drawable/baseline_arrow_circle_left_24"
+        app:iconTint="?attr/colorPrimary"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="10dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        android:backgroundTint="@color/bluec"/>
+    <!-- Header Title -->
+    <TextView
+        android:id="@+id/addChallenge_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/add_challenges"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/back_button"
+        android:textStyle="bold" />
+
+    <!-- Enter Language Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enterLanguageInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addChallenge_header">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enterLanguage_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_language"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:gravity="center" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Search Button with Inverted Colors -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/Search_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/search"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:backgroundTint="@android:color/white"
+        android:textColor="?attr/colorPrimary"
+        app:cornerRadius="16dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterLanguageInputLayout" />
+
+    <!-- Button that displays challenge text -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="24dp"
+        android:text="@string/please_type_a_language_and_click_search"
+        android:textSize="16sp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:backgroundTint="@android:color/white"
+        android:textColor="?attr/colorPrimary"
+        app:cornerRadius="16dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Search_Button" />
 </androidx.constraintlayout.widget.ConstraintLayout>

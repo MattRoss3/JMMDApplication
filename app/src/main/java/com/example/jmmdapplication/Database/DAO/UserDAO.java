@@ -23,6 +23,9 @@ public interface UserDAO {
     @Query("SELECT * FROM users WHERE username = :username")
     LiveData<User> getUserByUsername(String username);
 
+    @Query("SELECT * FROM users WHERE username = :username")
+    User getUserByUsernameNonLive(String username);
+
     @Update
     void updateUser(User user);
 
@@ -31,6 +34,9 @@ public interface UserDAO {
 
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
+
+    @Query("SELECT * FROM users")
+    List<User> getAllUsersNonLive();
 
     @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     LiveData<User> getUserByUsernameAndPassword(String username, String password);

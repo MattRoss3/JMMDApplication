@@ -29,12 +29,13 @@ public class MainUserInterface extends AppCompatActivity {
     private static final String CHALLENGE_PROMPT_CHALLENGE_NAME = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_NAME";
     private static final String CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION = "com.example.jmmdapplication.CHALLENGE_PROMPT_CHALLENGE_DESCRIPTION";
 
-    private ActivityMainUserInterfaceBinding binding;
+    public ActivityMainUserInterfaceBinding binding;
     private UserViewModel userViewModel;
     private UserChallengeViewModel userChallengeViewModel;
     private ChallengeAdapter challengeAdapter;
+    private UserAdapter userAdapter;
     private RecyclerView recyclerView;
-    private int userId;
+    public int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +112,11 @@ public class MainUserInterface extends AppCompatActivity {
 
         binding.editUserButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainUserInterface.this, AdminEditActivity.class);
+            startActivity(intent);
+        });
+
+        binding.settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainUserInterface.this, SettingsPage.class);
             startActivity(intent);
         });
     }

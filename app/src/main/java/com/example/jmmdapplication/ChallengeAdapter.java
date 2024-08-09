@@ -17,6 +17,7 @@ import java.util.List;
  * <p>
  * This adapter binds a list of {@link Challenge} objects to a RecyclerView, allowing for the display and management of challenge data.
  * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">...</a>
  */
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder> {
 

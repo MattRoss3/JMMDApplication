@@ -7,26 +7,21 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.jmmdapplication.Database.entities.User;
 import com.example.jmmdapplication.databinding.ActivitySignInPageBinding;
 import com.example.jmmdapplication.util.SessionManager;
 import com.example.jmmdapplication.viewmodel.UserViewModel;
 
 /**
- * Activity for handling user sign-in.
- * This activity provides a user interface for signing in, validates user credentials, and manages user sessions.
+ * Activity for signing in the user.
+ * <p>
+ * This activity handles the sign-in process, checks the user credentials, and navigates to the main user interface if successful.
+ * </p>
+ * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
  */
 public class SignInPageActivity extends AppCompatActivity {
-
     private ActivitySignInPageBinding binding;
     private UserViewModel userViewModel;
 
-    /**
-     * Called when the activity is first created.
-     * This method sets up the user interface, initializes the ViewModel, and sets up listeners for the sign-in and sign-up buttons.
-     *
-     * @param savedInstanceState If the activity is being re-created from a previous saved state, this bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Otherwise it is null.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
