@@ -52,7 +52,7 @@ public class AddNewChallenge extends AppCompatActivity {
         userId = SessionManager.getUserSession(this);
 
         binding.backButton.setOnClickListener(view -> navigateToMainUserInterface());
-        binding.ChallengesLabel.setOnClickListener(view -> searchChallenge());
+        binding.SearchButton.setOnClickListener(view -> searchChallenge());
         binding.button1.setOnClickListener(view -> addChallenge());
     }
 
