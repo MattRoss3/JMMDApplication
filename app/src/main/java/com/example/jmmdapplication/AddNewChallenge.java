@@ -17,14 +17,6 @@ import com.example.jmmdapplication.viewmodel.UserChallengeViewModel;
 
 import java.util.List;
 
-/**
- * Activity that allows users to add a new challenge.
- * <p>
- * This activity provides an interface for users to input details for a new challenge.
- * It includes a button to navigate back to the main user interface.
- * </p>
- * Link to GitHub Repo: <a href="https://github.com/MattRoss3/JMMDApplication">JMMDApplication</a>
- */
 public class AddNewChallenge extends AppCompatActivity {
     private ActivityAddnewChallengeBinding binding;
     private ChallengeViewModel challengeViewModel;
@@ -32,14 +24,6 @@ public class AddNewChallenge extends AppCompatActivity {
     private Challenge selectedChallenge = null;
     private int userId;
 
-    /**
-     * Called when the activity is first created.
-     * <p>
-     * This method sets up the UI by inflating the layout and setting up click listeners.
-     * </p>
-     *
-     * @param savedInstanceState If the activity is being re-created from a previous saved state, this bundle contains the data it most recently supplied in {@link #onSaveInstanceState(Bundle)}. <b>Note:</b> Otherwise it is null.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +40,11 @@ public class AddNewChallenge extends AppCompatActivity {
         binding.button1.setOnClickListener(view -> addChallenge());
     }
 
-    /**
-     * Navigates to the main user interface.
-     */
     private void navigateToMainUserInterface() {
         Intent intent = MainUserInterface.MainUserInterfaceIntentFactory(getApplicationContext());
         startActivity(intent);
     }
 
-    /**
-     * Searches for a challenge based on the entered language.
-     */
     private void searchChallenge() {
         String language = binding.enterLanguageBar.getText().toString();
         if (!language.isEmpty()) {
@@ -74,7 +52,7 @@ public class AddNewChallenge extends AppCompatActivity {
                 selectedChallenge = findChallengeByLanguage(challenges, language);
                 if (selectedChallenge != null) {
                     String challengeDetails = selectedChallenge.getCategory() + "\n" + selectedChallenge.getDescription();
-                    binding.ChallengesLabel.setText(challengeDetails);
+                    binding.button1.setText(challengeDetails); // Display the challenge details inside the button
                     binding.button1.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(this, "Language not Found", Toast.LENGTH_SHORT).show();
@@ -85,13 +63,6 @@ public class AddNewChallenge extends AppCompatActivity {
         }
     }
 
-    /**
-     * Finds a challenge by language from a list of challenges.
-     *
-     * @param challenges The list of challenges.
-     * @param language   The language to search for.
-     * @return The challenge if found, otherwise null.
-     */
     private Challenge findChallengeByLanguage(List<Challenge> challenges, String language) {
         for (Challenge challenge : challenges) {
             if (challenge.getCategory().equalsIgnoreCase(language)) {
@@ -101,9 +72,6 @@ public class AddNewChallenge extends AppCompatActivity {
         return null;
     }
 
-    /**
-     * Adds the selected challenge if it is not already assigned to the user.
-     */
     private void addChallenge() {
         if (selectedChallenge != null) {
             userChallengeViewModel.getChallengesAssignedToUser(userId).observe(this, userChallenges -> {
@@ -122,12 +90,6 @@ public class AddNewChallenge extends AppCompatActivity {
         }
     }
 
-    /**
-     * Factory method to create an {@link Intent} for starting {@link AddNewChallenge}.
-     *
-     * @param context The context from which the intent will be started.
-     * @return An {@link Intent} that can be used to start {@link AddNewChallenge}.
-     */
     public static Intent intentFactory(Context context) {
         return new Intent(context, AddNewChallenge.class);
     }

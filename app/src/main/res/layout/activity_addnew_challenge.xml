@@ -76,18 +76,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterLanguageInputLayout" />
 
-    <TextView
-        android:id="@+id/Challenges_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/challenges"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Search_Button" />
-
+    <!-- Button that displays challenge text -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -104,6 +93,5 @@
         app:strokeColor="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Challenges_label" />
-
+        app:layout_constraintTop_toBottomOf="@id/Search_Button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
