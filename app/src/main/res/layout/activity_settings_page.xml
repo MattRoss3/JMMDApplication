@@ -34,6 +34,16 @@
         android:textColor="@android:color/black"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        />
+
+    <Button
+        android:id="@+id/changeUsername_button_button"
+        android:layout_width="283dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/back_button_settings_screen"
         android:textStyle="bold"
@@ -80,27 +90,22 @@
         app:cornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsHeader_textView" />
+
+    <Button
+        android:id="@+id/button"
+
+        android:layout_width="283dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/change_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeUsername_button_button" />
         app:layout_constraintTop_toBottomOf="@id/username_text_input_layout"
         android:layout_marginTop="16dp" />
 
-    <!-- Password TextInputLayout -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_text_input_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/changeusername_button">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Password_sign_in_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_password"
-            android:inputType="textPassword"
-            android:textSize="18sp"
-            android:gravity="center"/>
-    </com.google.android.material.textfield.TextInputLayout>
+ 
 
     <!-- Change Password Button -->
     <com.google.android.material.button.MaterialButton
