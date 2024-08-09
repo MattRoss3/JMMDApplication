@@ -36,6 +36,7 @@ public class SettingsPage extends AppCompatActivity {
         binding.backButtonSettingsScreen.setOnClickListener(v -> navigateToMainUserInterface());
         binding.changeUsernameButtonButton.setOnClickListener(v -> navigatetoAdvancedSettings());
         binding.button.setOnClickListener(v -> navigateToChangePassword());
+
     }
 
 

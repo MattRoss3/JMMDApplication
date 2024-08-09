@@ -33,6 +33,7 @@ public class AdvancedSettings extends AppCompatActivity {
                 this.user = user;
             }
         });
+
         binding.changeUsernameButton.setOnClickListener(v -> changeUsername());
         binding.backButtonSettingsScreen.setOnClickListener(v-> navigateToSettings());
         };
@@ -58,7 +59,7 @@ public class AdvancedSettings extends AppCompatActivity {
         else{
             Toast.makeText(this, "Not Correct User", Toast.LENGTH_SHORT).show();
         }
-
+  
     }
     public static Intent intentFactory(Context context) {
         return new Intent(context, AdvancedSettings.class);
